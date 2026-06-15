@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumen — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #FAFAF9;
+    --surface: #FFFFFF;
+    --surface-glass: rgba(255,255,255,0.72);
+    --border-soft: rgba(0,0,0,0.06);
+    --border-medium: rgba(0,0,0,0.10);
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --text-tertiary: #A1A1A6;
+
+    --math: #0071E3;
+    --math-bg: rgba(0,113,227,0.08);
+    --chem: #2FA84F;
+    --chem-bg: rgba(47,168,79,0.08);
+    --bio: #FF9500;
+    --bio-bg: rgba(255,149,0,0.08);
+    --physics: #AF52DE;
+    --physics-bg: rgba(175,82,222,0.08);
+
+    --warn: #B7791E;
+    --warn-bg: rgba(183,121,30,0.08);
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-soft: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+    --shadow-elevated: 0 2px 4px rgba(0,0,0,0.04), 0 16px 40px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    padding: 48px 24px 96px;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; }
+
+  .doc-header { margin-bottom: 64px; }
+  .doc-header .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--math);
+    margin: 0 0 12px;
+  }
+  .doc-header h1 {
+    font-family: var(--font-display);
+    font-size: 48px; font-weight: 500; letter-spacing: -0.01em;
+    margin: 0 0 12px; line-height: 1.1;
+  }
+  .doc-header p {
+    font-size: 17px; color: var(--text-secondary); max-width: 640px;
+    line-height: 1.6; margin: 0;
+  }
+
+  section { margin-bottom: 72px; }
+  section > h2 {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-tertiary);
+    margin: 0 0 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-soft);
+  }
+
+  /* Color swatches */
+  .swatch-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    border-radius: var(--radius-md); overflow: hidden;
+    border: 1px solid var(--border-soft); background: var(--surface);
+  }
+  .swatch-color { height: 88px; }
+  .swatch-meta { padding: 12px 14px; }
+  .swatch-meta .name { font-size: 14px; font-weight: 600; margin: 0 0 2px; }
+  .swatch-meta .hex { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); margin: 0; }
+
+  /* Typography */
+  .type-sample { padding: 28px 0; border-bottom: 1px solid var(--border-soft); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-sample .label {
+    font-size: 12px; font-weight: 500; color: var(--text-tertiary);
+    font-family: var(--font-mono); margin-bottom: 10px;
+  }
+  .display-1 { font-family: var(--font-display); font-size: 40px; font-weight: 500; line-height: 1.2; margin: 0; }
+  .display-2 { font-family: var(--font-display); font-size: 26px; font-weight: 500; line-height: 1.35; margin: 0; }
+  .body-1 { font-size: 17px; line-height: 1.6; margin: 0; max-width: 560px; }
+  .body-2 { font-size: 15px; line-height: 1.6; color: var(--text-secondary); margin: 0; max-width: 560px; }
+  .caption { font-size: 13px; color: var(--text-tertiary); margin: 0; font-family: var(--font-mono); }
+  .ui-label { font-size: 14px; font-weight: 600; margin: 0; }
+
+  /* Spacing */
+  .spacing-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .spacing-box { background: var(--math); border-radius: 4px; height: 16px; }
+  .spacing-row .caption { width: 60px; flex-shrink: 0; }
+
+  /* Glass card */
+  .card-demo-bg {
+    background: linear-gradient(135deg, #EAF2FF 0%, #FAFAF9 60%);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+  }
+  .glass-card {
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 32px;
+    max-width: 420px;
+  }
+  .glass-card h3 { font-family: var(--font-display); font-size: 22px; font-weight: 500; margin: 0 0 8px; }
+  .glass-card p { font-size: 14px; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+
+  /* Buttons */
+  .component-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    border-radius: 980px; padding: 12px 24px; border: none; cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--math); color: #fff; box-shadow: 0 4px 14px rgba(0,113,227,0.28); }
+  .btn-secondary { background: var(--surface); color: var(--text-primary); border: 1px solid var(--border-medium); }
+  .btn-ghost { background: transparent; color: var(--math); padding: 12px 8px; }
+
+  /* Tags */
+  .tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 980px; font-size: 13px; font-weight: 600; }
+  .tag-math { background: var(--math-bg); color: var(--math); }
+  .tag-chem { background: var(--chem-bg); color: var(--chem); }
+  .tag-bio { background: var(--bio-bg); color: var(--bio); }
+  .tag-physics { background: var(--physics-bg); color: var(--physics); }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* Input */
+  .input-demo {
+    background: var(--surface); border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md); padding: 16px 20px; font-size: 16px;
+    color: var(--text-tertiary); max-width: 480px; box-shadow: var(--shadow-soft);
+  }
+  .input-demo.focused { border-color: var(--math); box-shadow: 0 0 0 4px var(--math-bg), var(--shadow-soft); color: var(--text-primary); }
+
+  /* Chips */
+  .chip {
+    display: inline-block; padding: 8px 16px; border-radius: 980px;
+    border: 1px solid var(--border-medium); background: var(--surface);
+    font-size: 13px; font-weight: 500; color: var(--text-primary); cursor: pointer;
+  }
+
+  /* Slider */
+  .slider-demo { max-width: 320px; }
+  .slider-demo .slider-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .slider-demo .slider-label span:last-child { font-family: var(--font-mono); color: var(--math); }
+  .slider-track { height: 4px; background: var(--border-medium); border-radius: 2px; position: relative; }
+  .slider-fill { position: absolute; left: 0; top: 0; height: 4px; width: 60%; background: var(--math); border-radius: 2px; }
+  .slider-thumb { position: absolute; left: 60%; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid var(--math); box-shadow: var(--shadow-soft); }
+
+  /* Motion table */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); font-weight: 600; }
+  td.mono { font-family: var(--font-mono); color: var(--text-secondary); font-size: 13px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="doc-header">
+    <p class="eyebrow">Design System · v0.1 — Pilot</p>
+    <h1>Lumen</h1>
+    <p>A calm, glass-and-light visual language. Inter carries the interface; Fraunces carries the tutor's voice. Color identifies the subject lens, not the state of the UI — accents are reserved for math, chemistry, biology, and physics.</p>
+  </div>
+
+  <section>
+    <h2>Color · Foundation</h2>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FAFAF9; border-bottom:1px solid var(--border-soft);"></div>
+        <div class="swatch-meta"><p class="name">Canvas</p><p class="hex">#FAFAF9</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFFFFF; border-bottom:1px solid var(--border-soft);"></div>
+        <div class="swatch-meta"><p class="name">Surface</p><p class="hex">#FFFFFF</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1D1D1F;"></div>
+        <div class="swatch-meta"><p class="name">Text Primary</p><p class="hex">#1D1D1F</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#6E6E73;"></div>
+        <div class="swatch-meta"><p class="name">Text Secondary</p><p class="hex">#6E6E73</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Color · Subject Lenses</h2>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0071E3;"></div>
+        <div class="swatch-meta"><p class="name">Math</p><p class="hex">#0071E3</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2FA84F;"></div>
+        <div class="swatch-meta"><p class="name">Chemistry</p><p class="hex">#2FA84F</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FF9500;"></div>
+        <div class="swatch-meta"><p class="name">Biology</p><p class="hex">#FF9500</p></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#AF52DE;"></div>
+        <div class="swatch-meta"><p class="name">Physics</p><p class="hex">#AF52DE</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typography</h2>
+    <div class="type-sample">
+      <p class="label">Display · Fraunces 500 · 40px — used for explanation "key idea"</p>
+      <p class="display-1">A larger value of a stretches the parabola, making it look narrower.</p>
+    </div>
+    <div class="type-sample">
+      <p class="label">Display · Fraunces 500 · 26px — section headings within explanations</p>
+      <p class="display-2">Why the graph curves the way it does</p>
+    </div>
+    <div class="type-sample">
+      <p class="label">Body · Inter 400 · 17px — explanation summary</p>
+      <p class="body-1">Multiplying x² by a larger value of a stretches the graph vertically. Every point gets pulled further from the x-axis, so the curve appears to rise more steeply — which reads visually as "narrower," even though the shape is still a parabola.</p>
+    </div>
+    <div class="type-sample">
+      <p class="label">Body Secondary · Inter 400 · 15px — supporting text, captions</p>
+      <p class="body-2">Drag the slider to see how the curve responds in real time.</p>
+    </div>
+    <div class="type-sample">
+      <p class="label">UI Label · Inter 600 · 14px — buttons, tags, slider labels</p>
+      <p class="ui-label">Stretch (a)</p>
+    </div>
+    <div class="type-sample">
+      <p class="label">Mono · JetBrains Mono 400 · 13px — values, expressions</p>
+      <p class="caption">y = a·x² &nbsp;&nbsp; a = 2.3</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Spacing Scale (4px base)</h2>
+    <div class="spacing-row"><span class="caption">4px</span><div class="spacing-box" style="width:4px;"></div></div>
+    <div class="spacing-row"><span class="caption">8px</span><div class="spacing-box" style="width:8px;"></div></div>
+    <div class="spacing-row"><span class="caption">12px</span><div class="spacing-box" style="width:12px;"></div></div>
+    <div class="spacing-row"><span class="caption">16px</span><div class="spacing-box" style="width:16px;"></div></div>
+    <div class="spacing-row"><span class="caption">24px</span><div class="spacing-box" style="width:24px;"></div></div>
+    <div class="spacing-row"><span class="caption">32px</span><div class="spacing-box" style="width:32px;"></div></div>
+    <div class="spacing-row"><span class="caption">48px</span><div class="spacing-box" style="width:48px;"></div></div>
+    <div class="spacing-row"><span class="caption">64px</span><div class="spacing-box" style="width:64px;"></div></div>
+  </section>
+
+  <section>
+    <h2>Surfaces · Glass Card</h2>
+    <div class="card-demo-bg">
+      <div class="glass-card">
+        <h3>Vertical Stretch</h3>
+        <p>The "glass card" is the canonical container for explanations and visuals — translucent surface, 1px hairline border, soft layered shadow, 24px radius. It sits on the canvas color or a subtle gradient, never a hard edge.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Components · Buttons &amp; Tags</h2>
+    <div class="two-col">
+      <div>
+        <p class="caption" style="margin-bottom:12px;">Buttons</p>
+        <div class="component-row">
+          <button class="btn btn-primary">Ask Lumen</button>
+          <button class="btn btn-secondary">New question</button>
+          <button class="btn btn-ghost">Skip →</button>
+        </div>
+      </div>
+      <div>
+        <p class="caption" style="margin-bottom:12px;">Subject tags</p>
+        <div class="component-row">
+          <span class="tag tag-math"><span class="tag-dot"></span>Math</span>
+          <span class="tag tag-chem"><span class="tag-dot"></span>Chemistry</span>
+          <span class="tag tag-bio"><span class="tag-dot"></span>Biology</span>
+          <span class="tag tag-physics"><span class="tag-dot"></span>Physics</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Components · Input, Chips &amp; Slider</h2>
+    <div class="two-col">
+      <div>
+        <p class="caption" style="margin-bottom:12px;">Question input — default / focused</p>
+        <div class="input-demo" style="margin-bottom:12px;">Why is the graph of y = x² shaped like a U?</div>
+        <div class="input-demo focused">Why does increasing a make the parabola narrower?</div>
+      </div>
+      <div>
+        <p class="caption" style="margin-bottom:12px;">Follow-up suggestion chips</p>
+        <div class="component-row" style="margin-bottom:24px;">
+          <span class="chip">What if a is negative?</span>
+          <span class="chip">What about adding a constant?</span>
+        </div>
+        <p class="caption" style="margin-bottom:12px;">Slider</p>
+        <div class="slider-demo">
+          <div class="slider-label"><span>Stretch (a)</span><span>2.3</span></div>
+          <div class="slider-track">
+            <div class="slider-fill"></div>
+            <div class="slider-thumb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Motion</h2>
+    <table>
+      <thead><tr><th>Moment</th><th>Easing</th><th>Duration</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Result reveal (text + canvas)</td><td class="mono">ease-out</td><td class="mono">250ms, 80ms stagger</td><td>Fade + 12px rise; canvas arrives just after text</td></tr>
+        <tr><td>Input → breadcrumb collapse</td><td class="mono">ease-out</td><td class="mono">300ms</td><td>Shared-element continuity, not a hard cut</td></tr>
+        <tr><td>Slider value label</td><td class="mono">ease-in-out</td><td class="mono">500ms fade-out</td><td>Follows thumb while dragging only</td></tr>
+        <tr><td>Canvas highlight on new expression</td><td class="mono">ease-in-out</td><td class="mono">600ms ring pulse</td><td>Subject-accent color, 1px</td></tr>
+        <tr><td>Hover (cards, buttons)</td><td class="mono">ease-out</td><td class="mono">150ms</td><td>Subtle elevation / -1px translateY only</td></tr>
+        <tr><td>Dashboard counters</td><td class="mono">ease-out</td><td class="mono">600ms count-up</td><td>One-time, on first dashboard load</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Iconography &amp; Misc</h2>
+    <p class="body-2">Icons: <strong>lucide-react</strong> — thin-stroke line icons (2px), matching the restrained, neutral chrome. Reserve color for subject tags and accent states only; icons stay <span class="caption" style="font-size:13px;">var(--text-secondary)</span> by default. Corner radii: 10px (small controls), 16px (inputs/buttons), 24px (cards/canvas). Shadows are always soft and layered — never a single hard drop shadow.</p>
+  </section>
+
+</div>
+</body>
+</html>
