@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Graphxy Labs — Wireframes v0.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────────────────────── */
+:root {
+  /* Wireframe-only palette — greyscale, clearly structural */
+  --wf-page:     #FAFAFA;
+  --wf-surface:  #FFFFFF;
+  --wf-fill:     #F0F0F0;       /* Generic region fill */
+  --wf-fill-mid: #E4E4E4;       /* Named region fill */
+  --wf-fill-str: #D0D0D0;       /* Prominent region fill */
+  --wf-line:     #C8C8C8;       /* Solid borders */
+  --wf-dash:     #CCCCCC;       /* Dashed placeholder borders */
+  --text:        #333333;
+  --text-mid:    #666666;
+  --text-faint:  #999999;
+  --accent:      #888888;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--wf-page);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  padding: 56px 40px 140px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DOCUMENT LAYOUT
+───────────────────────────────────────────────────────────── */
+.wrap { max-width: 1120px; margin: 0 auto; }
+
+/* Document header */
+.doc-header {
+  padding-bottom: 36px;
+  border-bottom: 1.5px solid var(--wf-line);
+  margin-bottom: 64px;
+}
+
+.doc-header .label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--text-faint); margin-bottom: 14px;
+}
+.doc-header .label::before {
+  content: '';
+  display: block; width: 14px; height: 1px;
+  background: var(--text-faint);
+}
+.doc-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+.doc-header p  { font-size: 13px; color: var(--text-mid); max-width: 640px; line-height: 1.65; }
+
+/* Page section */
+.wf-section { margin-bottom: 80px; }
+
+.section-header { margin-bottom: 20px; }
+.section-meta   { display: flex; align-items: baseline; gap: 12px; margin-bottom: 5px; }
+.section-id     { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-faint); }
+.section-title  { font-size: 15px; font-weight: 700; color: var(--text); }
+.section-note   { font-size: 12px; color: var(--text-faint); max-width: 720px; line-height: 1.6; margin-bottom: 18px; }
+
+.sub-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.09em; color: var(--accent); margin: 28px 0 12px;
+}
+.sub-label:first-child { margin-top: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   WIREFRAME FRAME (screen chrome)
+───────────────────────────────────────────────────────────── */
+.frame {
+  border: 1.5px solid var(--wf-line);
+  border-radius: 8px;
+  background: var(--wf-surface);
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BOX — generic wireframe region
+───────────────────────────────────────────────────────────── */
+.box {
+  border: 1px dashed var(--wf-dash);
+  border-radius: 4px;
+  background: var(--wf-fill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-faint);
+  text-align: center;
+  padding: 8px 10px;
+  min-height: 36px;
+  line-height: 1.4;
+}
+
+/* Solid — named / labeled UI element */
+.box.solid {
+  border: 1px solid var(--wf-line);
+  border-style: solid;
+  background: var(--wf-fill-mid);
+  color: var(--text-mid);
+  font-weight: 600;
+}
+
+/* Prominent — CTA, primary nav items */
+.box.strong {
+  border: 1px solid var(--wf-line);
+  background: var(--wf-fill-str);
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Heights */
+.box.h-sm   { min-height: 32px;  }
+.box.h-md   { min-height: 60px;  }
+.box.h-lg   { min-height: 100px; }
+.box.h-xl   { min-height: 180px; }
+.box.h-hero { min-height: 240px; }
+.box.h-canvas { min-height: 200px; font-size: 12px; }
+
+/* ─────────────────────────────────────────────────────────────
+   ANNOTATION
+───────────────────────────────────────────────────────────── */
+.ann {
+  font-size: 11px; color: var(--text-faint);
+  margin-top: 6px; line-height: 1.55;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LAYOUT HELPERS (within frames)
+───────────────────────────────────────────────────────────── */
+.wf-grid { display: grid; gap: 8px; }
+.cols-2  { grid-template-columns: 1fr 1fr; }
+.cols-3  { grid-template-columns: 1fr 1fr 1fr; }
+.cols-4  { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.cols-sidebar { grid-template-columns: 56px 1fr; }
+.cols-split-l { grid-template-columns: 1.15fr 0.85fr; }
+
+.wf-col  { display: flex; flex-direction: column; gap: 8px; }
+.wf-row  { display: flex; gap: 8px; }
+
+.pad { padding: 12px; }
+.pad-lg { padding: 20px; }
+
+/* Dividers */
+.divider { height: 1px; background: var(--wf-line); margin: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   NAV BAR PATTERN
+───────────────────────────────────────────────────────────── */
+.nav-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 180px;
+  gap: 8px;
+  padding: 8px 16px;
+  border-bottom: 1.5px solid var(--wf-line);
+  background: var(--wf-fill);
+  min-height: 50px;
+  align-items: center;
+}
+
+.nav-row.serva-nav {
+  background: #FDF7EE;
+  border-color: #E0C9A0;
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ─────────────────────────────────────────────────────────────
+     DOCUMENT HEADER
+───────────────────────────────────────────────────────────── -->
+<div class="doc-header">
+  <div class="label">Graphxy Labs · Wireframes · v0.3 · Structural Layout Only</div>
+  <h1>Wireframe documentation — layout, hierarchy, content zones</h1>
+  <p>Structural wireframes only. No colors, no real typography, no visual styling. Every region is labeled with its content type and structural role. Three surface areas: Graphxy Labs landing page, Graphzy product app, and the Serva waitlist page. All screens are light-mode.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART 1 — GRAPHXY LABS LANDING PAGE
+═══════════════════════════════════════════════════════════ -->
+
+<!-- ─────────────────────────────────────────────────────────────
+     1A — NAV BAR
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">1A</span>
+      <span class="section-title">Site Navigation — graphxylabs.com</span>
+    </div>
+    <p class="section-note">Sticky top nav. Height: 54px. Background is translucent warm-white + backdrop-blur — always visible from page load onward, not scroll-triggered. Logo left, links center, primary CTA right.</p>
+  </div>
+  <div class="frame">
+    <div class="nav-row">
+      <div class="box solid h-sm">Wordmark — Graphxy Labs</div>
+      <div class="wf-row" style="justify-content:center; gap:24px;">
+        <div class="box h-sm" style="min-width:60px;">Products</div>
+        <div class="box h-sm" style="min-width:60px;">Services</div>
+        <div class="box h-sm" style="min-width:60px;">Company</div>
+        <div class="box h-sm" style="min-width:60px;">Contact</div>
+      </div>
+      <div class="box strong h-sm">Explore Graphzy [CTA pill]</div>
+    </div>
+  </div>
+  <p class="ann">Frosted glass: rgba(250,250,248,.92) + blur. Mobile: logo + hamburger only. Sticky, z-index 100.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     1B — HERO SECTION
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">1B</span>
+      <span class="section-title">Hero — Above the Fold</span>
+    </div>
+    <p class="section-note">Left-aligned text block. Page background color (#FAFAF8). No dark sections, no gradient background. Eyebrow + headline + sub + two CTAs. Headline is max 640px wide.</p>
+  </div>
+  <div class="frame">
+    <div class="pad-lg wf-col">
+      <div class="box h-sm solid" style="max-width:140px;">Eyebrow — Graphxy Labs</div>
+      <div class="box h-lg solid" style="max-width:640px; font-size:14px; font-weight:700;">Hero headline — 58px Fraunces 400 · max-width 640px</div>
+      <div class="box h-md" style="max-width:500px; font-size:11px;">Hero sub — 17px Inter · max 500px wide · 2–3 lines max</div>
+      <div class="wf-row" style="max-width:360px;">
+        <div class="box strong h-sm" style="flex:1;">Primary CTA — Explore Graphzy</div>
+        <div class="box solid h-sm"  style="flex:1;">Secondary — Join Serva Waitlist</div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Padding: 80px top / 88px bottom. No hero image. Text-only. Visual weight comes from typographic scale, not decoration.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     1C — PRODUCTS SECTION
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">1C</span>
+      <span class="section-title">Products Section — Graphzy &amp; Serva</span>
+    </div>
+    <p class="section-note">White surface section. Eyebrow + heading above a 2-column product card grid. Graphzy card: white with shadow. Serva card: warm-tinted background + amber border + "coming soon" badge.</p>
+  </div>
+  <div class="frame pad-lg wf-col">
+    <div class="box solid h-sm" style="max-width:120px; align-self:flex-start;">Eyebrow: Our Products</div>
+    <div class="box h-md solid" style="max-width:400px; font-weight:700;">Section heading — 28px Fraunces</div>
+    <div class="wf-grid cols-2" style="margin-top:4px;">
+      <!-- Graphzy card -->
+      <div class="wf-col" style="background:#FAFAFA; border:1px solid #D0D0D0; border-radius:8px; padding:24px;">
+        <div class="box solid h-sm">Eyebrow: Graphzy · Visualization Platform</div>
+        <div class="box h-md solid">Card headline — 22px Fraunces</div>
+        <div class="box h-lg">Description — 14px · max 2–3 lines · color: text-secondary</div>
+        <div class="box strong h-sm">CTA — Explore Graphzy</div>
+      </div>
+      <!-- Serva card -->
+      <div class="wf-col" style="background:#FEF7EC; border:1px solid #D0A070; border-radius:8px; padding:24px;">
+        <div class="box solid h-sm">Eyebrow: Serva · Restaurant Operations</div>
+        <div class="box solid h-sm" style="max-width:130px; align-self:flex-start;">[ Coming Soon badge ]</div>
+        <div class="box h-md solid">Card headline — 22px Fraunces</div>
+        <div class="box h-lg">Description — 14px · max 2–3 lines</div>
+        <div class="box strong h-sm">CTA — Join Serva Waitlist</div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Section padding: 88px. Card border-radius: 28px (--r-xl). Both cards same typographic structure — only background and CTA color differ.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     1D — SERVICES SECTION
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">1D</span>
+      <span class="section-title">Services Section — Eight Verticals Grid</span>
+    </div>
+    <p class="section-note">Alternating tinted (#F5F5F2) section background to create gentle rhythm without dark sections. 4×2 grid of service tiles — icon + title + description. No heading color change, no dark cards.</p>
+  </div>
+  <div class="frame pad-lg wf-col" style="background:#F5F5F2;">
+    <div class="box solid h-sm" style="max-width:100px; align-self:flex-start;">Eyebrow: Services</div>
+    <div class="box h-md solid" style="max-width:420px; font-weight:700;">Section heading — 28px Fraunces</div>
+    <div style="border:1px solid var(--wf-line); border-radius:8px; overflow:hidden; background:#fff; margin-top:4px;">
+      <div class="wf-grid cols-4" style="gap:0;">
+        <div style="padding:20px 16px; border-right:1px solid var(--wf-line); border-bottom:1px solid var(--wf-line);">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">Management Systems</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">ERP, CRM, admin dashboards</div>
+        </div>
+        <div style="padding:20px 16px; border-right:1px solid var(--wf-line); border-bottom:1px solid var(--wf-line);">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">Web Development</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">Marketing, SaaS, web apps</div>
+        </div>
+        <div style="padding:20px 16px; border-right:1px solid var(--wf-line); border-bottom:1px solid var(--wf-line);">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">Mobile App Dev</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">iOS, Android, cross-platform</div>
+        </div>
+        <div style="padding:20px 16px; border-bottom:1px solid var(--wf-line);">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">AI &amp; Machine Learning</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">Assistants, NLP, recommenders</div>
+        </div>
+        <div style="padding:20px 16px; border-right:1px solid var(--wf-line);">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">Data Science</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">Dashboards, BI, pipelines</div>
+        </div>
+        <div style="padding:20px 16px; border-right:1px solid var(--wf-line);">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">Custom Software</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">Bespoke apps, portals, tools</div>
+        </div>
+        <div style="padding:20px 16px; border-right:1px solid var(--wf-line);">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">Automation &amp; Workflow</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">Approvals, automation, ops</div>
+        </div>
+        <div style="padding:20px 16px;">
+          <div class="box solid h-sm" style="margin-bottom:8px;">[icon]</div>
+          <div class="box h-sm solid">Scalable Tech Products</div>
+          <div class="box h-sm" style="margin-top:6px; font-size:10px;">SaaS MVPs, growth platforms</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Section bg: #F5F5F2 (--surface-tinted). Grid items: white card bg with 1px border grid. Hover: brand-bg tint. No dark background.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     1E — POSITIONING SECTION
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">1E</span>
+      <span class="section-title">Company Positioning — Two-Column</span>
+    </div>
+    <p class="section-note">White surface. Left column: section label + display headline + 3 value-prop rows. Right column: editorial pull-quote in Fraunces. Visual separation via typographic weight contrast, not color blocks.</p>
+  </div>
+  <div class="frame pad-lg">
+    <div class="wf-grid cols-2" style="gap:64px; align-items:center;">
+      <div class="wf-col">
+        <div class="box solid h-sm" style="max-width:110px; align-self:flex-start;">Eyebrow</div>
+        <div class="box h-lg solid" style="font-weight:700;">Display headline — 32px Fraunces · max 400px</div>
+        <div class="wf-col" style="gap:6px; margin-top:8px;">
+          <div class="box h-md solid">Value prop row — [bullet dot] · Label + short sub</div>
+          <div class="box h-md solid">Value prop row — [bullet dot] · Label + short sub</div>
+          <div class="box h-md solid">Value prop row — [bullet dot] · Label + short sub</div>
+        </div>
+      </div>
+      <div>
+        <div class="box h-xl solid" style="font-size:13px; font-style:italic;">Pull quote — 20px Fraunces 400 · left-border accent · max 3–4 lines</div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Section padding: 88px. No dark background. Color contrast via headline scale + text-secondary on body vs. text-primary on headline.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     1F — FOOTER
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">1F</span>
+      <span class="section-title">Footer — Light</span>
+    </div>
+    <p class="section-note">Page-background (#FAFAF8) footer. Top border only. No dark footer. 5-column grid: brand info + 4 link columns. Monospace copyright line at bottom.</p>
+  </div>
+  <div class="frame pad-lg wf-col" style="background:#FAFAF8;">
+    <div class="wf-grid" style="grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap:32px; margin-bottom:24px;">
+      <div class="wf-col">
+        <div class="box solid h-sm" style="max-width:160px;">Wordmark — Graphxy Labs</div>
+        <div class="box h-md">Tagline — 13px · text-tertiary · max 220px</div>
+      </div>
+      <div class="wf-col">
+        <div class="box solid h-sm">Products</div>
+        <div class="box h-sm">Graphzy</div>
+        <div class="box h-sm">Serva</div>
+      </div>
+      <div class="wf-col">
+        <div class="box solid h-sm">Services</div>
+        <div class="box h-sm">Web Dev</div>
+        <div class="box h-sm">Mobile Apps</div>
+        <div class="box h-sm">AI &amp; ML</div>
+        <div class="box h-sm">Data Analytics</div>
+      </div>
+      <div class="wf-col">
+        <div class="box solid h-sm">Company</div>
+        <div class="box h-sm">About</div>
+        <div class="box h-sm">Contact</div>
+      </div>
+      <div class="wf-col">
+        <div class="box solid h-sm">Legal</div>
+        <div class="box h-sm">Privacy</div>
+        <div class="box h-sm">Terms</div>
+      </div>
+    </div>
+    <div class="divider" style="margin-bottom:16px;"></div>
+    <div class="box h-sm" style="justify-content:flex-start;">© 2026 Graphxy Labs · graphxylabs.com [mono, 11px, text-tertiary]</div>
+  </div>
+  <p class="ann">Background: --page (#FAFAF8). Top border-fine. No dark styling. Column headings: JetBrains Mono 10px UC. Links: Inter 13px text-secondary.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART 2 — GRAPHZY PRODUCT APP
+═══════════════════════════════════════════════════════════ -->
+
+<!-- ─────────────────────────────────────────────────────────────
+     2A — HOME / ASK
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">2A</span>
+      <span class="section-title">Graphzy — Home / Ask — empty state with suggestions</span>
+    </div>
+    <p class="section-note">Full-height centered layout on a subtle gradient (math-bg to page to phys-bg). Logo mark → headline → ask input (focused state) → hint chips → recent question cards. No sidebar on this view — full width.</p>
+  </div>
+  <div class="frame">
+    <div class="wf-col pad-lg" style="align-items:center; text-align:center; min-height:420px; justify-content:center; background:linear-gradient(160deg, #EBF3FF, #FAFAF8 50%, #F3EFFF);">
+      <div class="box solid h-sm" style="max-width:120px; margin-bottom:24px;">Graphzy [wordmark]</div>
+      <div class="box h-lg solid" style="max-width:460px; font-weight:700; margin-bottom:24px;">Headline — 36px Fraunces · 2 lines max</div>
+      <!-- Ask input -->
+      <div style="width:100%; max-width:600px; border:1.5px solid #C8C8C8; border-radius:8px; background:#fff; padding:12px 14px; display:flex; gap:10px; margin-bottom:12px; align-items:center;">
+        <div class="box solid" style="width:32px; height:32px; border-radius:50%; min-height:unset; flex-shrink:0;">[icon]</div>
+        <div class="box" style="flex:1; min-height:unset; border:none; background:none; justify-content:flex-start; font-style:italic;">Placeholder text — example question</div>
+        <div class="box solid" style="width:32px; height:32px; border-radius:50%; min-height:unset; flex-shrink:0;">[→]</div>
+      </div>
+      <!-- Hint chips -->
+      <div class="wf-row" style="flex-wrap:wrap; justify-content:center; gap:8px; max-width:560px; margin-bottom:20px;">
+        <div class="box h-sm solid" style="border-radius:999px; min-width:120px;">Hint chip 1</div>
+        <div class="box h-sm solid" style="border-radius:999px; min-width:120px;">Hint chip 2</div>
+        <div class="box h-sm solid" style="border-radius:999px; min-width:120px;">Hint chip 3</div>
+        <div class="box h-sm solid" style="border-radius:999px; min-width:120px;">Hint chip 4</div>
+      </div>
+      <!-- Recent cards -->
+      <div class="wf-row" style="justify-content:center; gap:8px; flex-wrap:wrap;">
+        <div class="box solid" style="min-width:180px; max-width:200px; flex-direction:column; align-items:flex-start; border-radius:8px; min-height:64px; padding:12px;">
+          <div style="font-size:10px; font-weight:700; margin-bottom:6px;">[subject tag]</div>
+          <div style="font-size:11px; color:#555; text-align:left; line-height:1.4;">Recent question text</div>
+        </div>
+        <div class="box solid" style="min-width:180px; max-width:200px; flex-direction:column; align-items:flex-start; border-radius:8px; min-height:64px; padding:12px;">
+          <div style="font-size:10px; font-weight:700; margin-bottom:6px;">[subject tag]</div>
+          <div style="font-size:11px; color:#555; text-align:left; line-height:1.4;">Recent question text</div>
+        </div>
+        <div class="box solid" style="min-width:180px; max-width:200px; flex-direction:column; align-items:flex-start; border-radius:8px; min-height:64px; padding:12px;">
+          <div style="font-size:10px; font-weight:700; margin-bottom:6px;">[subject tag]</div>
+          <div style="font-size:11px; color:#555; text-align:left; line-height:1.4;">Recent question text</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">No app sidebar on this screen — full-width. Background: subtle gradient from math-bg to page to phys-bg. Ask input: 1.5px solid border + 4px ring in focused state.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     2B — EXPLANATION + VISUAL
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">2B</span>
+      <span class="section-title">Graphzy — Explanation + Visual — result state</span>
+    </div>
+    <p class="section-note">App shell with 64px left sidebar. Breadcrumb row at top. Split layout: visual canvas (left, wider) + explanation panel (right, narrower). Both panels are glass cards on the page background.</p>
+  </div>
+  <div class="frame">
+    <div class="wf-grid cols-sidebar" style="gap:0; min-height:440px;">
+      <!-- Sidebar -->
+      <div class="wf-col" style="border-right:1px solid var(--wf-line); padding:16px 0; align-items:center; gap:20px; background:var(--wf-fill);">
+        <div class="box solid" style="width:40px; height:40px; border-radius:50%; min-height:unset; flex-direction:column; gap:3px;">
+          <div style="font-size:8px;">[ic]</div>
+          <div style="font-size:7px; font-weight:700;">Ask</div>
+        </div>
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset; flex-direction:column; gap:3px;">
+          <div style="font-size:8px;">[ic]</div>
+          <div style="font-size:7px; font-weight:700;">Hist</div>
+        </div>
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset; flex-direction:column; gap:3px;">
+          <div style="font-size:8px;">[ic]</div>
+          <div style="font-size:7px; font-weight:700;">Dash</div>
+        </div>
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset; flex-direction:column; gap:3px; margin-top:auto;">
+          <div style="font-size:8px;">[ic]</div>
+          <div style="font-size:7px; font-weight:700;">Acct</div>
+        </div>
+      </div>
+      <!-- Main -->
+      <div class="wf-col pad" style="background:#F7F7F5;">
+        <!-- Breadcrumb -->
+        <div class="wf-row" style="align-items:center; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--wf-line); margin-bottom:12px;">
+          <div class="box solid h-sm" style="max-width:100px;">← New question</div>
+          <div class="box solid h-sm" style="border-radius:999px; min-width:60px;">[Subject tag]</div>
+          <div class="box h-sm" style="flex:1;">"Original question text…"</div>
+        </div>
+        <!-- Split layout -->
+        <div class="wf-grid cols-split-l" style="gap:12px;">
+          <!-- Canvas -->
+          <div class="wf-col" style="background:rgba(255,255,255,.82); border:1px solid rgba(255,255,255,.75); border-radius:12px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.04);">
+            <div class="box h-canvas" style="background:#F8F8F8; border-style:solid; border-color:var(--wf-line); border-radius:8px;">Interactive graph canvas — Desmos embed<br><br>[x and y axes, parabola curve, vertex dot, axis labels]<br><br>Touch/drag to interact</div>
+            <div class="wf-col" style="margin-top:12px; gap:10px;">
+              <div class="box h-sm solid">Slider: Stretch (a) — [track + thumb + live value label]</div>
+              <div class="box h-sm solid">Slider: Vertical shift (c) — [track + thumb + live value label]</div>
+            </div>
+          </div>
+          <!-- Explanation -->
+          <div class="wf-col" style="background:rgba(255,255,255,.82); border:1px solid rgba(255,255,255,.75); border-radius:12px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.04);">
+            <div class="box h-md solid" style="font-weight:700;">Key idea — 20px Fraunces · 1–2 lines</div>
+            <div class="box h-xl" style="margin-top:8px; font-size:10px;">Summary — 14px Inter · 3–5 lines · text-secondary</div>
+            <div class="box solid h-sm" style="margin-top:8px; font-size:10px;">Eyebrow: Continue exploring</div>
+            <div class="wf-row" style="flex-wrap:wrap; gap:6px; margin-top:6px;">
+              <div class="box h-sm solid" style="border-radius:999px; font-size:10px;">Follow-up chip 1</div>
+              <div class="box h-sm solid" style="border-radius:999px; font-size:10px;">Follow-up chip 2</div>
+              <div class="box h-sm solid" style="border-radius:999px; font-size:10px;">Follow-up chip 3</div>
+            </div>
+            <div class="box h-sm" style="margin-top:8px; font-size:10px; justify-content:space-between; padding:10px 12px;">Ask a follow-up… <span>[↑ icon]</span></div>
+            <div class="box h-sm" style="margin-top:4px; font-size:10px; justify-content:flex-end;">1 / 6 follow-ups used</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Both panels: glass surface (rgba(255,255,255,.82) + backdrop-blur). Canvas and explanation panels are visually level. Sidebar width: 64px. Mobile: sidebar hides, view stacks vertically — canvas → key idea → summary → follow-ups.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     2C — HISTORY
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">2C</span>
+      <span class="section-title">Graphzy — History — signed-in user</span>
+    </div>
+    <p class="section-note">App shell. Page title row with filter pills. Flat list of history items — each is a single surface card row: subject tag + question + metadata + Open action + Delete icon.</p>
+  </div>
+  <div class="frame">
+    <div class="wf-grid cols-sidebar" style="gap:0; min-height:360px;">
+      <div class="wf-col" style="border-right:1px solid var(--wf-line); padding:16px 0; align-items:center; gap:20px; background:var(--wf-fill);">
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset;"><span style="font-size:8px;">[Ask]</span></div>
+        <div class="box solid" style="width:40px; height:40px; border-radius:50%; min-height:unset;"><span style="font-size:8px;">[Hist]</span></div>
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset;"><span style="font-size:8px;">[Dash]</span></div>
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset; margin-top:auto;"><span style="font-size:8px;">[Acct]</span></div>
+      </div>
+      <div class="wf-col pad" style="gap:10px;">
+        <!-- Title row -->
+        <div class="wf-row" style="justify-content:space-between; align-items:center;">
+          <div class="box solid h-sm" style="font-size:14px; font-weight:700;">History [page title — 24px Fraunces]</div>
+          <div class="wf-row" style="gap:6px;">
+            <div class="box solid h-sm" style="border-radius:999px; min-width:50px;">All</div>
+            <div class="box h-sm" style="border-radius:999px; min-width:50px;">Math</div>
+          </div>
+        </div>
+        <!-- List items -->
+        <div class="wf-col" style="gap:6px;">
+          <div class="wf-row" style="background:#fff; border:1px solid var(--wf-line); border-radius:8px; padding:12px 14px; align-items:center; gap:12px;">
+            <div class="box solid h-sm" style="border-radius:999px; min-width:56px; font-size:10px;">[Math]</div>
+            <div class="wf-col" style="flex:1; gap:2px;">
+              <div class="box h-sm" style="justify-content:flex-start; background:none; border:none; font-weight:600; font-size:12px; padding:0;">Question text — 13px font-weight 600</div>
+              <div class="box h-sm" style="justify-content:flex-start; background:none; border:none; font-size:10px; color:#999; padding:0;">Today · Concepts — metadata line</div>
+            </div>
+            <div class="wf-row" style="gap:8px; flex-shrink:0;">
+              <div class="box solid h-sm" style="font-size:11px;">Open</div>
+              <div class="box h-sm" style="font-size:10px;">[del]</div>
+            </div>
+          </div>
+          <div class="wf-row" style="background:#fff; border:1px solid var(--wf-line); border-radius:8px; padding:12px 14px; align-items:center; gap:12px; opacity:0.75;">
+            <div class="box solid h-sm" style="border-radius:999px; min-width:56px; font-size:10px;">[Math]</div>
+            <div class="wf-col" style="flex:1; gap:2px;">
+              <div class="box h-sm" style="justify-content:flex-start; background:none; border:none; font-weight:600; font-size:12px; padding:0;">Question text</div>
+              <div class="box h-sm" style="justify-content:flex-start; background:none; border:none; font-size:10px; color:#999; padding:0;">Yesterday · Concepts</div>
+            </div>
+            <div class="wf-row" style="gap:8px; flex-shrink:0;">
+              <div class="box solid h-sm" style="font-size:11px;">Open</div>
+              <div class="box h-sm" style="font-size:10px;">[del]</div>
+            </div>
+          </div>
+          <div class="wf-row" style="background:#fff; border:1px solid var(--wf-line); border-radius:8px; padding:12px 14px; align-items:center; gap:12px; opacity:0.5;">
+            <div class="box solid h-sm" style="border-radius:999px; min-width:56px; font-size:10px;">[Math]</div>
+            <div class="wf-col" style="flex:1; gap:2px;">
+              <div class="box h-sm" style="justify-content:flex-start; background:none; border:none; font-weight:600; font-size:12px; padding:0;">Question text</div>
+              <div class="box h-sm" style="justify-content:flex-start; background:none; border:none; font-size:10px; color:#999; padding:0;">3 days ago · Concepts</div>
+            </div>
+            <div class="wf-row" style="gap:8px; flex-shrink:0;">
+              <div class="box solid h-sm" style="font-size:11px;">Open</div>
+              <div class="box h-sm" style="font-size:10px;">[del]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Each history row: surface card, border-fine, shadow-xs, hover → shadow-sm. Filter pills: active = math-bg + math color. Delete icon: 14px, text-tertiary. Timestamp: mono 10px.</p>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     2D — DASHBOARD
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">2D</span>
+      <span class="section-title">Graphzy — Dashboard — Math pilot, 12 sessions</span>
+    </div>
+    <p class="section-note">4-column stat cards (only Math active; Chemistry, Biology, Physics dimmed at 38% opacity). Below: 2-column — Concepts explored (wider) + Weak areas (narrower). Both are glass panels.</p>
+  </div>
+  <div class="frame">
+    <div class="wf-grid cols-sidebar" style="gap:0; min-height:380px;">
+      <div class="wf-col" style="border-right:1px solid var(--wf-line); padding:16px 0; align-items:center; gap:20px; background:var(--wf-fill);">
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset;"><span style="font-size:8px;">[Ask]</span></div>
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset;"><span style="font-size:8px;">[Hist]</span></div>
+        <div class="box solid" style="width:40px; height:40px; border-radius:50%; min-height:unset;"><span style="font-size:8px;">[Dash]</span></div>
+        <div class="box" style="width:40px; height:40px; border-radius:50%; min-height:unset; margin-top:auto;"><span style="font-size:8px;">[Acct]</span></div>
+      </div>
+      <div class="wf-col pad" style="gap:10px;">
+        <!-- Stat grid -->
+        <div class="wf-grid cols-4" style="gap:10px;">
+          <div class="wf-col" style="background:#fff; border:1px solid var(--wf-line); border-radius:8px; padding:16px; gap:4px;">
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:10px; font-weight:700; color:#0066CC; padding:0;">MATH</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:28px; font-weight:400; color:#0066CC; padding:0; font-family:Georgia,serif;">12</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:11px; color:#999; padding:0;">topics explored</div>
+          </div>
+          <div class="wf-col" style="background:#fff; border:1px solid var(--wf-line); border-radius:8px; padding:16px; gap:4px; opacity:0.38;">
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:10px; font-weight:700; padding:0;">CHEMISTRY</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:24px; padding:0;">—</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:11px; color:#999; padding:0;">coming soon</div>
+          </div>
+          <div class="wf-col" style="background:#fff; border:1px solid var(--wf-line); border-radius:8px; padding:16px; gap:4px; opacity:0.38;">
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:10px; font-weight:700; padding:0;">BIOLOGY</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:24px; padding:0;">—</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:11px; color:#999; padding:0;">coming soon</div>
+          </div>
+          <div class="wf-col" style="background:#fff; border:1px solid var(--wf-line); border-radius:8px; padding:16px; gap:4px; opacity:0.38;">
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:10px; font-weight:700; padding:0;">PHYSICS</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:24px; padding:0;">—</div>
+            <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:11px; color:#999; padding:0;">coming soon</div>
+          </div>
+        </div>
+        <!-- Lower panels -->
+        <div class="wf-grid" style="grid-template-columns:1.3fr 0.7fr; gap:10px;">
+          <div class="wf-col" style="background:rgba(255,255,255,.85); border:1px solid rgba(255,255,255,.75); border-radius:12px; padding:16px; gap:10px;">
+            <div class="box solid h-sm" style="font-size:10px; font-weight:700; max-width:130px;">CONCEPTS EXPLORED</div>
+            <div class="wf-row" style="flex-wrap:wrap; gap:6px;">
+              <div class="box solid h-sm" style="border-radius:999px; font-size:11px;">Quadratic functions ×4</div>
+              <div class="box solid h-sm" style="border-radius:999px; font-size:11px;">Vertical stretch ×2</div>
+              <div class="box solid h-sm" style="border-radius:999px; font-size:11px;">Roots &amp; factoring ×3</div>
+              <div class="box solid h-sm" style="border-radius:999px; font-size:11px;">Slope &amp; derivatives ×4</div>
+              <div class="box solid h-sm" style="border-radius:999px; font-size:11px;">Trigonometry ×2</div>
+            </div>
+          </div>
+          <div class="wf-col" style="background:rgba(255,255,255,.85); border:1px solid rgba(255,255,255,.75); border-radius:12px; padding:16px; gap:10px;">
+            <div class="box solid h-sm" style="font-size:10px; font-weight:700; max-width:100px;">WEAK AREAS</div>
+            <div class="wf-col" style="gap:8px;">
+              <div class="wf-row" style="gap:8px; align-items:flex-start;">
+                <div style="width:8px; height:8px; border-radius:50%; background:#92400E; margin-top:4px; flex-shrink:0;"></div>
+                <div class="wf-col" style="gap:2px; flex:1;">
+                  <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:11px; font-weight:600; padding:0; line-height:1.4;">Weak concept question text</div>
+                  <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:10px; color:#999; padding:0;">Reason text</div>
+                  <div class="box h-sm" style="background:none; border:none; justify-content:flex-start; font-size:11px; font-weight:700; color:#0066CC; padding:0;">Ask about this →</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Dimmed cards: opacity 0.38 — do not grey text, dim the whole card. Active subject (Math) uses math-blue. Concepts panel wider; weak areas narrower. Both use glass surface.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART 3 — SERVA WAITLIST PAGE
+═══════════════════════════════════════════════════════════ -->
+
+<!-- ─────────────────────────────────────────────────────────────
+     3A — SERVA NAV
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">3A</span>
+      <span class="section-title">Serva — Nav Bar</span>
+    </div>
+    <p class="section-note">Serva wordmark (amber color) on the left. Back link to graphxylabs.com on the right. Warm-tinted background (#FEF7EC). Border-bottom: amber-tinted. No Graphxy Labs nav links here — this is a standalone product page.</p>
+  </div>
+  <div class="frame">
+    <div class="nav-row serva-nav">
+      <div class="box h-sm solid" style="max-width:140px; background:#FEF7EC; border-color:#D0A070;">Serva [wordmark — amber]</div>
+      <div></div>
+      <div class="box h-sm" style="background:#FEF7EC; border-color:#D0A070; max-width:180px; margin-left:auto;">← graphxylabs.com</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     3B — SERVA HERO / WAITLIST FORM
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">3B</span>
+      <span class="section-title">Serva — Hero + Waitlist Form</span>
+    </div>
+    <p class="section-note">Centered layout on warm-tinted (#FEF7EC) page background. Eyebrow + headline + sub + email input + CTA + small note. No dark background. No imagery. Padding: 96px top / 100px bottom.</p>
+  </div>
+  <div class="frame">
+    <div class="wf-col pad-lg" style="align-items:center; text-align:center; min-height:400px; justify-content:center; background:#FEF7EC;">
+      <div class="box solid h-sm" style="max-width:140px; margin-bottom:16px; background:#FEF7EC; border-color:#D0A070;">Eyebrow: Serva · Coming Soon</div>
+      <div class="box h-xl solid" style="max-width:580px; font-weight:700; margin-bottom:14px; background:#FEF7EC; border-color:#D0A070;">Hero headline — 48px Fraunces 400 · max 580px wide · 2 lines max</div>
+      <div class="box h-lg" style="max-width:480px; margin-bottom:32px; background:#FEF7EC; border-color:#D0A070;">Sub — 16px Inter · max 480px · 2–3 lines · text-secondary</div>
+      <!-- Form -->
+      <div class="wf-row" style="max-width:440px; width:100%; gap:10px;">
+        <div class="box" style="flex:1; height:46px; background:#fff; border:1px solid #D0A070; border-radius:8px; min-height:unset; justify-content:flex-start; padding:0 14px; font-style:italic; font-size:12px;">Email input — your@email.com</div>
+        <div class="box strong h-sm" style="min-width:120px; height:46px; background:#92400E; color:#fff; border-color:#92400E; border-radius:8px; min-height:unset;">Join Waitlist [CTA]</div>
+      </div>
+      <div class="box h-sm" style="margin-top:10px; background:none; border:none; font-size:11px; color:#999;">Note: no spam, we'll reach out when ready</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     3C — SERVA FEATURE STRIP
+───────────────────────────────────────────────────────────── -->
+<div class="wf-section">
+  <div class="section-header">
+    <div class="section-meta">
+      <span class="section-id">3C</span>
+      <span class="section-title">Serva — Feature Strip (below fold)</span>
+    </div>
+    <p class="section-note">White background. 3-column grid separated by thin amber-tinted lines. Short label + description per feature. Keeps the page light and scannable. No dark sections.</p>
+  </div>
+  <div class="frame" style="background:#fff; border-top:1px solid #E0C9A0;">
+    <div class="wf-grid cols-3" style="gap:0; border-top:1px solid #E0C9A0;">
+      <div style="padding:28px 28px; border-right:1px solid var(--wf-line);">
+        <div class="box solid h-sm" style="margin-bottom:8px;">Feature label — 13px bold</div>
+        <div class="box h-md" style="font-size:11px;">Feature description — 13px text-tertiary · 2–3 lines</div>
+      </div>
+      <div style="padding:28px 28px; border-right:1px solid var(--wf-line);">
+        <div class="box solid h-sm" style="margin-bottom:8px;">Feature label — 13px bold</div>
+        <div class="box h-md" style="font-size:11px;">Feature description — 13px text-tertiary · 2–3 lines</div>
+      </div>
+      <div style="padding:28px 28px;">
+        <div class="box solid h-sm" style="margin-bottom:8px;">Feature label — 13px bold</div>
+        <div class="box h-md" style="font-size:11px;">Feature description — 13px text-tertiary · 2–3 lines</div>
+      </div>
+    </div>
+  </div>
+  <p class="ann">Feature strip replaces a services or benefits section for the waitlist page — keep it concise. White background, amber-tinted top border from the hero section. No heading — labels are sufficient at this stage.</p>
+</div>
+
+</div><!-- /wrap -->
+</body>
+</html>

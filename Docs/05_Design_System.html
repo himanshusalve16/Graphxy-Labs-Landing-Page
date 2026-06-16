@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Graphxy Labs — Design System v0.4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --brand:          #1B3A6B;        /* Graphxy Labs — deep navy, trustworthy, premium */
+  --brand-mid:      #2B52A0;        /* Interactive hover state */
+  --brand-bg:       #EEF3FB;        /* Brand tint on light surface */
+
+  /* Graphzy subject lenses — color signals domain, not UI state */
+  --math:           #0066CC;
+  --math-bg:        #EBF3FF;
+  --chem:           #1E8A4A;
+  --chem-bg:        #E8F5EE;
+  --bio:            #B85C00;
+  --bio-bg:         #FEF3E6;
+  --phys:           #6B3FA0;
+  --phys-bg:        #F2ECFB;
+
+  /* Serva — warm, hospitality palette */
+  --serva:          #92400E;
+  --serva-mid:      #B45309;
+  --serva-bg:       #FEF7EC;
+  --serva-border:   rgba(180, 83, 9, 0.14);
+
+  /* Surface hierarchy — light only */
+  --page:           #FAFAF8;        /* Page background — warm off-white */
+  --surface:        #FFFFFF;        /* Cards, panels, inputs */
+  --surface-raised: #FFFFFF;        /* Elevated above page */
+  --surface-tinted: #F5F5F2;        /* Alternating section bg */
+
+  /* Glass — for panels over textured/gradient bgs only */
+  --glass-bg:       rgba(255, 255, 255, 0.82);
+  --glass-border:   rgba(255, 255, 255, 0.75);
+
+  /* Borders */
+  --border-fine:    rgba(0, 0, 0, 0.06);    /* Card borders, dividers */
+  --border-soft:    rgba(0, 0, 0, 0.09);    /* Input default state */
+  --border-mid:     rgba(0, 0, 0, 0.14);    /* Input focused hint */
+
+  /* Text */
+  --text-primary:   #0F0F0F;        /* Headlines, primary labels */
+  --text-secondary: #525252;        /* Body copy, descriptions */
+  --text-tertiary:  #A3A3A3;        /* Placeholders, captions, metadata */
+
+  /* Warn — neutral amber for caution only, never red as dominant */
+  --warn:           #92400E;
+  --warn-bg:        #FEF3E2;
+
+  /* Typography */
+  --ff-display: 'Fraunces', Georgia, serif;
+  --ff-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ff-mono:    'JetBrains Mono', 'SF Mono', monospace;
+
+  /* Border radius — restrained, never excessive */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:  12px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+  --r-pill: 999px;
+
+  /* Shadows — subtle depth, not dramatic */
+  --sh-xs:   0 1px 2px rgba(0,0,0,0.05);
+  --sh-sm:   0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.05);
+  --sh-md:   0 2px 4px rgba(0,0,0,0.04), 0 8px 20px rgba(0,0,0,0.07);
+  --sh-lg:   0 4px 8px rgba(0,0,0,0.04), 0 16px 36px rgba(0,0,0,0.08);
+
+  /* Transitions */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout:  cubic-bezier(0.45, 0, 0.55, 1);
+  --dur-fast:    120ms;
+  --dur-base:    200ms;
+  --dur-slow:    300ms;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE RESET
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--page);
+  color: var(--text-primary);
+  font-family: var(--ff-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DOCUMENT LAYOUT
+───────────────────────────────────────────────────────────── */
+.page-header {
+  padding: 72px 0 64px;
+  border-bottom: 1px solid var(--border-fine);
+  margin-bottom: 0;
+}
+
+.page-header .ph-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 56px;
+}
+
+.page-header .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
+}
+
+.page-header .label::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: var(--text-tertiary);
+  opacity: 0.6;
+}
+
+.page-header h1 {
+  font-family: var(--ff-display);
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+  max-width: 640px;
+}
+
+.page-header h1 span { color: var(--text-tertiary); }
+
+.page-header p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 560px;
+}
+
+/* Main wrap */
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 56px;
+}
+
+/* Section */
+.ds-section {
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border-fine);
+}
+.ds-section:last-child { border-bottom: none; }
+
+.ds-section .section-label {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.ds-section .section-title {
+  font-family: var(--ff-display);
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.ds-section .section-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin-bottom: 40px;
+}
+
+/* Layout helpers */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+
+/* Group label within section */
+.group-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+  margin-top: 36px;
+}
+.group-label:first-child { margin-top: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   01 — COLORS — SWATCHES
+───────────────────────────────────────────────────────────── */
+.swatch-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.swatch {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--border-fine);
+  box-shadow: var(--sh-xs);
+  background: var(--surface);
+  min-width: 130px;
+  flex: 1 1 130px;
+  max-width: 180px;
+}
+
+.sw-color { height: 68px; }
+
+.sw-body {
+  padding: 10px 12px 12px;
+}
+
+.sw-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.sw-hex {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  margin-bottom: 3px;
+}
+
+.sw-use {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   02 — TYPOGRAPHY — SCALE
+───────────────────────────────────────────────────────────── */
+.type-scale { }
+
+.type-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border-fine);
+  align-items: start;
+}
+.type-row:last-child { border-bottom: none; }
+
+.type-meta {}
+.type-meta .tn {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.type-meta .ts {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--text-tertiary);
+}
+
+/* Type specimens */
+.t-hero    { font-family: var(--ff-display); font-size: 52px; font-weight: 400; line-height: 1.1;  letter-spacing: -0.025em; color: var(--text-primary); }
+.t-h1      { font-family: var(--ff-display); font-size: 38px; font-weight: 400; line-height: 1.2;  letter-spacing: -0.020em; color: var(--text-primary); }
+.t-h2      { font-family: var(--ff-display); font-size: 28px; font-weight: 400; line-height: 1.25; letter-spacing: -0.015em; color: var(--text-primary); }
+.t-h3      { font-family: var(--ff-display); font-size: 21px; font-weight: 500; line-height: 1.35; letter-spacing: -0.010em; color: var(--text-primary); }
+.t-body-lg { font-family: var(--ff-body);    font-size: 17px; font-weight: 400; line-height: 1.70; color: var(--text-secondary); max-width: 580px; }
+.t-body    { font-family: var(--ff-body);    font-size: 15px; font-weight: 400; line-height: 1.65; color: var(--text-secondary); max-width: 520px; }
+.t-ui      { font-family: var(--ff-body);    font-size: 14px; font-weight: 600; line-height: 1.4;  color: var(--text-primary); }
+.t-caption { font-family: var(--ff-mono);    font-size: 12px; font-weight: 400; line-height: 1.5;  color: var(--text-tertiary); }
+.t-label   { font-family: var(--ff-mono);    font-size: 11px; font-weight: 500; line-height: 1.4;  letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-tertiary); }
+
+/* ─────────────────────────────────────────────────────────────
+   03 — SPACING
+───────────────────────────────────────────────────────────── */
+.space-rows { }
+.sp-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-fine);
+}
+.sp-row:last-child { border-bottom: none; }
+.sp-label {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  width: 80px;
+  flex-shrink: 0;
+}
+.sp-bar {
+  height: 12px;
+  background: var(--brand);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+.sp-desc {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  flex: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   04 — SURFACES
+───────────────────────────────────────────────────────────── */
+.surfaces-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+
+.surf {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-fine);
+}
+
+.surf-preview {
+  height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.surf-meta {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border-fine);
+  background: var(--surface);
+}
+
+.surf-meta .sm-name {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.surf-meta .sm-spec {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+}
+
+.demo-card {
+  background: var(--surface);
+  border: 1px solid var(--border-fine);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  box-shadow: var(--sh-sm);
+  width: 80%;
+}
+.demo-card .dc-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; color: var(--text-primary); }
+.demo-card .dc-sub   { font-size: 11px; color: var(--text-tertiary); }
+
+.demo-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  width: 80%;
+  box-shadow: var(--sh-sm);
+}
+.demo-glass .dc-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; color: var(--text-primary); }
+.demo-glass .dc-sub   { font-size: 11px; color: var(--text-tertiary); }
+
+/* ─────────────────────────────────────────────────────────────
+   05 — PRODUCT CARDS
+───────────────────────────────────────────────────────────── */
+.product-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.pc {
+  border-radius: var(--r-xl);
+  padding: 36px 40px 40px;
+  border: 1px solid var(--border-fine);
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-white  { background: var(--surface); box-shadow: var(--sh-md); }
+.pc-tinted { background: var(--serva-bg); border-color: var(--serva-border); }
+
+.pc-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.pc-white  .pc-eyebrow { color: var(--math); }
+.pc-tinted .pc-eyebrow { color: var(--serva); }
+
+.pc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  padding: 4px 9px;
+  border-radius: var(--r-pill);
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+.pc h3 {
+  font-family: var(--ff-display);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.010em;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.pc p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  flex: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   06 — BUTTONS
+───────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-family: var(--ff-body);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* Sizes */
+.btn-lg  { font-size: 15px; padding: 14px 26px; }
+.btn-md  { font-size: 14px; padding: 11px 20px; }
+.btn-sm  { font-size: 13px; padding: 8px  16px; }
+
+/* Variants */
+.btn-brand {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(27,58,107,0.22), 0 1px 2px rgba(27,58,107,0.12);
+}
+.btn-brand:hover {
+  background: var(--brand-mid);
+  box-shadow: 0 4px 14px rgba(27,58,107,0.28), 0 2px 4px rgba(27,58,107,0.12);
+}
+
+.btn-graphzy {
+  background: var(--math);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,102,204,0.22), 0 1px 2px rgba(0,102,204,0.10);
+}
+.btn-graphzy:hover {
+  background: #0057AA;
+  box-shadow: 0 4px 14px rgba(0,102,204,0.30);
+}
+
+.btn-serva {
+  background: var(--serva);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(146,64,14,0.22), 0 1px 2px rgba(146,64,14,0.10);
+}
+.btn-serva:hover {
+  background: var(--serva-mid);
+  box-shadow: 0 4px 14px rgba(146,64,14,0.28);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--sh-xs);
+}
+.btn-secondary:hover {
+  border-color: var(--border-mid);
+  box-shadow: var(--sh-sm);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--brand);
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 0;
+}
+.btn-ghost:hover { transform: none; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Button group demo helper */
+.btn-stack { display: flex; flex-direction: column; gap: 10px; }
+.btn-row   { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+/* ─────────────────────────────────────────────────────────────
+   07 — TAGS & BADGES
+───────────────────────────────────────────────────────────── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--ff-body);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.tag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.tag-math  { background: var(--math-bg);  color: var(--math);  }
+.tag-chem  { background: var(--chem-bg);  color: var(--chem);  }
+.tag-bio   { background: var(--bio-bg);   color: var(--bio);   }
+.tag-phys  { background: var(--phys-bg);  color: var(--phys);  }
+.tag-serva { background: var(--serva-bg); color: var(--serva); }
+.tag-brand { background: var(--brand-bg); color: var(--brand); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--text-tertiary);
+}
+.badge-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--text-tertiary);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   08 — INPUTS & INTERACTIVE
+───────────────────────────────────────────────────────────── */
+.input-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  box-shadow: var(--sh-xs);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+  max-width: 480px;
+}
+
+.input-field.focused {
+  border-color: var(--math);
+  box-shadow: 0 0 0 3px var(--math-bg), var(--sh-xs);
+}
+
+.input-field.error-state {
+  border-color: var(--warn);
+  box-shadow: 0 0 0 3px var(--warn-bg);
+}
+
+.input-field .placeholder { font-size: 15px; color: var(--text-tertiary); flex: 1; }
+.input-field .input-text  { font-size: 15px; color: var(--text-primary);   flex: 1; }
+
+/* Ask box — Graphzy primary input */
+.ask-field {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1.5px solid var(--math);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  box-shadow: 0 0 0 4px var(--math-bg), var(--sh-sm);
+  max-width: 580px;
+}
+.ask-field-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--math);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ask-field-text { flex: 1; font-size: 15px; color: var(--text-tertiary); }
+.ask-field-submit {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--math);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+.chip:hover { border-color: var(--border-mid); box-shadow: var(--sh-xs); }
+
+/* Slider */
+.slider-demo-wrap { max-width: 300px; }
+.sl-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.sl-name  { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.sl-value { font-family: var(--ff-mono); font-size: 12px; color: var(--math); }
+.sl-track { height: 3px; background: var(--border-soft); border-radius: 2px; position: relative; }
+.sl-fill  { position: absolute; left: 0; top: 0; height: 100%; width: 62%; background: var(--math); border-radius: 2px; }
+.sl-thumb {
+  position: absolute; left: 62%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--math);
+  box-shadow: var(--sh-sm);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   09 — NAVIGATION
+───────────────────────────────────────────────────────────── */
+.nav-demo-wrap {
+  border: 1px solid var(--border-fine);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--sh-sm);
+}
+
+/* Top nav */
+.nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px;
+  padding: 0 32px;
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-fine);
+}
+
+.nav-logo-mark {
+  font-family: var(--ff-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.nav-links-list {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-links-list a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--dur-fast);
+}
+.nav-links-list a:hover { color: var(--text-primary); }
+.nav-links-list a.active { color: var(--text-primary); }
+
+.nav-action-pill {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(27,58,107,0.20);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.nav-action-pill:hover { background: var(--brand-mid); }
+
+/* App sidebar */
+.app-sidebar-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+  padding: 20px 0;
+  gap: 22px;
+  background: rgba(250,250,248,0.90);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--border-fine);
+  min-height: 220px;
+}
+
+.side-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.side-icon span {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.side-icon.is-active span { color: var(--math); }
+.side-icon.is-active svg  { stroke: var(--math); }
+
+/* ─────────────────────────────────────────────────────────────
+   10 — RADII & SHADOWS — TABLES
+───────────────────────────────────────────────────────────── */
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ds-table th {
+  text-align: left;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--border-fine);
+}
+.ds-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-fine);
+  color: var(--text-secondary);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.ds-table tr:last-child td { border-bottom: none; }
+.ds-table td:first-child { color: var(--text-primary); font-weight: 500; width: 30%; }
+.ds-table .mono { font-family: var(--ff-mono); font-size: 11px; color: var(--text-secondary); }
+
+/* Radius demos */
+.radius-items { display: flex; flex-direction: column; gap: 14px; }
+.radius-row { display: flex; align-items: center; gap: 16px; }
+.radius-block {
+  width: 48px;
+  height: 32px;
+  background: var(--brand);
+  opacity: 0.35;
+  flex-shrink: 0;
+}
+.radius-label { font-family: var(--ff-mono); font-size: 11px; color: var(--text-secondary); }
+
+/* Shadow demos */
+.shadow-items { display: flex; flex-direction: column; gap: 14px; }
+.shadow-card {
+  background: var(--surface);
+  border: 1px solid var(--border-fine);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+}
+.shadow-card .sc-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.shadow-card .sc-spec { font-family: var(--ff-mono); font-size: 10px; color: var(--text-tertiary); line-height: 1.6; }
+
+/* ─────────────────────────────────────────────────────────────
+   11 — MOTION
+───────────────────────────────────────────────────────────── */
+.callout {
+  background: var(--brand-bg);
+  border-left: 3px solid var(--brand);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 14px 20px;
+  margin-top: 24px;
+}
+.callout p { font-size: 13px; line-height: 1.65; color: var(--text-secondary); }
+.callout p strong { color: var(--text-primary); }
+
+/* ─────────────────────────────────────────────────────────────
+   13 — ACCESSIBILITY
+───────────────────────────────────────────────────────────── */
+.a11y-list { display: flex; flex-direction: column; gap: 12px; }
+
+.a11y-item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border-fine);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-xs);
+}
+
+.a11y-icon {
+  width: 32px; height: 32px;
+  border-radius: var(--r-sm);
+  background: var(--brand-bg);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.a11y-icon svg { stroke: var(--brand); }
+
+.a11y-item .ai-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.a11y-item .ai-desc  { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .page-header h1 { font-size: 34px; }
+  .ph-inner, .wrap { padding: 0 28px; }
+  .two-col, .three-col, .product-cards-grid, .surfaces-grid { grid-template-columns: 1fr; }
+  .type-row { grid-template-columns: 1fr; gap: 12px; }
+  .t-hero { font-size: 36px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────────────────────────
+     PAGE HEADER
+───────────────────────────────────────────────────────────── -->
+<header class="page-header">
+  <div class="ph-inner">
+    <div class="label">Graphxy Labs · Design System · v0.4</div>
+    <h1>Visual language for<br>Graphxy Labs <span>&amp; its products.</span></h1>
+    <p>One coherent system serving the company brand, Graphzy, and Serva. Light-only. Premium. Restrained. Every decision here is intentional — if it doesn't earn its place, it isn't here.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ─────────────────────────────────────────────────────────────
+     01 — COLOR SYSTEM
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">01</div>
+  <h2 class="section-title">Color System</h2>
+  <p class="section-desc">Color is used with restraint. Brand colors signal identity. Subject lenses signal domain in Graphzy — never UI state. Warm amber is reserved for Serva and caution — never for errors. Nothing is red.</p>
+
+  <div class="group-label">Graphxy Labs — Brand</div>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="sw-color" style="background:#1B3A6B;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Brand</div>
+        <div class="sw-hex">#1B3A6B</div>
+        <div class="sw-use">Primary actions, links, brand identity</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#2B52A0;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Brand Mid</div>
+        <div class="sw-hex">#2B52A0</div>
+        <div class="sw-use">Hover states on brand elements</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#EEF3FB; border-bottom:1px solid rgba(0,0,0,0.06);"></div>
+      <div class="sw-body">
+        <div class="sw-name">Brand Tint</div>
+        <div class="sw-hex">#EEF3FB</div>
+        <div class="sw-use">Focus rings, callout backgrounds</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="group-label">Page — Light Surfaces</div>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="sw-color" style="background:#FAFAF8; border-bottom:1px solid rgba(0,0,0,0.06);"></div>
+      <div class="sw-body">
+        <div class="sw-name">Page</div>
+        <div class="sw-hex">#FAFAF8</div>
+        <div class="sw-use">Document/page background</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#FFFFFF; border-bottom:1px solid rgba(0,0,0,0.06);"></div>
+      <div class="sw-body">
+        <div class="sw-name">Surface</div>
+        <div class="sw-hex">#FFFFFF</div>
+        <div class="sw-use">Cards, inputs, elevated panels</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#F5F5F2; border-bottom:1px solid rgba(0,0,0,0.06);"></div>
+      <div class="sw-body">
+        <div class="sw-name">Surface Tinted</div>
+        <div class="sw-hex">#F5F5F2</div>
+        <div class="sw-use">Alternate section background</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="group-label">Text — Hierarchy</div>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="sw-color" style="background:#0F0F0F;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Text Primary</div>
+        <div class="sw-hex">#0F0F0F</div>
+        <div class="sw-use">Headlines, primary labels, headings</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#525252;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Text Secondary</div>
+        <div class="sw-hex">#525252</div>
+        <div class="sw-use">Body copy, descriptions</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#A3A3A3;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Text Tertiary</div>
+        <div class="sw-hex">#A3A3A3</div>
+        <div class="sw-use">Placeholders, metadata, captions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="group-label">Graphzy — Subject Lenses</div>
+  <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px; max-width:540px; line-height:1.6;">Accent colors identify subject domain only. Each has a solid token + a translucent background variant. Never used for generic UI state.</p>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="sw-color" style="background:#0066CC;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Math</div>
+        <div class="sw-hex">#0066CC</div>
+        <div class="sw-use">Active in MVP pilot</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#1E8A4A;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Chemistry</div>
+        <div class="sw-hex">#1E8A4A</div>
+        <div class="sw-use">V2 — coming</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#B85C00;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Biology</div>
+        <div class="sw-hex">#B85C00</div>
+        <div class="sw-use">V2 — coming</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#6B3FA0;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Physics</div>
+        <div class="sw-hex">#6B3FA0</div>
+        <div class="sw-use">V2 — coming</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="group-label">Serva — Product &amp; Caution</div>
+  <div class="swatch-row">
+    <div class="swatch">
+      <div class="sw-color" style="background:#92400E;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Serva</div>
+        <div class="sw-hex">#92400E</div>
+        <div class="sw-use">Serva brand, caution states</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#B45309;"></div>
+      <div class="sw-body">
+        <div class="sw-name">Serva Mid</div>
+        <div class="sw-hex">#B45309</div>
+        <div class="sw-use">Interactive hover on Serva elements</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="sw-color" style="background:#FEF7EC; border-bottom:1px solid rgba(180,83,9,0.10);"></div>
+      <div class="sw-body">
+        <div class="sw-name">Serva Bg</div>
+        <div class="sw-hex">#FEF7EC</div>
+        <div class="sw-use">Serva card background, warm tint</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     02 — TYPOGRAPHY
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">02</div>
+  <h2 class="section-title">Typography</h2>
+  <p class="section-desc">
+    <strong style="color:var(--text-primary);">Fraunces</strong> — editorial serif for headlines, product names, and key moments. Used purposefully.<br>
+    <strong style="color:var(--text-primary);">Inter</strong> — the interface workhorse. Body copy, labels, buttons, navigation.<br>
+    <strong style="color:var(--text-primary);">JetBrains Mono</strong> — data values, expressions, eyebrows, and timestamps. Never for running text.
+  </p>
+
+  <div class="type-scale">
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Hero Display</div>
+        <div class="ts">Fraunces 400<br>48–60px · lh 1.1<br>ls −0.025em<br>Page-level hero headline</div>
+      </div>
+      <p class="t-hero">Software that thinks,<br>scales, and performs.</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Section H1</div>
+        <div class="ts">Fraunces 400<br>36–42px · lh 1.2<br>ls −0.020em<br>Section headings</div>
+      </div>
+      <p class="t-h1">Turn any question into an interactive visual.</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Section H2</div>
+        <div class="ts">Fraunces 400<br>26–30px · lh 1.25<br>ls −0.015em<br>Sub-sections, cards</div>
+      </div>
+      <p class="t-h2">A larger value of <em>a</em> makes the parabola narrower.</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Card Title / H3</div>
+        <div class="ts">Fraunces 500<br>19–22px · lh 1.35<br>ls −0.010em<br>Product cards, result titles</div>
+      </div>
+      <p class="t-h3">Restaurant management built for modern operators.</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Body Large</div>
+        <div class="ts">Inter 400<br>17px · lh 1.70<br>Landing page, hero sub</div>
+      </div>
+      <p class="t-body-lg">Graphxy Labs builds precision software products, intelligent systems, and scalable digital experiences for startups, businesses, and enterprises.</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Body Default</div>
+        <div class="ts">Inter 400<br>15px · lh 1.65<br>UI copy, explanations</div>
+      </div>
+      <p class="t-body">Multiplying x² by a larger value of a stretches the graph vertically. Every point gets pulled further from the x-axis — visually narrower, even though it's still a parabola.</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">UI Label</div>
+        <div class="ts">Inter 600<br>13–14px · lh 1.4<br>Buttons, nav, tags</div>
+      </div>
+      <p class="t-ui">Explore Graphzy</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Mono / Caption</div>
+        <div class="ts">JetBrains Mono 400<br>10–12px<br>Values, expressions, dates</div>
+      </div>
+      <p class="t-caption">y = a·x² · a = 2.3 · graphxylabs.com · Today, 14:32</p>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="tn">Eyebrow</div>
+        <div class="ts">JetBrains Mono 500<br>11px · UC · ls 0.09em<br>Section starters, doc labels</div>
+      </div>
+      <p class="t-label">Graphzy · Visualization Platform · Under Development</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     03 — SPACING SCALE
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">03</div>
+  <h2 class="section-title">Spacing Scale</h2>
+  <p class="section-desc">4px base unit. Every spacing value is a multiple of 4. Use the scale — don't invent ad-hoc values. Generous whitespace is a quality signal.</p>
+
+  <div class="space-rows">
+    <div class="sp-row"><span class="sp-label">4px · xs</span>  <div class="sp-bar" style="width:4px;"></div>  <span class="sp-desc">Icon gaps, tight internal pairs</span></div>
+    <div class="sp-row"><span class="sp-label">8px · sm</span>  <div class="sp-bar" style="width:8px;"></div>  <span class="sp-desc">Label-to-value, chip gutters</span></div>
+    <div class="sp-row"><span class="sp-label">12px</span>       <div class="sp-bar" style="width:12px;"></div> <span class="sp-desc">Compact list items, tag rows</span></div>
+    <div class="sp-row"><span class="sp-label">16px · md</span> <div class="sp-bar" style="width:16px;"></div> <span class="sp-desc">Card internal padding (compact)</span></div>
+    <div class="sp-row"><span class="sp-label">20px</span>       <div class="sp-bar" style="width:20px;"></div> <span class="sp-desc">Card grid gaps</span></div>
+    <div class="sp-row"><span class="sp-label">24px</span>       <div class="sp-bar" style="width:24px;"></div> <span class="sp-desc">Intra-section spacing</span></div>
+    <div class="sp-row"><span class="sp-label">32px · lg</span> <div class="sp-bar" style="width:32px;"></div> <span class="sp-desc">Component group separation</span></div>
+    <div class="sp-row"><span class="sp-label">48px · xl</span> <div class="sp-bar" style="width:48px;"></div> <span class="sp-desc">Between distinct content groups</span></div>
+    <div class="sp-row"><span class="sp-label">64px · 2xl</span><div class="sp-bar" style="width:64px;"></div> <span class="sp-desc">Section top/bottom padding</span></div>
+    <div class="sp-row"><span class="sp-label">96px · 3xl</span><div class="sp-bar" style="width:96px;"></div> <span class="sp-desc">Landing page section rhythm</span></div>
+    <div class="sp-row"><span class="sp-label">128px · 4xl</span><div class="sp-bar" style="width:128px;"></div><span class="sp-desc">Hero vertical breathing room</span></div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     04 — SURFACES
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">04</div>
+  <h2 class="section-title">Surfaces</h2>
+  <p class="section-desc">Three surface types used in the system. Surface Card is the default. Glass is used selectively — only where it provides meaningful depth over a textured or tinted background. Never stack glass on glass.</p>
+
+  <div class="surfaces-grid">
+    <div class="surf">
+      <div class="surf-preview" style="background: var(--page);">
+        <div class="demo-card">
+          <div class="dc-title">Surface Card</div>
+          <div class="dc-sub">On page background</div>
+        </div>
+      </div>
+      <div class="surf-meta">
+        <div class="sm-name">Surface Card</div>
+        <div class="sm-spec">#FFFFFF · border rgba(0,0,0,.06)<br>shadow-sm<br>Default: cards, stat panels, list items</div>
+      </div>
+    </div>
+    <div class="surf">
+      <div class="surf-preview" style="background: linear-gradient(135deg, #EBF3FF 0%, #F5F5F2 100%);">
+        <div class="demo-glass">
+          <div class="dc-title">Glass Card</div>
+          <div class="dc-sub">On gradient/tinted bg only</div>
+        </div>
+      </div>
+      <div class="surf-meta">
+        <div class="sm-name">Glass Card</div>
+        <div class="sm-spec">rgba(255,255,255,.82)<br>backdrop-blur(16px)<br>border rgba(255,255,255,.75)<br>Use: visual canvas, app panels on gradients</div>
+      </div>
+    </div>
+    <div class="surf">
+      <div class="surf-preview" style="background: var(--surface-tinted);">
+        <div class="demo-card" style="background:var(--surface-tinted); border-color:rgba(0,0,0,0.09);">
+          <div class="dc-title">Tinted Surface</div>
+          <div class="dc-sub">Section background variant</div>
+        </div>
+      </div>
+      <div class="surf-meta">
+        <div class="sm-name">Tinted Surface</div>
+        <div class="sm-spec">#F5F5F2 · border rgba(0,0,0,.09)<br>shadow-xs<br>Use: alternating sections, form areas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     05 — PRODUCT CARDS
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">05</div>
+  <h2 class="section-title">Product Cards</h2>
+  <p class="section-desc">Used on the Graphxy Labs landing page. Graphzy is white surface with shadow. Serva is warm-tinted with amber border. Both have the same typographic structure. The badge-only treatment signals "coming soon" without greying out the card.</p>
+
+  <div class="product-cards-grid">
+    <div class="pc pc-white">
+      <div class="pc-eyebrow">Graphzy · Visualization Platform</div>
+      <h3>Turn any question into an interactive visual.</h3>
+      <p>AI-powered explanations with live graphs, molecules, and simulations — for students who want to see how things work, not just read about them.</p>
+      <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
+    </div>
+    <div class="pc pc-tinted">
+      <div class="pc-eyebrow">Serva · Restaurant Operations</div>
+      <div class="pc-badge">
+        <span class="badge-dot"></span>
+        Coming Soon
+      </div>
+      <h3>Restaurant management built for modern operators.</h3>
+      <p>A unified platform for orders, tables, inventory, staff, and analytics. Designed to run a restaurant the way a product company would.</p>
+      <button class="btn btn-md btn-serva">Join Serva Waitlist</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     06 — BUTTONS
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">06</div>
+  <h2 class="section-title">Buttons</h2>
+  <p class="section-desc">Pill shape always. Hover lifts 1px — no bounce, no spring. Focus ring is a 3px offset outline in the brand or subject color. Disabled at 35% opacity. Min 44px height on mobile.</p>
+
+  <div class="two-col">
+    <div>
+      <div class="group-label">Variants &amp; Sizes</div>
+      <div class="btn-stack">
+        <div class="btn-row">
+          <button class="btn btn-lg btn-brand">Get Started</button>
+          <button class="btn btn-lg btn-secondary">Learn More</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
+          <button class="btn btn-md btn-serva">Join Serva Waitlist</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-sm btn-brand">Small Primary</button>
+          <button class="btn btn-sm btn-secondary">Small Secondary</button>
+          <button class="btn btn-sm btn-ghost">Ghost link →</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="group-label">Button Rules</div>
+      <table class="ds-table">
+        <thead><tr><th>Property</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td>Border radius</td><td class="mono">999px (pill) — always</td></tr>
+          <tr><td>Hover</td><td class="mono">translateY(−1px) · 120ms ease-out</td></tr>
+          <tr><td>Focus ring</td><td class="mono">2px outline · 3px offset · brand color</td></tr>
+          <tr><td>Disabled</td><td class="mono">opacity 0.35 · cursor not-allowed</td></tr>
+          <tr><td>Icon gap</td><td class="mono">7px</td></tr>
+          <tr><td>Mobile min-height</td><td class="mono">44px</td></tr>
+          <tr><td>Font</td><td class="mono">Inter 600 · 13–15px</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     07 — TAGS & BADGES
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">07</div>
+  <h2 class="section-title">Tags &amp; Badges</h2>
+  <p class="section-desc">Subject tags use solid accent color on a translucent background. The dot reinforces the color identity without relying on color alone. The "Coming Soon" badge uses neutral tones — intentionally not a product color, because it signals status, not identity.</p>
+
+  <div class="two-col">
+    <div>
+      <div class="group-label">Subject Tags — Graphzy</div>
+      <div class="tag-row">
+        <span class="tag tag-math"><span class="tag-dot"></span>Math</span>
+        <span class="tag tag-chem"><span class="tag-dot"></span>Chemistry</span>
+        <span class="tag tag-bio"><span class="tag-dot"></span>Biology</span>
+        <span class="tag tag-phys"><span class="tag-dot"></span>Physics</span>
+      </div>
+
+      <div class="group-label">Product &amp; Status</div>
+      <div class="tag-row">
+        <span class="tag tag-brand"><span class="tag-dot"></span>Graphxy Labs</span>
+        <span class="tag tag-serva"><span class="tag-dot"></span>Serva</span>
+        <span class="badge"><span class="badge-dot"></span>Coming Soon</span>
+      </div>
+    </div>
+    <div>
+      <div class="group-label">Tag Rules</div>
+      <table class="ds-table">
+        <thead><tr><th>Property</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td>Border radius</td><td class="mono">999px (pill)</td></tr>
+          <tr><td>Padding</td><td class="mono">4px 10px</td></tr>
+          <tr><td>Font</td><td class="mono">Inter 600 · 12px</td></tr>
+          <tr><td>Dot</td><td class="mono">5px · currentColor</td></tr>
+          <tr><td>Color rule</td><td class="mono">Solid accent on translucent bg — domain only</td></tr>
+          <tr><td>Status badge</td><td class="mono">Mono · 10px · UC · neutral tones only</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     08 — INPUTS & INTERACTIVE
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">08</div>
+  <h2 class="section-title">Inputs &amp; Interactive Elements</h2>
+
+  <div class="two-col">
+    <div>
+      <div class="group-label">Form Input — Default / Focused / Error</div>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+        <div class="input-field">
+          <span class="placeholder">Why is the graph of y = x² shaped like a U?</span>
+        </div>
+        <div class="input-field focused">
+          <span class="input-text">Why does increasing a make it narrower?</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--math)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="input-field error-state">
+          <span class="placeholder">Please enter at least 3 characters</span>
+        </div>
+      </div>
+
+      <div class="group-label">Graphzy — Ask Input (Focused state)</div>
+      <div class="ask-field">
+        <div class="ask-field-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <span class="ask-field-text">Why does increasing a in y = ax² narrow the parabola?</span>
+        <div class="ask-field-submit">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+
+      <div class="group-label" style="margin-top:28px;">Follow-up Chips</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="chip">What if a is negative?</span>
+        <span class="chip">What about adding c?</span>
+        <span class="chip">Where are the roots?</span>
+      </div>
+    </div>
+    <div>
+      <div class="group-label">Slider — Graphzy Visualization Control</div>
+      <div class="slider-demo-wrap">
+        <div class="sl-header">
+          <span class="sl-name">Stretch — a</span>
+          <span class="sl-value">2.0</span>
+        </div>
+        <div class="sl-track">
+          <div class="sl-fill"></div>
+          <div class="sl-thumb"></div>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--text-tertiary); margin-top:14px; line-height:1.65;">
+        Live value label follows thumb during drag. Fades 500ms after release.<br>
+        Slider interaction is instant (native Desmos). State persists at 1s debounce.
+      </p>
+
+      <div class="group-label" style="margin-top:28px;">Input State Rules</div>
+      <table class="ds-table">
+        <thead><tr><th>State</th><th>Border</th><th>Ring</th></tr></thead>
+        <tbody>
+          <tr><td>Default</td><td class="mono">rgba(0,0,0,.09)</td><td class="mono">none</td></tr>
+          <tr><td>Hover</td><td class="mono">rgba(0,0,0,.14)</td><td class="mono">none</td></tr>
+          <tr><td>Focused</td><td class="mono">subject accent</td><td class="mono">3px · accent-bg</td></tr>
+          <tr><td>Error</td><td class="mono">warn #92400E</td><td class="mono">3px · #FEF3E2</td></tr>
+          <tr><td>Disabled</td><td class="mono">rgba(0,0,0,.06)</td><td class="mono">opacity 0.45</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     09 — NAVIGATION
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">09</div>
+  <h2 class="section-title">Navigation</h2>
+
+  <div class="two-col">
+    <div>
+      <div class="group-label">Site Top Nav — graphxylabs.com</div>
+      <div class="nav-demo-wrap">
+        <div class="nav-top">
+          <div class="nav-logo-mark">
+            <span class="logo-dot"></span>
+            Graphxy Labs
+          </div>
+          <ul class="nav-links-list">
+            <li><a href="#" class="active">Products</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Company</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <button class="nav-action-pill">Explore Graphzy</button>
+        </div>
+        <div style="padding:12px 16px; background:var(--surface-tinted); font-family:var(--ff-mono); font-size:10px; color:var(--text-tertiary); border-top:1px solid var(--border-fine); line-height:1.6;">
+          height: 54px · background: rgba(250,250,248,.92) · backdrop-blur(12px)<br>
+          Border-bottom: border-fine · sticky top:0 · z-index:100
+        </div>
+      </div>
+
+      <div class="group-label" style="margin-top:28px;">Nav Rules</div>
+      <table class="ds-table">
+        <thead><tr><th>Property</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td>Height</td><td class="mono">54px</td></tr>
+          <tr><td>Logo</td><td class="mono">Fraunces 500 · 16px · −0.012em</td></tr>
+          <tr><td>Links</td><td class="mono">Inter 500 · 14px · text-secondary → primary on active</td></tr>
+          <tr><td>Background</td><td class="mono">rgba(250,250,248,.92) · backdrop-blur(12px)</td></tr>
+          <tr><td>Activation</td><td class="mono">Immediately on page load — not scroll-triggered</td></tr>
+          <tr><td>Mobile</td><td class="mono">Logo + hamburger · links hidden</td></tr>
+          <tr><td>Position</td><td class="mono">sticky · top:0 · z-index:100</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <div class="group-label">App Sidebar — Graphzy</div>
+      <div class="nav-demo-wrap" style="display:flex;">
+        <div class="app-sidebar-demo">
+          <div class="side-icon is-active">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Ask</span>
+          </div>
+          <div class="side-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+            <span>History</span>
+          </div>
+          <div class="side-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            <span>Dash</span>
+          </div>
+          <div class="side-icon" style="margin-top:auto;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+            <span>Account</span>
+          </div>
+        </div>
+        <div style="flex:1; padding:14px 16px; background:var(--page);">
+          <div style="font-family:var(--ff-mono); font-size:10px; color:var(--text-tertiary); line-height:1.7;">
+            Width: 64px<br>
+            Icon + label: 9px UC mono<br>
+            Active: math blue icon + label<br>
+            Background: rgba(250,250,248,.90)<br>
+            Mobile: hidden → bottom tab bar (4 items)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     10 — BORDER RADIUS & SHADOWS
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">10</div>
+  <h2 class="section-title">Border Radius &amp; Shadows</h2>
+
+  <div class="two-col">
+    <div>
+      <div class="group-label">Corner Radii</div>
+      <div class="radius-items">
+        <div class="radius-row">
+          <div class="radius-block" style="border-radius:4px;"></div>
+          <span class="radius-label">4px · xs — micro badges, inline elements</span>
+        </div>
+        <div class="radius-row">
+          <div class="radius-block" style="border-radius:8px;"></div>
+          <span class="radius-label">8px · sm — secondary cards, dropdown items, tooltips</span>
+        </div>
+        <div class="radius-row">
+          <div class="radius-block" style="border-radius:12px;"></div>
+          <span class="radius-label">12px · md — primary cards, inputs, history items</span>
+        </div>
+        <div class="radius-row">
+          <div class="radius-block" style="border-radius:20px;"></div>
+          <span class="radius-label">20px · lg — glass panels, visual canvas, sections</span>
+        </div>
+        <div class="radius-row">
+          <div class="radius-block" style="border-radius:28px;"></div>
+          <span class="radius-label">28px · xl — large product cards, device chrome</span>
+        </div>
+        <div class="radius-row">
+          <div class="radius-block" style="border-radius:999px;"></div>
+          <span class="radius-label">999px · pill — buttons, tags, filter pills, chips</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="group-label">Shadows</div>
+      <div class="shadow-items">
+        <div class="shadow-card" style="box-shadow: 0 1px 2px rgba(0,0,0,.05);">
+          <div class="sc-name">Shadow XS</div>
+          <div class="sc-spec">0 1px 2px rgba(0,0,0,.05)<br>Chips, tags, micro elements</div>
+        </div>
+        <div class="shadow-card" style="box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.05);">
+          <div class="sc-name">Shadow SM</div>
+          <div class="sc-spec">0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.05)<br>Cards, inputs, nav, sidebar</div>
+        </div>
+        <div class="shadow-card" style="box-shadow: 0 2px 4px rgba(0,0,0,.04), 0 8px 20px rgba(0,0,0,.07);">
+          <div class="sc-name">Shadow MD</div>
+          <div class="sc-spec">0 2px 4px rgba(0,0,0,.04), 0 8px 20px rgba(0,0,0,.07)<br>Product cards, glass panels</div>
+        </div>
+        <div class="shadow-card" style="box-shadow: 0 4px 8px rgba(0,0,0,.04), 0 16px 36px rgba(0,0,0,.08);">
+          <div class="sc-name">Shadow LG</div>
+          <div class="sc-spec">0 4px 8px rgba(0,0,0,.04), 0 16px 36px rgba(0,0,0,.08)<br>Screen device chrome in design docs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     11 — MOTION PRINCIPLES
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">11</div>
+  <h2 class="section-title">Motion Principles</h2>
+  <p class="section-desc">Motion signals state change — it never decorates. The result reveal is the signature moment. Everything else is fast, subordinate, and purposeful.</p>
+
+  <table class="ds-table">
+    <thead><tr><th>Moment</th><th>Easing</th><th>Duration</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>Result reveal — text + canvas</td><td class="mono">ease-out</td><td class="mono">250ms + 80ms stagger</td><td>Fade + 12px rise. Canvas arrives just after text.</td></tr>
+      <tr><td>Input → breadcrumb collapse</td><td class="mono">ease-out</td><td class="mono">280ms</td><td>Shared-element. No hard cut.</td></tr>
+      <tr><td>Section reveal on scroll</td><td class="mono">ease-out</td><td class="mono">300ms</td><td>Entire section block. One reveal zone visible at a time.</td></tr>
+      <tr><td>Product card hover</td><td class="mono">ease-out</td><td class="mono">200ms</td><td>translateY(−2px) + shadow deepening. No scale.</td></tr>
+      <tr><td>Canvas highlight (new expression)</td><td class="mono">ease-in-out</td><td class="mono">500ms ring pulse</td><td>1px subject-accent ring. One pulse, not looping.</td></tr>
+      <tr><td>Dashboard counters</td><td class="mono">ease-out</td><td class="mono">600ms count-up</td><td>One-time, on first dashboard load only.</td></tr>
+      <tr><td>Button / link hover</td><td class="mono">ease-out</td><td class="mono">120ms</td><td>translateY(−1px) only.</td></tr>
+      <tr><td>Follow-up append</td><td class="mono">ease-out</td><td class="mono">200ms</td><td>Fade + rise. Auto-scroll to reveal.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <p><strong>Rules:</strong> Settle, don't bounce. Ease-out for entrances; ease-in-out for state changes. No spring, no overshoot. One orchestrated entrance per screen — all else is subordinate and &lt;200ms. Animate section blocks as units, not individual elements within. Respect <code>prefers-reduced-motion</code>: all transitions degrade to opacity-only fades.</p>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     12 — RESPONSIVENESS
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">12</div>
+  <h2 class="section-title">Responsiveness</h2>
+
+  <table class="ds-table">
+    <thead><tr><th>Breakpoint</th><th>Name</th><th>Layout behavior</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">≥ 1280px</td><td>Desktop XL</td><td>Full layout: 4-col verticals, 2-col product cards, sidebar nav, exp-grid 1.2/0.85</td></tr>
+      <tr><td class="mono">1024–1279px</td><td>Desktop</td><td>Same as XL. Reduced horizontal padding. Sidebar visible.</td></tr>
+      <tr><td class="mono">768–1023px</td><td>Tablet</td><td>Product cards → 1 col. Verticals 4-col → 2-col. Exp-grid stacks. Sidebar hidden → bottom tab bar.</td></tr>
+      <tr><td class="mono">< 768px</td><td>Mobile</td><td>All grids → single column. Hero headline 36px. Nav links hidden → hamburger. Ask-box full width.</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:32px;">
+    <table class="ds-table">
+      <thead><tr><th>Element</th><th>Desktop</th><th>Mobile</th></tr></thead>
+      <tbody>
+        <tr><td>App nav</td><td class="mono">Left sidebar · 64px</td><td class="mono">Bottom tab bar · 4 items · 64px height</td></tr>
+        <tr><td>Explanation view</td><td class="mono">Canvas left · panel right</td><td class="mono">Canvas → key idea → summary → follow-ups (stacked)</td></tr>
+        <tr><td>Product cards</td><td class="mono">2 columns</td><td class="mono">1 column stacked</td></tr>
+        <tr><td>Verticals grid</td><td class="mono">4 × 2</td><td class="mono">2 × 4 → 1 × 8</td></tr>
+        <tr><td>Min touch target</td><td class="mono">—</td><td class="mono">44px × 44px on all interactive elements</td></tr>
+        <tr><td>Max content width</td><td class="mono">1100px centered</td><td class="mono">100% − 40px gutter</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ─────────────────────────────────────────────────────────────
+     13 — ACCESSIBILITY
+───────────────────────────────────────────────────────────── -->
+<section class="ds-section">
+  <div class="section-label">13</div>
+  <h2 class="section-title">Accessibility</h2>
+  <p class="section-desc">Accessibility is not an add-on. It's part of the system. Every rule here is a quality signal, not a compliance checkbox.</p>
+
+  <div class="a11y-list">
+    <div class="a11y-item">
+      <div class="a11y-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div>
+        <div class="ai-title">Color contrast — WCAG AA minimum</div>
+        <div class="ai-desc">All text on colored backgrounds: 4.5:1 for normal text, 3:1 for large text. Never rely on color alone to convey meaning — always pair with a label, icon, or pattern. Warn amber is not used as text on white without a background tint.</div>
+      </div>
+    </div>
+    <div class="a11y-item">
+      <div class="a11y-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div>
+        <div class="ai-title">Keyboard navigation &amp; focus rings</div>
+        <div class="ai-desc">All interactive elements have a visible focus ring when keyboard-focused: 2px outline, 3px offset, in the corresponding brand or subject accent color. Never remove outline without providing a visible alternative. Tab order follows visual reading order.</div>
+      </div>
+    </div>
+    <div class="a11y-item">
+      <div class="a11y-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+      </div>
+      <div>
+        <div class="ai-title">Reduced motion</div>
+        <div class="ai-desc">All entrance and transition animations respect <code>prefers-reduced-motion: reduce</code>. Entrance animations (fade + rise) degrade to opacity-only. Pulse animations (thinking state, canvas ring) become static. Slider animation is unaffected — it is direct interaction feedback.</div>
+      </div>
+    </div>
+    <div class="a11y-item">
+      <div class="a11y-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div>
+        <div class="ai-title">Semantic HTML &amp; ARIA</div>
+        <div class="ai-desc">Use semantic elements: &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;button&gt;. Never use &lt;div&gt; with click handlers for interactive elements. All images need descriptive alt text. The Desmos canvas needs an aria-label describing the current graph. Follow-up counter is announced via aria-live="polite".</div>
+      </div>
+    </div>
+    <div class="a11y-item">
+      <div class="a11y-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </div>
+      <div>
+        <div class="ai-title">Touch targets</div>
+        <div class="ai-desc">All interactive elements on mobile: minimum 44×44px touch target (WCAG 2.5.5). Small visual elements (delete icons, tag dots) use padding or ::after pseudo-elements to meet the minimum, even if the visual size is smaller.</div>
+      </div>
+    </div>
+    <div class="a11y-item">
+      <div class="a11y-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div>
+        <div class="ai-title">Error communication</div>
+        <div class="ai-desc">Errors are never communicated by color alone. All error states use an icon, inline label, and neutral amber tone — never red as a dominant color. Error messages are associated to the field via aria-describedby. Inline banners, not modals or toasts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "graphxy-labs-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "start:backend": "npm start --workspace=backend",
+    "install:all": "npm install"
+  }
+}

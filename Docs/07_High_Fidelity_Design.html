@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Graphxy Labs — High-Fidelity Design v0.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────────────────────────
+   TOKEN SYSTEM — LIGHT ONLY
+───────────────────────────────────────────────────────────── */
+:root {
+  --brand:       #1B3A6B;
+  --brand-mid:   #2B52A0;
+  --brand-bg:    #EEF3FB;
+
+  --math:        #0066CC;
+  --math-bg:     #EBF3FF;
+
+  --chem:        #1E8A4A;
+  --bio:         #B85C00;
+  --phys:        #6B3FA0;
+
+  --serva:       #92400E;
+  --serva-mid:   #B45309;
+  --serva-bg:    #FEF7EC;
+  --serva-bdr:   rgba(180,83,9,0.14);
+
+  --page:        #FAFAF8;
+  --surface:     #FFFFFF;
+  --surface-t:   #F5F5F2;
+
+  --glass-bg:    rgba(255,255,255,0.85);
+  --glass-bdr:   rgba(255,255,255,0.75);
+
+  --bdr-fine:    rgba(0,0,0,0.06);
+  --bdr-soft:    rgba(0,0,0,0.09);
+  --bdr-mid:     rgba(0,0,0,0.14);
+
+  --text-1:      #0F0F0F;
+  --text-2:      #525252;
+  --text-3:      #A3A3A3;
+
+  --ff-d: 'Fraunces', Georgia, serif;
+  --ff-b: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ff-m: 'JetBrains Mono', monospace;
+
+  --r-xs:  4px;
+  --r-sm:  8px;
+  --r-md:  12px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+  --r-pill: 999px;
+
+  --sh-xs: 0 1px 2px rgba(0,0,0,.05);
+  --sh-sm: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.05);
+  --sh-md: 0 2px 4px rgba(0,0,0,.04), 0 8px 20px rgba(0,0,0,.07);
+  --sh-lg: 0 4px 8px rgba(0,0,0,.04), 0 16px 36px rgba(0,0,0,.08);
+  --sh-screen: 0 8px 16px rgba(0,0,0,.06), 0 32px 64px rgba(0,0,0,.10);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--surface-t);
+  font-family: var(--ff-b);
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-1);
+  padding: 64px 40px 160px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DOC HEADER
+───────────────────────────────────────────────────────────── */
+.doc-header {
+  max-width: 1120px;
+  margin: 0 auto 80px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--bdr-fine);
+}
+.doc-header .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-m);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 20px;
+}
+.doc-header .label::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: var(--text-3);
+  opacity: 0.6;
+}
+.doc-header h1 {
+  font-family: var(--ff-d);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  color: var(--text-1);
+  margin-bottom: 14px;
+}
+.doc-header h1 em { font-style: normal; color: var(--text-3); }
+.doc-header p { font-size: 16px; color: var(--text-2); line-height: 1.7; max-width: 600px; }
+
+/* ─────────────────────────────────────────────────────────────
+   SCREEN WRAPPER
+───────────────────────────────────────────────────────────── */
+.screen-wrap {
+  max-width: 1120px;
+  margin: 0 auto 96px;
+}
+
+.screen-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.screen-id {
+  font-family: var(--ff-m);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.screen-desc {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DEVICE CHROME (light-mode only — no dark chrome)
+───────────────────────────────────────────────────────────── */
+.device {
+  background: var(--surface);
+  border-radius: 20px;
+  box-shadow: var(--sh-screen);
+  border: 1px solid var(--bdr-fine);
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SHARED COMPONENTS
+═══════════════════════════════════════════════════════ */
+
+/* Site Nav */
+.site-nav {
+  height: 54px;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bdr-fine);
+  position: relative;
+  z-index: 10;
+}
+
+.nav-logo {
+  font-family: var(--ff-d);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--text-1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.nav-logo .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+}
+.nav-links a.active { color: var(--text-1); }
+
+.nav-pill {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(27,58,107,0.20);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  font-family: var(--ff-b); font-weight: 600; border: none; cursor: pointer;
+  border-radius: var(--r-pill); line-height: 1; transition: transform 120ms, box-shadow 120ms;
+  text-decoration: none; white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-lg { font-size: 15px; padding: 14px 26px; }
+.btn-md { font-size: 14px; padding: 11px 20px; }
+.btn-sm { font-size: 13px; padding: 8px 16px; }
+
+.btn-brand    { background: var(--brand); color: #fff; box-shadow: 0 2px 8px rgba(27,58,107,0.22); }
+.btn-graphzy  { background: var(--math);  color: #fff; box-shadow: 0 2px 8px rgba(0,102,204,0.22); }
+.btn-serva    { background: var(--serva); color: #fff; box-shadow: 0 2px 8px rgba(146,64,14,0.22); }
+.btn-outline  { background: transparent; color: var(--text-2); border: 1px solid var(--bdr-soft); }
+.btn-outline:hover { border-color: var(--bdr-mid); }
+
+/* Tags */
+.tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: var(--r-pill);
+  font-family: var(--ff-b); font-size: 12px; font-weight: 600;
+}
+.tag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.tag-math  { background: var(--math-bg);  color: var(--math);  }
+.tag-brand { background: var(--brand-bg); color: var(--brand); }
+.tag-serva { background: var(--serva-bg); color: var(--serva); }
+
+/* App layout */
+.app-frame {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  min-height: 560px;
+}
+
+/* Sidebar */
+.app-sidebar {
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--bdr-fine);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0;
+  gap: 28px;
+}
+
+.nav-ic {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;
+}
+.nav-ic .ic-label {
+  font-size: 9px; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.nav-ic.active .ic-label { color: var(--math); }
+.nav-ic.active svg        { stroke: var(--math); }
+
+/* Content area */
+.content { padding: 28px 32px; display: flex; flex-direction: column; gap: 18px; }
+
+/* Glass surface */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-bdr);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-sm);
+}
+
+/* Surface card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--bdr-fine);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-sm);
+}
+
+/* Section structure */
+.section-label {
+  font-family: var(--ff-m);
+  font-size: 10px; font-weight: 500; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--text-3);
+  margin-bottom: 6px;
+}
+.section-heading {
+  font-family: var(--ff-d);
+  font-size: 28px; font-weight: 400; line-height: 1.3;
+  letter-spacing: -0.015em; color: var(--text-1);
+  margin-bottom: 36px; max-width: 460px;
+}
+
+/* Chip */
+.chip {
+  display: inline-flex; align-items: center; padding: 7px 14px;
+  border-radius: var(--r-pill); border: 1px solid var(--bdr-soft);
+  background: var(--surface); font-size: 13px; font-weight: 500;
+  color: var(--text-2); cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN A — GRAPHXY LABS LANDING PAGE
+═══════════════════════════════════════════════════════ */
+
+.landing-hero {
+  padding: 80px 48px 88px;
+  background: var(--page);
+  border-bottom: 1px solid var(--bdr-fine);
+  position: relative;
+}
+
+.landing-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0; height: 1px;
+  background: var(--bdr-fine);
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-m);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--brand);
+  margin-bottom: 28px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 16px; height: 1px;
+  background: var(--brand);
+  opacity: 0.5;
+}
+
+.hero-headline {
+  font-family: var(--ff-d);
+  font-size: 58px; font-weight: 400; line-height: 1.1;
+  letter-spacing: -0.025em; color: var(--text-1);
+  max-width: 640px; margin-bottom: 20px;
+}
+.hero-headline em { font-style: normal; color: var(--text-3); }
+
+.hero-sub {
+  font-size: 17px; color: var(--text-2);
+  line-height: 1.68; max-width: 500px; margin-bottom: 40px;
+}
+
+.hero-ctas { display: flex; gap: 12px; }
+
+/* Products section */
+.products-section {
+  padding: 88px 48px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--bdr-fine);
+}
+
+.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.pcard {
+  border-radius: var(--r-xl);
+  padding: 36px 40px 40px;
+  display: flex; flex-direction: column;
+}
+
+.pcard-white {
+  background: var(--surface);
+  border: 1px solid var(--bdr-fine);
+  box-shadow: var(--sh-md);
+}
+.pcard-warm {
+  background: var(--serva-bg);
+  border: 1px solid var(--serva-bdr);
+}
+
+.pcard-eyebrow {
+  font-family: var(--ff-m);
+  font-size: 10px; font-weight: 600; letter-spacing: 0.10em;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.pcard-white .pcard-eyebrow { color: var(--math); }
+.pcard-warm  .pcard-eyebrow { color: var(--serva); }
+
+.pcard-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--ff-m); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--text-3); border: 1px solid var(--bdr-soft);
+  background: var(--surface); padding: 4px 10px;
+  border-radius: var(--r-pill); margin-bottom: 18px; width: fit-content;
+}
+.pcard-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text-3); }
+
+.pcard h3 {
+  font-family: var(--ff-d); font-size: 22px; font-weight: 400;
+  line-height: 1.4; letter-spacing: -0.010em;
+  color: var(--text-1); margin-bottom: 10px;
+}
+.pcard p {
+  font-size: 14px; color: var(--text-2);
+  line-height: 1.65; margin-bottom: 28px; flex: 1;
+}
+
+/* Services section */
+.services-section {
+  padding: 88px 48px;
+  background: var(--page);
+  border-bottom: 1px solid var(--bdr-fine);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--bdr-fine);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--sh-sm);
+}
+
+.svc-item {
+  padding: 28px 24px;
+  border-right: 1px solid var(--bdr-fine);
+  border-bottom: 1px solid var(--bdr-fine);
+  transition: background 200ms;
+}
+.svc-item:nth-child(4n) { border-right: none; }
+.svc-item:nth-child(5),
+.svc-item:nth-child(6),
+.svc-item:nth-child(7),
+.svc-item:nth-child(8) { border-bottom: none; }
+.svc-item:hover { background: var(--brand-bg); }
+
+.svc-icon {
+  width: 34px; height: 34px; border-radius: var(--r-sm);
+  background: var(--page); border: 1px solid var(--bdr-fine);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+
+.svc-title {
+  font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 5px;
+}
+.svc-desc {
+  font-size: 12px; color: var(--text-3); line-height: 1.55;
+}
+
+/* Company positioning */
+.positioning-section {
+  padding: 88px 48px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--bdr-fine);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+}
+
+.pos-headline {
+  font-family: var(--ff-d);
+  font-size: 32px; font-weight: 400;
+  line-height: 1.3; letter-spacing: -0.015em;
+  color: var(--text-1); max-width: 400px;
+}
+.pos-headline em { font-style: normal; color: var(--text-3); }
+
+.pos-list { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.pos-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px;
+  background: var(--page);
+  border: 1px solid var(--bdr-fine); border-radius: var(--r-md);
+}
+.pos-bullet {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
+}
+.pos-text { font-size: 14px; font-weight: 500; color: var(--text-1); line-height: 1.5; }
+.pos-sub  { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+
+.pos-quote {
+  font-family: var(--ff-d);
+  font-size: 20px; font-weight: 400;
+  line-height: 1.5; letter-spacing: -0.010em;
+  color: var(--text-2); border-left: 2px solid var(--bdr-soft);
+  padding-left: 20px;
+}
+
+/* Footer — light */
+.site-footer {
+  padding: 56px 48px 40px;
+  background: var(--page);
+  border-top: 1px solid var(--bdr-fine);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 40px; margin-bottom: 48px;
+}
+.footer-logo {
+  font-family: var(--ff-d);
+  font-size: 16px; font-weight: 500; letter-spacing: -0.012em;
+  color: var(--text-1); display: flex; align-items: center; gap: 6px;
+  margin-bottom: 10px;
+}
+.footer-logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
+.footer-tagline { font-size: 13px; color: var(--text-3); line-height: 1.65; max-width: 220px; }
+
+.footer-col h4 {
+  font-family: var(--ff-m);
+  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-3); margin-bottom: 14px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.footer-col ul li a { font-size: 13px; color: var(--text-2); text-decoration: none; }
+.footer-col ul li a:hover { color: var(--text-1); }
+
+.footer-bottom {
+  padding-top: 24px;
+  border-top: 1px solid var(--bdr-fine);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy { font-family: var(--ff-m); font-size: 11px; color: var(--text-3); }
+
+/* ═══════════════════════════════════════════════════════
+   GRAPHZY APP SCREENS
+═══════════════════════════════════════════════════════ */
+
+/* Home / Ask */
+.gz-home {
+  min-height: 540px;
+  padding: 72px 48px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  background: linear-gradient(160deg, var(--math-bg) 0%, var(--page) 50%, #F3EFFF 100%);
+}
+
+.gz-logo {
+  font-family: var(--ff-d); font-size: 16px; font-weight: 500;
+  letter-spacing: -0.012em; color: var(--text-1);
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 36px;
+}
+.gz-logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--math); }
+
+.gz-headline {
+  font-family: var(--ff-d); font-size: 36px; font-weight: 400;
+  line-height: 1.25; letter-spacing: -0.015em;
+  color: var(--text-1); max-width: 460px; margin-bottom: 32px;
+}
+
+.ask-box {
+  width: 100%; max-width: 600px;
+  background: var(--surface);
+  border: 1.5px solid var(--math);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 0 0 4px var(--math-bg), var(--sh-sm);
+}
+.ask-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--math); display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ask-placeholder { flex: 1; font-size: 15px; color: var(--text-3); text-align: left; }
+.ask-submit {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--math); display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.hint-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; justify-content: center; }
+.hint-chip {
+  font-size: 12px; font-weight: 500; color: var(--text-2);
+  border: 1px solid var(--bdr-soft); border-radius: var(--r-pill);
+  padding: 6px 14px; background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(8px);
+}
+
+.recent-row { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; justify-content: center; }
+.recent-card {
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(12px);
+  border: 1px solid var(--bdr-fine); border-radius: var(--r-md);
+  padding: 13px 16px; text-align: left; max-width: 200px;
+  box-shadow: var(--sh-sm);
+}
+.recent-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--math); margin-bottom: 5px; }
+.recent-q   { font-size: 12px; color: var(--text-1); line-height: 1.5; }
+
+/* Explanation + Visual */
+.breadcrumb {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--bdr-fine);
+}
+.bc-back { font-size: 12px; font-weight: 600; color: var(--text-3); cursor: pointer; }
+.bc-q    { font-size: 13px; font-weight: 500; color: var(--text-2); line-height: 1.45; flex: 1; }
+
+.exp-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; align-items: start; }
+
+.canvas-panel { padding: 20px; }
+.canvas-panel svg { display: block; width: 100%; border-radius: 10px; }
+
+.sliders { margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+.sl-row { }
+.sl-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.sl-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+.sl-val  { font-family: var(--ff-m); font-size: 12px; color: var(--math); }
+.sl-track { height: 3px; background: var(--bdr-soft); border-radius: 2px; position: relative; }
+.sl-fill  { position: absolute; left: 0; top: 0; height: 100%; background: var(--math); border-radius: 2px; }
+.sl-thumb {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--math);
+  box-shadow: var(--sh-sm);
+}
+
+.exp-panel { padding: 24px; display: flex; flex-direction: column; }
+.key-idea {
+  font-family: var(--ff-d); font-size: 20px; font-weight: 400;
+  line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.008em;
+}
+.summary {
+  font-size: 14px; line-height: 1.7; color: var(--text-2); margin-bottom: 22px;
+}
+.fu-label {
+  font-family: var(--ff-m); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px;
+}
+.chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+
+.fu-input {
+  background: var(--surface); border: 1px solid var(--bdr-soft);
+  border-radius: var(--r-sm); padding: 11px 14px;
+  font-size: 13px; color: var(--text-3);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.fu-counter {
+  font-family: var(--ff-m); font-size: 10px; color: var(--text-3);
+  text-align: right; margin-top: 6px;
+}
+
+/* History */
+.page-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.page-title { font-family: var(--ff-d); font-size: 24px; font-weight: 500; letter-spacing: -0.010em; }
+
+.filter-bar { display: flex; gap: 6px; }
+.filter-pill {
+  font-size: 12px; font-weight: 600; padding: 6px 14px;
+  border-radius: var(--r-pill); border: 1px solid var(--bdr-soft);
+  background: var(--surface); color: var(--text-2); cursor: pointer;
+}
+.filter-pill.active { background: var(--math-bg); color: var(--math); border-color: transparent; }
+
+.hist-list { display: flex; flex-direction: column; gap: 8px; }
+.hist-item {
+  background: var(--surface); border: 1px solid var(--bdr-fine);
+  border-radius: var(--r-md); padding: 14px 18px;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 14px; align-items: center; box-shadow: var(--sh-xs);
+  transition: box-shadow 150ms;
+}
+.hist-item:hover { box-shadow: var(--sh-sm); }
+
+.hist-body .hq { font-size: 13px; font-weight: 600; margin-bottom: 3px; line-height: 1.45; }
+.hist-body .hm { font-family: var(--ff-m); font-size: 10px; color: var(--text-3); }
+.hist-actions { display: flex; gap: 8px; align-items: center; }
+.open-btn {
+  font-size: 12px; font-weight: 600; color: var(--math);
+  background: var(--math-bg); border: none; border-radius: var(--r-sm);
+  padding: 6px 12px; cursor: pointer;
+}
+.del-btn {
+  color: var(--text-3); background: none; border: none;
+  cursor: pointer; display: flex; align-items: center; padding: 4px;
+}
+
+/* Dashboard */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--bdr-fine);
+  border-radius: var(--r-md); padding: 20px 22px; box-shadow: var(--sh-xs);
+}
+.stat-card.dim { opacity: 0.38; }
+.stat-card .stag {
+  font-family: var(--ff-m); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;
+}
+.stat-card .snum {
+  font-family: var(--ff-d); font-size: 40px; font-weight: 400;
+  line-height: 1; margin-bottom: 4px;
+}
+.stat-card .sdesc { font-size: 12px; color: var(--text-3); }
+
+.dash-lower { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 14px; margin-top: 0; }
+
+.concepts-panel { padding: 22px; }
+.panel-heading {
+  font-family: var(--ff-m); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 14px;
+}
+.ctag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.ctag {
+  font-size: 12px; font-weight: 500; color: var(--math);
+  background: var(--math-bg); border-radius: var(--r-pill); padding: 5px 12px;
+}
+.ctag .ct-count { color: var(--text-3); font-size: 11px; margin-left: 3px; }
+
+.weak-panel { padding: 22px; }
+.weak-list { display: flex; flex-direction: column; }
+.weak-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 11px 0; border-bottom: 1px solid var(--bdr-fine);
+}
+.weak-item:last-child { border-bottom: none; }
+.w-dot { width: 6px; height: 6px; border-radius: 50%; background: #92400E; margin-top: 5px; flex-shrink: 0; }
+.w-body { flex: 1; }
+.w-q      { font-size: 12px; font-weight: 600; line-height: 1.4; margin-bottom: 2px; }
+.w-reason { font-size: 11px; color: var(--text-3); }
+.w-action { font-size: 11px; font-weight: 700; color: var(--math); display: inline-block; margin-top: 4px; }
+
+/* ═══════════════════════════════════════════════════════
+   SERVA WAITLIST PAGE
+═══════════════════════════════════════════════════════ */
+
+.serva-nav {
+  height: 54px; padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(254,247,236,0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--serva-bdr);
+}
+.sv-logo {
+  font-family: var(--ff-d); font-size: 16px; font-weight: 500;
+  letter-spacing: -0.012em; color: var(--serva);
+  display: flex; align-items: center; gap: 6px;
+}
+.sv-logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--serva); }
+
+.sv-back { font-size: 13px; color: var(--text-3); }
+
+.serva-hero {
+  padding: 96px 48px 100px;
+  background: var(--serva-bg);
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  position: relative;
+}
+
+.sv-eyebrow {
+  font-family: var(--ff-m); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--serva); margin-bottom: 20px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.sv-eyebrow::before {
+  content: '';
+  display: block;
+  width: 16px; height: 1px;
+  background: var(--serva); opacity: 0.5;
+}
+
+.sv-headline {
+  font-family: var(--ff-d); font-size: 48px; font-weight: 400;
+  line-height: 1.15; letter-spacing: -0.022em;
+  color: var(--text-1); max-width: 580px; margin-bottom: 18px;
+}
+
+.sv-sub {
+  font-size: 16px; color: var(--text-2);
+  line-height: 1.68; max-width: 480px; margin-bottom: 40px;
+}
+
+.sv-form { display: flex; gap: 10px; max-width: 440px; width: 100%; }
+.sv-input {
+  flex: 1; height: 46px;
+  background: var(--surface); border: 1px solid var(--serva-bdr);
+  border-radius: var(--r-md); padding: 0 16px;
+  font-size: 14px; color: var(--text-1);
+  font-family: var(--ff-b); box-shadow: var(--sh-xs);
+}
+.sv-input::placeholder { color: var(--text-3); }
+.sv-submit {
+  height: 46px; padding: 0 22px;
+  background: var(--serva); color: #fff;
+  border: none; border-radius: var(--r-md);
+  font-family: var(--ff-b); font-size: 14px; font-weight: 600;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(146,64,14,0.25);
+  white-space: nowrap;
+}
+
+.sv-note { font-size: 12px; color: var(--text-3); margin-top: 12px; }
+
+.serva-feature-strip {
+  padding: 48px 48px;
+  background: var(--surface);
+  border-top: 1px solid var(--serva-bdr);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background-color: var(--bdr-fine);
+}
+
+.sf-item {
+  padding: 28px 32px;
+  background: var(--surface);
+}
+
+.sf-label {
+  font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 6px;
+}
+.sf-desc {
+  font-size: 13px; color: var(--text-3); line-height: 1.55;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  body { padding: 32px 16px 100px; }
+  .product-grid, .services-grid, .positioning-section,
+  .exp-grid, .dash-lower, .footer-grid, .serva-feature-strip { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .app-frame { grid-template-columns: 1fr; }
+  .app-sidebar { display: none; }
+  .hero-headline { font-size: 40px; }
+  .sv-headline { font-size: 36px; }
+  .sv-form { flex-direction: column; }
+  .site-nav .nav-links { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────────────────────────
+     DOCUMENT HEADER
+───────────────────────────────────────────────────────────── -->
+<header class="doc-header">
+  <div class="label">Graphxy Labs · High-Fidelity Design · v0.3 · Light Mode</div>
+  <h1>Visual direction — <em>website &amp; product screens.</em></h1>
+  <p>Six screen areas. Light-only throughout. No dark sections, no theme switching. Consistent warm-white surface system, restrained shadows, Fraunces editorial moments. Every spacing value is intentional.</p>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCREEN A — GRAPHXY LABS LANDING PAGE
+═══════════════════════════════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-meta">
+    <span class="screen-id">Screen A</span>
+    <span class="screen-desc">Graphxy Labs — Landing Page (graphxylabs.com) — above the fold through footer</span>
+  </div>
+  <div class="device">
+
+    <!-- Nav -->
+    <nav class="site-nav">
+      <div class="nav-logo"><span class="dot"></span>Graphxy Labs</div>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Products</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Company</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <button class="nav-pill">Explore Graphzy</button>
+    </nav>
+
+    <!-- Hero -->
+    <div class="landing-hero">
+      <div class="hero-eyebrow">Graphxy Labs</div>
+      <h1 class="hero-headline">Software that thinks,<br>scales, <em>and performs.</em></h1>
+      <p class="hero-sub">We build precision software products, intelligent systems, and scalable digital experiences — starting with Graphzy and Serva.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-lg btn-graphzy">Explore Graphzy</button>
+        <button class="btn btn-lg btn-outline">Join Serva Waitlist</button>
+      </div>
+    </div>
+
+    <!-- Products -->
+    <div class="products-section">
+      <div class="section-label">Our Products</div>
+      <div class="section-heading">Two flagship products,<br>built in-house.</div>
+      <div class="product-grid">
+        <div class="pcard pcard-white">
+          <div class="pcard-eyebrow">Graphzy · Visualization Platform</div>
+          <h3>Turn any question into an interactive visual.</h3>
+          <p>AI-powered explanations with live graphs, molecules, and simulations — for students who want to see how things work, not just read about them.</p>
+          <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
+        </div>
+        <div class="pcard pcard-warm">
+          <div class="pcard-eyebrow">Serva · Restaurant Operations</div>
+          <div class="pcard-badge"><span class="pcard-badge-dot"></span>Coming Soon</div>
+          <h3>Restaurant management built for modern operators.</h3>
+          <p>A unified platform for orders, tables, inventory, staff, and analytics — designed to run a restaurant the way a product company would.</p>
+          <button class="btn btn-md btn-serva">Join Serva Waitlist</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="services-section">
+      <div class="section-label">Services</div>
+      <div class="section-heading">Eight technology verticals,<br>one engineering standard.</div>
+      <div class="services-grid">
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="svc-title">Management Systems</div>
+          <div class="svc-desc">ERP, CRM, admin dashboards, workflow tools</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="svc-title">Web Development</div>
+          <div class="svc-desc">Marketing sites, SaaS platforms, web apps</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div class="svc-title">Mobile App Development</div>
+          <div class="svc-desc">iOS, Android, cross-platform apps</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="svc-title">AI &amp; Machine Learning</div>
+          <div class="svc-desc">AI assistants, NLP, recommendation engines</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="svc-title">Data Science &amp; Analytics</div>
+          <div class="svc-desc">Dashboards, pipelines, BI, reporting</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="svc-title">Custom Software</div>
+          <div class="svc-desc">Bespoke apps, client portals, internal tools</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+          </div>
+          <div class="svc-title">Automation &amp; Workflow</div>
+          <div class="svc-desc">Approval flows, task automation, optimization</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
+          </div>
+          <div class="svc-title">Scalable Tech Products</div>
+          <div class="svc-desc">SaaS MVPs, product engineering, growth platforms</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Positioning -->
+    <div class="positioning-section">
+      <div>
+        <div class="section-label">Graphxy Labs</div>
+        <div class="pos-headline">Built by engineers who care about<br><em>detail, craft, and execution.</em></div>
+        <div class="pos-list">
+          <div class="pos-item">
+            <div class="pos-bullet" style="background:var(--math);"></div>
+            <div>
+              <div class="pos-text">Engineering-driven from day one</div>
+              <div class="pos-sub">No cut corners, no generic scaffolding</div>
+            </div>
+          </div>
+          <div class="pos-item">
+            <div class="pos-bullet" style="background:var(--serva);"></div>
+            <div>
+              <div class="pos-text">Products built in-house, not outsourced</div>
+              <div class="pos-sub">Graphzy and Serva are our own</div>
+            </div>
+          </div>
+          <div class="pos-item">
+            <div class="pos-bullet" style="background:var(--brand);"></div>
+            <div>
+              <div class="pos-text">Premium design applied consistently</div>
+              <div class="pos-sub">Craft is a company value, not a deliverable</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="pos-quote">
+          We build software the way it should be built — precisely, intentionally, and with a product identity that earns trust before asking for it.
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo"><span class="dot"></span>Graphxy Labs</div>
+          <p class="footer-tagline">Precision software products, intelligent systems, and scalable digital experiences.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="#">Graphzy</a></li>
+            <li><a href="#">Serva</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Mobile Apps</a></li>
+            <li><a href="#">AI &amp; ML</a></li>
+            <li><a href="#">Data Analytics</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Graphxy Labs · graphxylabs.com</span>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCREEN B — GRAPHZY: HOME / ASK
+═══════════════════════════════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-meta">
+    <span class="screen-id">Screen B</span>
+    <span class="screen-desc">Graphzy — Home / Ask — new visitor, empty state with suggestions (/graphzy)</span>
+  </div>
+  <div class="device">
+    <div class="gz-home">
+      <div class="gz-logo"><span class="dot"></span>Graphzy</div>
+      <h1 class="gz-headline">Ask anything.<br>See exactly why it works.</h1>
+      <div class="ask-box">
+        <div class="ask-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <span class="ask-placeholder">Why does increasing a in y = ax² make the parabola narrower?</span>
+        <div class="ask-submit">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+      <div class="hint-row">
+        <span class="hint-chip">Graphs &amp; equations</span>
+        <span class="hint-chip">Rates of change</span>
+        <span class="hint-chip">Function transformations</span>
+        <span class="hint-chip">Calculus concepts</span>
+      </div>
+      <div class="recent-row">
+        <div class="recent-card">
+          <div class="recent-tag">Math</div>
+          <div class="recent-q">Why do quadratic roots come in pairs?</div>
+        </div>
+        <div class="recent-card">
+          <div class="recent-tag">Math</div>
+          <div class="recent-q">How does slope change along a curve?</div>
+        </div>
+        <div class="recent-card">
+          <div class="recent-tag">Math</div>
+          <div class="recent-q">What makes sin(x) periodic?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCREEN C — GRAPHZY: EXPLANATION + VISUAL
+═══════════════════════════════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-meta">
+    <span class="screen-id">Screen C</span>
+    <span class="screen-desc">Graphzy — Explanation + Visual — math lens, slider interaction, result state</span>
+  </div>
+  <div class="device">
+    <div class="app-frame">
+
+      <!-- Sidebar -->
+      <div class="app-sidebar">
+        <div class="nav-ic active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="ic-label">Ask</span>
+        </div>
+        <div class="nav-ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          <span class="ic-label">History</span>
+        </div>
+        <div class="nav-ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span class="ic-label">Dash</span>
+        </div>
+        <div class="nav-ic" style="margin-top:auto;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+          <span class="ic-label">Account</span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+          <span class="bc-back">← New question</span>
+          <span class="tag tag-math"><span class="tag-dot"></span>Math</span>
+          <span class="bc-q">"Why does increasing a in y = ax² make the parabola narrower?"</span>
+        </div>
+
+        <!-- Visual + Explanation -->
+        <div class="exp-grid">
+
+          <!-- Left: Canvas + Sliders -->
+          <div class="glass canvas-panel">
+            <svg viewBox="0 0 480 290" xmlns="http://www.w3.org/2000/svg" style="background:#FCFCFD; border-radius:10px;">
+              <defs>
+                <pattern id="grid-c" width="30" height="30" patternUnits="userSpaceOnUse">
+                  <path d="M30 0L0 0 0 30" fill="none" stroke="#EBEBEB" stroke-width="1"/>
+                </pattern>
+              </defs>
+              <rect width="480" height="290" fill="url(#grid-c)"/>
+              <!-- Axes -->
+              <line x1="240" y1="10" x2="240" y2="280" stroke="#C8C8C8" stroke-width="1.2"/>
+              <line x1="10"  y1="248" x2="470" y2="248" stroke="#C8C8C8" stroke-width="1.2"/>
+              <!-- Axis labels -->
+              <text x="456" y="243" font-family="JetBrains Mono,monospace" font-size="11" fill="#AAAAAA">x</text>
+              <text x="246" y="20"  font-family="JetBrains Mono,monospace" font-size="11" fill="#AAAAAA">y</text>
+              <!-- Tick marks -->
+              <text x="264" y="263" font-family="JetBrains Mono,monospace" font-size="9" fill="#C0C0C0">1</text>
+              <text x="294" y="263" font-family="JetBrains Mono,monospace" font-size="9" fill="#C0C0C0">2</text>
+              <text x="209" y="263" font-family="JetBrains Mono,monospace" font-size="9" fill="#C0C0C0">−1</text>
+              <text x="176" y="263" font-family="JetBrains Mono,monospace" font-size="9" fill="#C0C0C0">−2</text>
+              <!-- a=0.5 — wide (faded) -->
+              <path d="M 60,244 Q 240,32 420,244" fill="none" stroke="#0066CC" stroke-width="1.6" opacity="0.18" stroke-dasharray="5,4"/>
+              <!-- a=2 — narrow (primary) -->
+              <path d="M 145,244 Q 240,22 335,244" fill="none" stroke="#0066CC" stroke-width="2.8"/>
+              <!-- a=4 — very narrow (secondary) -->
+              <path d="M 190,244 Q 240,80 290,244" fill="none" stroke="#0066CC" stroke-width="1.6" opacity="0.4"/>
+              <!-- Vertex -->
+              <circle cx="240" cy="22" r="4.5" fill="#0066CC"/>
+              <!-- Labels -->
+              <text x="72"  y="202" font-family="JetBrains Mono,monospace" font-size="10" fill="#0066CC" opacity="0.35">a = 0.5</text>
+              <text x="338" y="178" font-family="JetBrains Mono,monospace" font-size="10" fill="#0066CC">a = 2</text>
+              <text x="292" y="224" font-family="JetBrains Mono,monospace" font-size="10" fill="#0066CC" opacity="0.55">a = 4</text>
+            </svg>
+
+            <div class="sliders">
+              <div class="sl-row">
+                <div class="sl-head">
+                  <span class="sl-name">Stretch factor — a</span>
+                  <span class="sl-val">2.0</span>
+                </div>
+                <div class="sl-track">
+                  <div class="sl-fill" style="width:68%;"></div>
+                  <div class="sl-thumb" style="left:68%;"></div>
+                </div>
+              </div>
+              <div class="sl-row">
+                <div class="sl-head">
+                  <span class="sl-name">Vertical shift — c</span>
+                  <span class="sl-val">0.0</span>
+                </div>
+                <div class="sl-track">
+                  <div class="sl-fill" style="width:50%;"></div>
+                  <div class="sl-thumb" style="left:50%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Explanation -->
+          <div class="glass exp-panel">
+            <p class="key-idea">A larger value of <em>a</em> stretches the curve vertically, making it look narrower.</p>
+            <p class="summary">Multiplying x² by a larger a pulls every point further from the x-axis for the same horizontal step. The graph rises more steeply — visually narrower — but it's still a parabola. Drag the slider left to see it widen, right to tighten.</p>
+            <div class="fu-label">Continue exploring</div>
+            <div class="chip-row">
+              <span class="chip">What if a is negative?</span>
+              <span class="chip">What does adding c do?</span>
+              <span class="chip">Where are the roots?</span>
+            </div>
+            <div class="fu-input">
+              <span>Ask a follow-up…</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A3A3A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </div>
+            <div class="fu-counter">1 / 6 follow-ups used</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCREEN D — GRAPHZY: HISTORY
+═══════════════════════════════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-meta">
+    <span class="screen-id">Screen D</span>
+    <span class="screen-desc">Graphzy — History — signed-in user, Math pilot sessions</span>
+  </div>
+  <div class="device">
+    <div class="app-frame">
+      <div class="app-sidebar">
+        <div class="nav-ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="ic-label">Ask</span>
+        </div>
+        <div class="nav-ic active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          <span class="ic-label">History</span>
+        </div>
+        <div class="nav-ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span class="ic-label">Dash</span>
+        </div>
+        <div class="nav-ic" style="margin-top:auto;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+          <span class="ic-label">Account</span>
+        </div>
+      </div>
+      <div class="content">
+        <div class="page-title-row">
+          <span class="page-title">History</span>
+          <div class="filter-bar">
+            <span class="filter-pill active">All</span>
+            <span class="filter-pill">Math</span>
+          </div>
+        </div>
+        <div class="hist-list">
+          <div class="hist-item">
+            <span class="tag tag-math"><span class="tag-dot"></span>Math</span>
+            <div class="hist-body">
+              <div class="hq">Why does increasing a in y = ax² make the parabola narrower?</div>
+              <div class="hm">Today · Quadratic functions, vertical stretch</div>
+            </div>
+            <div class="hist-actions">
+              <button class="open-btn">Open</button>
+              <button class="del-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+            </div>
+          </div>
+          <div class="hist-item">
+            <span class="tag tag-math"><span class="tag-dot"></span>Math</span>
+            <div class="hist-body">
+              <div class="hq">What makes sin(x) repeat? Show me how amplitude changes it.</div>
+              <div class="hm">Yesterday · Trigonometry, periodic functions, amplitude</div>
+            </div>
+            <div class="hist-actions">
+              <button class="open-btn">Open</button>
+              <button class="del-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+            </div>
+          </div>
+          <div class="hist-item">
+            <span class="tag tag-math"><span class="tag-dot"></span>Math</span>
+            <div class="hist-body">
+              <div class="hq">How does slope change along a curve? Derivative intuition.</div>
+              <div class="hm">3 days ago · Calculus, derivatives, tangent lines</div>
+            </div>
+            <div class="hist-actions">
+              <button class="open-btn">Open</button>
+              <button class="del-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+            </div>
+          </div>
+          <div class="hist-item">
+            <span class="tag tag-math"><span class="tag-dot"></span>Math</span>
+            <div class="hist-body">
+              <div class="hq">Show me how the roots of a quadratic relate to its graph.</div>
+              <div class="hm">4 days ago · Quadratic functions, roots, factoring</div>
+            </div>
+            <div class="hist-actions">
+              <button class="open-btn">Open</button>
+              <button class="del-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCREEN E — GRAPHZY: DASHBOARD
+═══════════════════════════════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-meta">
+    <span class="screen-id">Screen E</span>
+    <span class="screen-desc">Graphzy — Dashboard — Math pilot, after 12 sessions</span>
+  </div>
+  <div class="device">
+    <div class="app-frame">
+      <div class="app-sidebar">
+        <div class="nav-ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="ic-label">Ask</span>
+        </div>
+        <div class="nav-ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          <span class="ic-label">History</span>
+        </div>
+        <div class="nav-ic active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span class="ic-label">Dash</span>
+        </div>
+        <div class="nav-ic" style="margin-top:auto;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+          <span class="ic-label">Account</span>
+        </div>
+      </div>
+      <div class="content">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stag" style="color:var(--math);">Math</div>
+            <div class="snum" style="color:var(--math);">12</div>
+            <div class="sdesc">topics explored</div>
+          </div>
+          <div class="stat-card dim">
+            <div class="stag" style="color:var(--chem);">Chemistry</div>
+            <div class="snum" style="color:var(--text-3);">—</div>
+            <div class="sdesc">coming soon</div>
+          </div>
+          <div class="stat-card dim">
+            <div class="stag" style="color:var(--bio);">Biology</div>
+            <div class="snum" style="color:var(--text-3);">—</div>
+            <div class="sdesc">coming soon</div>
+          </div>
+          <div class="stat-card dim">
+            <div class="stag" style="color:var(--phys);">Physics</div>
+            <div class="snum" style="color:var(--text-3);">—</div>
+            <div class="sdesc">coming soon</div>
+          </div>
+        </div>
+        <div class="dash-lower">
+          <div class="glass concepts-panel">
+            <div class="panel-heading">Concepts explored</div>
+            <div class="ctag-row">
+              <span class="ctag">Quadratic functions <span class="ct-count">×4</span></span>
+              <span class="ctag">Vertical stretch <span class="ct-count">×2</span></span>
+              <span class="ctag">Roots &amp; factoring <span class="ct-count">×3</span></span>
+              <span class="ctag">Slope &amp; derivatives <span class="ct-count">×4</span></span>
+              <span class="ctag">Trigonometry <span class="ct-count">×2</span></span>
+              <span class="ctag">Periodic functions <span class="ct-count">×1</span></span>
+            </div>
+          </div>
+          <div class="glass weak-panel">
+            <div class="panel-heading">Weak areas</div>
+            <div class="weak-list">
+              <div class="weak-item">
+                <div class="w-dot"></div>
+                <div class="w-body">
+                  <div class="w-q">Why does increasing a make the parabola narrower?</div>
+                  <div class="w-reason">Multiple clarifying follow-ups</div>
+                  <a class="w-action">Ask about this →</a>
+                </div>
+              </div>
+              <div class="weak-item">
+                <div class="w-dot"></div>
+                <div class="w-body">
+                  <div class="w-q">Roots of a quadratic — factoring vs. formula</div>
+                  <div class="w-reason">Revisited twice</div>
+                  <a class="w-action">Ask about this →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCREEN F — SERVA WAITLIST PAGE
+═══════════════════════════════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-meta">
+    <span class="screen-id">Screen F</span>
+    <span class="screen-desc">Serva — Waitlist Page (/serva) — light warm palette, no dark sections</span>
+  </div>
+  <div class="device">
+
+    <!-- Serva nav -->
+    <nav class="serva-nav">
+      <div class="sv-logo"><span class="dot"></span>Serva</div>
+      <span class="sv-back">← graphxylabs.com</span>
+    </nav>
+
+    <!-- Hero -->
+    <div class="serva-hero">
+      <div class="sv-eyebrow">Serva · Coming Soon</div>
+      <h1 class="sv-headline">Restaurant management built for modern operators.</h1>
+      <p class="sv-sub">A premium, unified platform for orders, tables, inventory, staff, and analytics. Designed the way a product company would design for hospitality.</p>
+      <div class="sv-form">
+        <input class="sv-input" type="email" placeholder="your@email.com" />
+        <button class="sv-submit">Join Waitlist</button>
+      </div>
+      <p class="sv-note">We'll reach out when Serva is ready for early access. No spam, ever.</p>
+    </div>
+
+    <!-- Feature strip -->
+    <div class="serva-feature-strip">
+      <div class="sf-item">
+        <div class="sf-label">Order management</div>
+        <div class="sf-desc">Real-time order tracking across tables, takeaway, and delivery channels</div>
+      </div>
+      <div class="sf-item">
+        <div class="sf-label">Table &amp; floor management</div>
+        <div class="sf-desc">Visual floor plan, reservation logic, turn time analytics</div>
+      </div>
+      <div class="sf-item">
+        <div class="sf-label">Staff &amp; inventory</div>
+        <div class="sf-desc">Scheduling, role-based access, inventory depletion tracking</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
