@@ -517,32 +517,42 @@ body {
 
 /* Footer — light */
 .site-footer {
-  padding: 56px 48px 40px;
+  padding: 40px 48px 32px;
   background: var(--page);
   border-top: 1px solid var(--bdr-fine);
 }
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  gap: 40px; margin-bottom: 48px;
+.footer-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px; margin-bottom: 32px;
 }
 .footer-logo {
   font-family: var(--ff-d);
   font-size: 16px; font-weight: 500; letter-spacing: -0.012em;
   color: var(--text-1); display: flex; align-items: center; gap: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .footer-logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
-.footer-tagline { font-size: 13px; color: var(--text-3); line-height: 1.65; max-width: 220px; }
+.footer-tagline { font-size: 12px; color: var(--text-3); line-height: 1.65; }
 
-.footer-col h4 {
-  font-family: var(--ff-m);
-  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--text-3); margin-bottom: 14px;
+.footer-links {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-.footer-col ul li a { font-size: 13px; color: var(--text-2); text-decoration: none; }
-.footer-col ul li a:hover { color: var(--text-1); }
+.footer-links li a {
+  font-size: 13px;
+  color: var(--text-2);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 150ms ease;
+}
+.footer-links li a:hover { color: var(--text-1); }
 
 .footer-bottom {
   padding-top: 24px;
@@ -1038,42 +1048,18 @@ body {
 
     <!-- Footer -->
     <footer class="site-footer">
-      <div class="footer-grid">
+      <div class="footer-flex">
         <div>
           <div class="footer-logo"><span class="dot"></span>Graphxy Labs</div>
           <p class="footer-tagline">Precision software products, intelligent systems, and scalable digital experiences.</p>
         </div>
-        <div class="footer-col">
-          <h4>Products</h4>
-          <ul>
-            <li><a href="#">Graphzy</a></li>
-            <li><a href="#">Forkline</a></li>
-            <li><a href="#">Lattice</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Services</h4>
-          <ul>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Mobile Apps</a></li>
-            <li><a href="#">AI &amp; ML</a></li>
-            <li><a href="#">Data Analytics</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <ul>
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Terms</a></li>
-          </ul>
-        </div>
+        <ul class="footer-links">
+          <li><a href="#">Products</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
       </div>
       <div class="footer-bottom">
         <span class="footer-copy">© 2026 Graphxy Labs · graphxylabs.com</span>

@@ -180,41 +180,83 @@ function InteractiveNeuralML() {
 // ==========================================
 function CapabilityMap({ onSelectNode, selectedNode }) {
   const isTouch = useIsTouch();
+  const [isLocked, setIsLocked] = useState(false);
 
   const verticalsNodes = [
-    { id: 'management', name: 'Management Systems', x: 160, y: 30, color: '#1B3A6B' },
-    { id: 'web', name: 'Web Development', x: 70, y: 75, color: '#0066CC' },
-    { id: 'mobile', name: 'Mobile Clients', x: 250, y: 75, color: '#92400E' },
-    { id: 'ai', name: 'AI & Machine Learning', x: 160, y: 120, color: '#1B3A6B' }
+    { id: 'management-systems', name: 'Management Systems', x: 130, y: 30, color: '#1B3A6B' },
+    { id: 'web-development', name: 'Web Development', x: 130, y: 80, color: '#0066CC' },
+    { id: 'mobile-apps', name: 'Mobile App Development', x: 130, y: 130, color: '#92400E' },
+    { id: 'ai-ml', name: 'AI & Machine Learning', x: 130, y: 180, color: '#1B3A6B' },
+    { id: 'data-science', name: 'Data Science & Analytics', x: 290, y: 30, color: '#0066CC' },
+    { id: 'custom-software', name: 'Custom Software Development', x: 290, y: 80, color: '#1B3A6B' },
+    { id: 'automation', name: 'Automation & Workflow Solutions', x: 290, y: 130, color: '#1E8A4A' },
+    { id: 'scalable-products', name: 'Scalable Tech Products', x: 290, y: 180, color: '#92400E' }
   ];
 
-  const nodeR = isTouch ? 18 : 12;
+  const nodeR = isTouch ? 11 : 8;
 
-  const handleNode = (name) => {
-    if (isTouch) {
-      onSelectNode(prev => prev === name ? null : name);
-    } else {
+  const handleNodeHover = (name) => {
+    if (!isLocked) {
       onSelectNode(name);
     }
   };
 
+  const handleNodeLeave = () => {
+    if (!isLocked) {
+      onSelectNode(null);
+    }
+  };
+
+  const handleNodeClick = (id, name) => {
+    setIsLocked(true);
+    onSelectNode(name);
+
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Briefly highlight: clear selectedNode and lock after 1.5s
+    setTimeout(() => {
+      onSelectNode(null);
+      setIsLocked(false);
+    }, 1500);
+  };
+
   return (
-    <Card variant="glass" className="w-full p-5 sm:p-6 bg-white/70 border-white/80 shadow-md relative overflow-hidden">
+    <Card variant="glass" className="w-full p-4 sm:p-5 bg-white/70 border-white/80 shadow-md relative overflow-hidden">
       <div className="text-[10px] font-mono text-black/40 border-b border-black/[0.04] pb-3 mb-4 flex justify-between items-center gap-2">
         <span className="flex-shrink-0">ACTIVE ENGINEERING DIVISION LINKS</span>
         <span className="text-[#1B3A6B] font-bold uppercase tracking-wider text-right truncate max-w-[150px]">
-          {selectedNode ? selectedNode : (isTouch ? 'Tap nodes' : 'Hover nodes to visualize mapping')}
+          {selectedNode ? selectedNode : (isTouch ? 'Tap nodes to map' : 'Hover / click nodes to navigate')}
         </span>
       </div>
 
-      <div className="w-full aspect-[320/160] relative">
-        <svg viewBox="0 0 320 160" className="w-full h-full select-none">
+      <div className="w-full aspect-[420/220] relative">
+        <svg viewBox="0 0 420 220" className="w-full h-full select-none">
           {/* Connection lines */}
-          <line x1="160" y1="30" x2="70" y2="75" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
-          <line x1="160" y1="30" x2="250" y2="75" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
-          <line x1="70" y1="75" x2="160" y2="120" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
-          <line x1="250" y1="75" x2="160" y2="120" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
-          <line x1="160" y1="30" x2="160" y2="120" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" strokeDasharray="3 3" />
+          <g stroke="rgba(0,0,0,0.06)" strokeWidth="1.2">
+            {/* Left vertical chain */}
+            <line x1="130" y1="30" x2="130" y2="80" />
+            <line x1="130" y1="80" x2="130" y2="130" />
+            <line x1="130" y1="130" x2="130" y2="180" />
+            {/* Right vertical chain */}
+            <line x1="290" y1="30" x2="290" y2="80" />
+            <line x1="290" y1="80" x2="290" y2="130" />
+            <line x1="290" y1="130" x2="290" y2="180" />
+            {/* Horizontal cross-links */}
+            <line x1="130" y1="30" x2="290" y2="30" strokeDasharray="3 3" />
+            <line x1="130" y1="80" x2="290" y2="80" strokeDasharray="3 3" />
+            <line x1="130" y1="130" x2="290" y2="130" strokeDasharray="3 3" />
+            <line x1="130" y1="180" x2="290" y2="180" strokeDasharray="3 3" />
+            {/* Diagonal structural bracing */}
+            <line x1="130" y1="30" x2="290" y2="80" />
+            <line x1="130" y1="80" x2="290" y2="30" />
+            <line x1="130" y1="80" x2="290" y2="130" />
+            <line x1="130" y1="130" x2="290" y2="80" />
+            <line x1="130" y1="130" x2="290" y2="180" />
+            <line x1="130" y1="180" x2="290" y2="130" />
+          </g>
 
           {verticalsNodes.map((n) => {
             const isSelf = selectedNode === n.name;
@@ -222,14 +264,14 @@ function CapabilityMap({ onSelectNode, selectedNode }) {
               <g
                 key={n.id}
                 className="cursor-pointer"
-                onMouseEnter={() => !isTouch && handleNode(n.name)}
-                onMouseLeave={() => !isTouch && onSelectNode(null)}
-                onClick={() => isTouch && handleNode(n.name)}
+                onMouseEnter={() => !isTouch && handleNodeHover(n.name)}
+                onMouseLeave={() => !isTouch && handleNodeLeave()}
+                onClick={() => handleNodeClick(n.id, n.name)}
                 style={{ touchAction: 'manipulation' }}
               >
                 <circle
                   cx={n.x} cy={n.y}
-                  r={isSelf ? nodeR + 4 : nodeR}
+                  r={isSelf ? nodeR + 3 : nodeR}
                   fill={isSelf ? n.color : '#FFFFFF'}
                   stroke={isSelf ? '#FFFFFF' : 'rgba(0,0,0,0.08)'}
                   strokeWidth={isSelf ? 2 : 1}
@@ -237,7 +279,7 @@ function CapabilityMap({ onSelectNode, selectedNode }) {
                 />
                 <circle
                   cx={n.x} cy={n.y}
-                  r={isSelf ? nodeR + 9 : nodeR + 5}
+                  r={isSelf ? nodeR + 7 : nodeR + 4}
                   fill="none"
                   stroke={n.color}
                   strokeWidth={1}
@@ -245,12 +287,12 @@ function CapabilityMap({ onSelectNode, selectedNode }) {
                 />
                 {/* Extra transparent hit area for touch */}
                 {isTouch && (
-                  <circle cx={n.x} cy={n.y} r="30" fill="transparent" />
+                  <circle cx={n.x} cy={n.y} r="24" fill="transparent" />
                 )}
                 <text
-                  x={n.x}
-                  y={n.y + (n.y > 75 ? nodeR + 14 : -(nodeR + 8))}
-                  textAnchor="middle"
+                  x={n.x + (n.x === 130 ? -16 : 16)}
+                  y={n.y + 3}
+                  textAnchor={n.x === 130 ? 'end' : 'start'}
                   className={`font-mono text-[8px] font-semibold tracking-tight transition-colors duration-150 ${
                     isSelf ? 'fill-[#0F0F0F] font-bold' : 'fill-black/45'
                   }`}
@@ -344,7 +386,7 @@ export default function Services() {
     {
       id: "custom-software",
       icon: Terminal,
-      title: "Custom Software",
+      title: "Custom Software Development",
       desc: "Bespoke development addressing workflow bottlenecks, API bridge integrations, and proprietary business applications.",
       features: ["Bespoke Business Logic", "Legacy Integration Bridges", "API Infrastructure Setup", "Secure Client Portals"],
       visual: (
@@ -367,7 +409,7 @@ export default function Services() {
     {
       id: "automation",
       icon: Workflow,
-      title: "Automation & Workflows",
+      title: "Automation & Workflow Solutions",
       desc: "Replacing repetitive manual spreadsheets with scheduled webhooks, alert systems, approval pipelines, and task routers.",
       features: ["Approval & Verification Loops", "Third-party Webhook Syncs", "Scheduled Task Checkers", "Error Alert Dashboards"],
       visual: (

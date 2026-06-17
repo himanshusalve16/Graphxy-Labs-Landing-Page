@@ -49,17 +49,7 @@ export default function TermsOfService() {
               </p>
             </section>
 
-            <section className="flex flex-col gap-3 border-t border-black/[0.04] pt-8 mt-4">
-              <h2 className="font-serif text-lg text-[#0F0F0F] font-semibold">5. Inquiries & Feedback</h2>
-              <p>
-                Feedback, license queries, and general inquiries regarding these terms should be addressed to our operations inbox at:
-              </p>
-              <div className="bg-white border border-black/5 rounded-xl p-4 mt-2 font-mono text-[11px] text-[#0f0f0f] self-start">
-                <div>Graphxy Labs Legal Team</div>
-                <div>Email: himanshusalve9@gmail.com</div>
-                <div>Nagpur, Maharashtra, India</div>
-              </div>
-            </section>
+
           </div>
         </Container>
       </div>
