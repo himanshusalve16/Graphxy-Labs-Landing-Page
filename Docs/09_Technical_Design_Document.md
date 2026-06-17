@@ -53,7 +53,7 @@ graphxy-labs/
 └── README.md
 ```
 
-A monorepo structure (Turborepo recommended) allows Graphzy and the Graphxy Labs marketing site to share design tokens and types, and prepares the codebase to onboard Serva later without architecture debt.
+A monorepo structure (Turborepo recommended) allows Graphzy and the Graphxy Labs marketing site to share design tokens and types, and prepares the codebase to onboard Forkline later without architecture debt.
 
 ---
 
@@ -71,7 +71,7 @@ A monorepo structure (Turborepo recommended) allows Graphzy and the Graphxy Labs
 
 - **Framework:** Next.js (App Router) for SEO, fast static generation, and easy addition of product/landing pages.
 - **Styling:** Tailwind CSS with shared design tokens from `packages/ui`.
-- **Key pages:** `/` (landing page with hero, products, verticals), `/graphzy` (product page / app redirect), `/serva` (waitlist page), `/services` (verticals detail).
+- **Key pages:** `/` (landing page with hero, products, verticals), `/graphzy` (product page / app redirect), `/forkline` (waitlist page), `/lattice` (waitlist page), `/services` (verticals detail).
 - **Hosting:** Vercel.
 
 ---
@@ -133,9 +133,9 @@ Supabase (managed Postgres + Auth). See **Database Schema Document** for full ta
 
 ---
 
-## 10. Serva Backend (Future — Reference)
+## 10. Forkline Backend (Future — Reference)
 
-Serva will be a separate backend service (Node.js + Express or NestJS) with its own Supabase project or schema namespace. It will not share database tables with Graphzy but may share infrastructure patterns, CI/CD pipelines, and the monorepo `packages/ui` design system. Serva backend spec is produced during Serva pre-development.
+Forkline will be a separate backend service (Node.js + Express or NestJS) with its own Supabase project or schema namespace. It will not share database tables with Graphzy but may share infrastructure patterns, CI/CD pipelines, and the monorepo `packages/ui` design system. Forkline backend spec is produced during Forkline pre-development.
 
 ---
 

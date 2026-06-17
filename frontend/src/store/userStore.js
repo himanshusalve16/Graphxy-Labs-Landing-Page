@@ -56,7 +56,7 @@ export const useUserStore = create((set) => ({
       topicKey,
       date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
       time: new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }),
-      subject: "Math",
+      subject: topic.subject === 'physics' ? 'Physics' : topic.subject === 'chemistry' ? 'Chemistry' : 'Math',
       concepts: topic.concepts
     };
 

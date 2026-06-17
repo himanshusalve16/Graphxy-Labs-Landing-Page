@@ -21,9 +21,9 @@ import {
 // 1. ANIMATED GRAPHZY PREVIEW COMPONENT
 // ==========================================
 function GraphzyPreview() {
-  const [equation, setEquation] = useState('');
-  const [sliderVal, setSliderVal] = useState(1.0);
-  const [step, setStep] = useState(0); // 0: typing, 1: graphed, 2: sliding, 3: tooltip
+  const [promptText, setPromptText] = useState('');
+  const [launchAngle, setLaunchAngle] = useState(45);
+  const [step, setStep] = useState(0); // 0: typing prompt, 1: AI generation, 2: drawing initial trajectory, 3: sliding launch angle, 4: tooltip
 
   useEffect(() => {
     let active = true;
@@ -31,42 +31,46 @@ function GraphzyPreview() {
     let intervalId;
 
     if (step === 0) {
-      const text = "y = 1.6 * x²";
+      const text = "Simulate a physics projectile trajectory";
       let idx = 0;
-      setEquation('');
-      setSliderVal(1.0);
+      setPromptText('');
+      setLaunchAngle(45);
       intervalId = setInterval(() => {
         if (!active) return;
-        setEquation(text.slice(0, idx + 1));
+        setPromptText(text.slice(0, idx + 1));
         idx++;
         if (idx >= text.length) {
           clearInterval(intervalId);
           timerId = setTimeout(() => {
             if (active) setStep(1);
-          }, 1000);
+          }, 800);
         }
-      }, 120);
+      }, 70);
     } else if (step === 1) {
       timerId = setTimeout(() => {
         if (active) setStep(2);
       }, 1500);
     } else if (step === 2) {
-      let val = 1.0;
+      timerId = setTimeout(() => {
+        if (active) setStep(3);
+      }, 1500);
+    } else if (step === 3) {
+      let angle = 45;
       intervalId = setInterval(() => {
         if (!active) return;
-        val += 0.1;
-        setSliderVal(parseFloat(val.toFixed(1)));
-        if (val >= 2.4) {
+        angle += 1;
+        setLaunchAngle(angle);
+        if (angle >= 65) {
           clearInterval(intervalId);
           timerId = setTimeout(() => {
-            if (active) setStep(3);
-          }, 1000);
+            if (active) setStep(4);
+          }, 800);
         }
-      }, 80);
-    } else if (step === 3) {
+      }, 50);
+    } else if (step === 4) {
       timerId = setTimeout(() => {
         if (active) setStep(0);
-      }, 3000);
+      }, 3500);
     }
 
     return () => {
@@ -76,18 +80,27 @@ function GraphzyPreview() {
     };
   }, [step]);
 
-  // Compute coordinate SVG path for y = a * x^2
-  const getPath = () => {
-    const cx = 100;
-    const cy = 150;
-    const scale = 12;
-    let points = [];
-    for (let x = -8; x <= 8; x += 0.2) {
-      const svgX = cx + x * scale;
-      const svgY = cy - (sliderVal * (x ** 2)) * 1.5;
-      points.push(`${svgX},${svgY}`);
+  // Projectile trajectory math for 200x200 viewBox
+  const getPhysicsPath = () => {
+    const cx = 15;
+    const cy = 175;
+    const g = 9.8;
+    const velocity = 20;
+    const rad = (launchAngle * Math.PI) / 180;
+    const vx = velocity * Math.cos(rad);
+    const vy = velocity * Math.sin(rad);
+    const tFlight = (2 * vy) / g;
+    const points = [];
+    const numPoints = 30;
+    for (let i = 0; i <= numPoints; i++) {
+      const t = (tFlight * i) / numPoints;
+      const xVal = cx + (t * vx) * (160 / (vx * tFlight));
+      const yVal = cy - (vy * t - 0.5 * g * t * t) * (110 / ((vy * vy) / (2 * g)));
+      if (!isNaN(xVal) && !isNaN(yVal)) {
+        points.push(`${xVal.toFixed(1)},${yVal.toFixed(1)}`);
+      }
     }
-    return `M ${points.join(' L ')}`;
+    return `M 15,175 L ${points.join(' L ')}`;
   };
 
   return (
@@ -98,86 +111,97 @@ function GraphzyPreview() {
           <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
           <span className="w-2 h-2 rounded-full bg-[#10B981]" />
         </div>
-        <span className="font-mono text-[9px] text-[#A3A3A3]">graphzy.io/visualizer/demo</span>
+        <span className="font-mono text-[9px] text-[#A3A3A3]">graphzy.io/demo/animated</span>
       </div>
 
       {/* Screen Area */}
       <div className="relative h-[180px] sm:h-[200px] bg-white border border-black/5 rounded-lg overflow-hidden flex items-center justify-center">
-        {/* Graph Grid Lines */}
-        <div className="absolute inset-0 grid grid-cols-10 grid-rows-6 pointer-events-none opacity-[0.15]">
-          {Array.from({ length: 60 }).map((_, i) => (
-            <div key={i} className="border-r border-b border-black/30 w-full h-full" />
-          ))}
+        {step !== 1 && (
+          <div className="absolute inset-0 grid grid-cols-10 grid-rows-6 pointer-events-none opacity-[0.12]">
+            {Array.from({ length: 60 }).map((_, i) => (
+              <div key={i} className="border-r border-b border-black/30 w-full h-full" />
+            ))}
+          </div>
+        )}
+
+        {/* X/Y Ground Axis */}
+        <div className="absolute left-0 right-0 h-[1px] bg-black/10 top-[175px]" />
+
+        {/* AI Prompt Input Bar */}
+        <div className="absolute top-3 left-3 right-3 bg-[#FAFAF8]/92 backdrop-blur-sm border border-black/5 rounded px-2.5 py-1.5 text-[9px] font-mono shadow-xs flex items-center gap-1.5 z-10">
+          <span className="text-[#0066CC] font-bold flex items-center gap-1">
+            <span className="w-1 h-1 rounded-full bg-[#0066CC] animate-ping" />
+            Prompt:
+          </span>
+          <span className="text-black/80 truncate font-semibold">{promptText}</span>
+          {step === 0 && <span className="w-1 h-3 bg-black/50 animate-pulse" />}
         </div>
 
-        {/* X/Y Axes */}
-        <div className="absolute left-0 right-0 h-[1.5px] bg-black/10" />
-        <div className="absolute top-0 bottom-0 w-[1.5px] bg-black/10" />
+        {/* Processing overlay */}
+        {step === 1 ? (
+          <div className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center gap-2 z-20">
+            <span className="w-4 h-4 border-2 border-[#0066CC] border-t-transparent rounded-full animate-spin" />
+            <span className="font-mono text-[8px] text-[#0066CC] uppercase tracking-wider font-semibold">AI Modeling physics parameters...</span>
+          </div>
+        ) : (
+          <>
+            {step > 1 && (
+              <svg className="absolute inset-0 w-full h-full text-[#0066CC] overflow-hidden" viewBox="0 0 200 200">
+                <motion.path 
+                  d={getPhysicsPath()} 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeDasharray="4 2"
+                  fill="none" 
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.6 }}
+                  key={step === 2 ? 'initial' : 'sliding'}
+                />
+                <circle cx="15" cy="175" r="4.5" fill="#0066CC" />
+                <line x1="15" y1="175" x2={15 + 12 * Math.cos((launchAngle * Math.PI) / 180)} y2={175 - 12 * Math.sin((launchAngle * Math.PI) / 180)} stroke="#0066CC" strokeWidth="2.5" />
+              </svg>
+            )}
 
-        {/* Animated Equation Input Bar */}
-        <div className="absolute top-3 left-3 bg-[#FAFAF8]/90 backdrop-blur-sm border border-black/5 rounded px-2.5 py-1 text-[10px] font-mono shadow-sm flex items-center gap-1.5 min-w-[110px]">
-          <span className="text-[#0066CC] font-bold">f(x) =</span>
-          <span>{equation}</span>
-          {step === 0 && <span className="w-1.5 h-3 bg-black/50 animate-pulse" />}
-        </div>
+            {/* Dynamic Coordinate Tooltip */}
+            <AnimatePresence>
+              {step === 4 && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="absolute bottom-10 right-4 bg-black text-white px-2 py-1 rounded text-[8px] font-mono shadow-md text-left z-10"
+                >
+                  <div>Launch angle: {launchAngle}°</div>
+                  <div>Status: Model Synthesized</div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
+        )}
 
-        {/* Graph Path Draw */}
-        <svg className="absolute inset-0 w-full h-full text-[#0066CC] overflow-hidden" viewBox="0 0 200 200">
-          <clipPath id="graph-clip">
-            <rect x="0" y="0" width="200" height="200" />
-          </clipPath>
-          {step > 0 && (
-            <motion.path 
-              d={getPath()} 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              fill="none" 
-              strokeLinecap="round"
-              clipPath="url(#graph-clip)"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              key={`${step}-${sliderVal}`}
-            />
-          )}
-        </svg>
-
-        {/* Dynamic Coordinate Tooltip */}
-        <AnimatePresence>
-          {step === 3 && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="absolute bottom-12 right-12 bg-black text-white px-2 py-1 rounded text-[9px] font-mono shadow-md text-left"
-            >
-              <div>Vertex: (0,0)</div>
-              <div>Stretch: {sliderVal}</div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <span className="absolute bottom-2 right-2 text-[8px] font-mono text-black/30">LOCKED (DEMO)</span>
+        <span className="absolute bottom-2 right-2 text-[7px] font-mono text-black/30">PROTOTYPE MOCKUP • UNDER ACTIVE DEVELOPMENT</span>
       </div>
 
       {/* Control Panel Simulator */}
-      <div className="bg-white rounded-lg p-3 border border-black/5 flex flex-col gap-2" style={{ touchAction: 'manipulation' }}>
-        <div className="flex justify-between items-baseline text-[10px] font-semibold">
-          <span className="text-black/50 font-mono">PARAMETER a (STRETCH)</span>
-          <span className="font-mono text-[#0066CC]">{sliderVal}</span>
+      <div className="bg-white rounded-lg p-3 border border-black/5 flex flex-col gap-2">
+        <div className="flex justify-between items-baseline text-[9px] font-semibold">
+          <span className="text-black/50 font-mono">LAUNCH ANGLE PARAMETER</span>
+          <span className="font-mono text-[#0066CC]">{launchAngle}°</span>
         </div>
-        <div className="relative w-full h-3 flex items-center" style={{ touchAction: 'none' }}>
+        <div className="relative w-full h-2 flex items-center">
           <div className="absolute inset-y-0 flex items-center w-full">
-            <div className="w-full h-1 bg-black/[0.06] rounded-full relative">
-              <motion.div
+            <div className="w-full h-0.5 bg-black/[0.06] rounded-full relative">
+              <div
                 className="absolute left-0 top-0 h-full bg-[#0066CC] rounded-full"
-                style={{ width: `${(sliderVal / 2.5) * 100}%` }}
+                style={{ width: `${((launchAngle - 15) / 60) * 100}%` }}
               />
             </div>
           </div>
-          <motion.div
-            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-2 border-[#0066CC] shadow-sm"
-            style={{ left: `${(sliderVal / 2.5) * 100}%` }}
+          <div
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-[#0066CC] shadow-xs"
+            style={{ left: `${((launchAngle - 15) / 60) * 100}%` }}
           />
         </div>
       </div>
@@ -186,9 +210,9 @@ function GraphzyPreview() {
 }
 
 // ==========================================
-// 2. ANIMATED MESA PREVIEW COMPONENT
+// 2. ANIMATED FORKLINE PREVIEW COMPONENT
 // ==========================================
-function MesaPreview() {
+function ForklinePreview() {
   const [step, setStep] = useState(0); // 0: Seated state, 1: order arrives, 2: kitchen update, 3: warning limit, 4: clean/reset
   const [activeNotification, setActiveNotification] = useState(false);
   const [t2Status, setT2Status] = useState('Empty');
@@ -201,14 +225,10 @@ function MesaPreview() {
   useEffect(() => {
     let active = true;
     let timerId;
-
-    const runStep = (nextStep, delay) => {
-      timerId = setTimeout(() => {
-        if (active) setStep(nextStep);
-      }, delay);
-    };
+    let intervalId;
 
     if (step === 0) {
+      // Reset state
       setT2Status('Empty');
       setT2Duration('0m');
       setActiveNotification(false);
@@ -216,24 +236,25 @@ function MesaPreview() {
         { id: 'o1', item: 'T-1: Steak Frites', time: '14m' },
         { id: 'o2', item: 'T-3: Caesar Salad', time: '6m' }
       ]);
-      runStep(1, 2000);
+      timerId = setTimeout(() => { if (active) setStep(1); }, 2000);
     } else if (step === 1) {
-      setActiveNotification(true);
-      runStep(2, 2000);
-    } else if (step === 2) {
-      setActiveNotification(false);
+      // Table 2 gets seated, order sent to kitchen
       setT2Status('Seated');
-      setT2Duration('18m');
-      setActiveKitchenOrders(prev => [
-        ...prev,
-        { id: 'o3', item: 'T-2: Calamari Appetizer', time: '1m' }
-      ]);
-      runStep(3, 3000);
+      setT2Duration('1m');
+      setActiveKitchenOrders(prev => [...prev, { id: 'o3', item: 'T-2: Salmon Grill', time: '1m' }]);
+      timerId = setTimeout(() => { if (active) setStep(2); }, 2500);
+    } else if (step === 2) {
+      // Kitchen completes Table 3 salad order, time passes
+      setActiveKitchenOrders(prev => prev.filter(o => o.id !== 'o2').map(o => ({ ...o, time: o.id === 'o1' ? '19m' : '6m' })));
+      setT2Duration('6m');
+      timerId = setTimeout(() => { if (active) setStep(3); }, 2500);
     } else if (step === 3) {
-      setT2Duration('42m');
-      runStep(4, 3000);
+      // Table 1 warning limit triggered
+      setActiveNotification(true);
+      timerId = setTimeout(() => { if (active) setStep(4); }, 4000);
     } else if (step === 4) {
-      runStep(0, 2500);
+      // Reset loop
+      timerId = setTimeout(() => { if (active) setStep(0); }, 1000);
     }
 
     return () => {
@@ -243,14 +264,14 @@ function MesaPreview() {
   }, [step]);
 
   return (
-    <Card variant="surface" className="p-5 bg-[#FEF7EC] border-[#B45309]/14 shadow-sm overflow-hidden flex flex-col gap-4 w-full relative">
+    <Card variant="surface" className="p-5 bg-[#FEF7EC] border-[#B45309]/14 shadow-sm overflow-hidden flex flex-col gap-4 w-full">
       <div className="flex justify-between items-center pb-2 border-b border-[#B45309]/10">
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
           <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
           <span className="w-2 h-2 rounded-full bg-[#10B981]" />
         </div>
-        <span className="font-mono text-[9px] text-[#92400E]">mesa.graphxy.com/dashboard/floor</span>
+        <span className="font-mono text-[9px] text-[#92400E]">forkline.graphxy.com/dashboard/floor</span>
       </div>
 
       {/* Screen Area */}
@@ -351,9 +372,9 @@ function MesaPreview() {
 }
 
 // ==========================================
-// 3. ANIMATED VENTUREFLOW PREVIEW COMPONENT
+// 3. ANIMATED LATTICE PREVIEW COMPONENT
 // ==========================================
-function VentureFlowPreview() {
+function LatticePreview() {
   const [step, setStep] = useState(0); // 0: overview, 1: CRM transition, 2: progress increase, 3: runway/milestone completed
   const [committed, setCommitted] = useState(450);
   const [apexStage, setApexStage] = useState('Meetings'); // 'Meetings' | 'Term Sheet'
@@ -414,7 +435,7 @@ function VentureFlowPreview() {
           <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
           <span className="w-2 h-2 rounded-full bg-[#10B981]" />
         </div>
-        <span className="font-mono text-[9px] text-[#1B3A6B]">ventureflow.graphxy.com/console/founders</span>
+        <span className="font-mono text-[9px] text-[#1B3A6B]">lattice.graphxy.com/workspace/dashboard</span>
       </div>
 
       {/* Screen Area */}
@@ -426,7 +447,7 @@ function VentureFlowPreview() {
             <span className="text-[12px] font-serif font-bold text-[#1B3A6B] transition-all duration-300">{runway} Months</span>
           </div>
           <div className="text-right">
-            <span className="text-[8px] font-mono text-black/40 block">SEED COMMITTED</span>
+            <span className="text-[8px] font-mono text-black/45 block">SEED COMMITTED</span>
             <span className="text-[12px] font-mono font-bold text-black/80">${committed}K / $1.5M</span>
           </div>
         </div>
@@ -505,10 +526,9 @@ function VentureFlowPreview() {
 export default function ProductShowcase() {
   return (
     <section id="products" className="py-12 sm:py-16 bg-white border-b border-black/[0.06] relative overflow-hidden">
-      {/* Background radial gradients for refined depth */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#1B3A6B]/5 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute top-2/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#B45309]/3 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808003_1px,transparent_1px),linear-gradient(to_bottom,#80808003_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute top-2/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#B45309]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       <Container className="relative z-10">
         <SectionHeading 
@@ -585,26 +605,26 @@ export default function ProductShowcase() {
             </div>
           </div>
 
-          {/* PRODUCT ROW 2: MESA */}
+          {/* PRODUCT ROW 2: FORKLINE */}
           <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center border-t border-black/[0.04] pt-10 sm:pt-16">
             {/* Dynamic Preview Component */}
             <div className="lg:col-span-5">
-              <MesaPreview />
+              <ForklinePreview />
             </div>
 
             {/* Details Column */}
             <div className="lg:col-span-7 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
-                <Tag variant="serva">Concept Preview</Tag>
+                <Tag variant="forkline">Concept Preview</Tag>
                 <span className="font-mono text-[9px] text-[#A3A3A3] font-bold uppercase tracking-wider">Product In Development</span>
               </div>
               
               <h3 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
-                Mesa
+                Forkline
               </h3>
               
               <p className="text-xs sm:text-sm text-[#525252] leading-relaxed mb-5">
-                An upcoming restaurant management and hospitality operations engine. Designed to eliminate expensive hardware lock-ins, Mesa runs natively on generic touch displays and monitors, synchronizing seating layouts, orders, and food prep speeds.
+                An upcoming restaurant management and hospitality operations engine. Designed to eliminate expensive hardware lock-ins, Forkline runs natively on generic touch displays and monitors, synchronizing seating layouts, orders, and food prep speeds.
               </p>
               
               {/* Product Specifications Grid */}
@@ -644,14 +664,14 @@ export default function ProductShowcase() {
               </div>
 
               <div>
-                <Link to="/mesa">
-                  <Button variant="serva" size="md">Join Developer Preview Waitlist</Button>
+                <Link to="/forkline">
+                  <Button variant="forkline" size="md">Join Developer Preview Waitlist</Button>
                 </Link>
               </div>
             </div>
           </div>
 
-          {/* PRODUCT ROW 3: VENTUREFLOW */}
+          {/* PRODUCT ROW 3: LATTICE */}
           <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center border-t border-black/[0.04] pt-10 sm:pt-16">
             {/* Details Column */}
             <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center">
@@ -661,11 +681,11 @@ export default function ProductShowcase() {
               </div>
               
               <h3 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
-                VentureFlow
+                Lattice
               </h3>
               
               <p className="text-xs sm:text-sm text-[#525252] leading-relaxed mb-5">
-                The operating system for startup execution. Built to eliminate the complexity of fragmented spreadsheets and scattered tools, VentureFlow consolidates runway logs, investor communications, cap tables, and slide-deck views into a single, high-visibility dashboard for founders.
+                Structured workspace for startup execution and operational clarity, consolidating fundraising trackers, runway logs, and team coordination workflows into a single, high-visibility dashboard for founders.
               </p>
               
               {/* Product Specifications Grid */}
@@ -705,15 +725,15 @@ export default function ProductShowcase() {
               </div>
 
               <div>
-                <Link to="/ventureflow">
-                  <Button variant="brand" size="md">Explore VentureFlow Concept</Button>
+                <Link to="/lattice">
+                  <Button variant="brand" size="md">Explore Lattice Concept</Button>
                 </Link>
               </div>
             </div>
 
             {/* Dynamic Preview Component */}
             <div className="lg:col-span-5 order-1 lg:order-2">
-              <VentureFlowPreview />
+              <LatticePreview />
             </div>
           </div>
 

@@ -3,6 +3,7 @@ module.exports = {
   PRODUCT_NAMES: {
     labs: "Graphxy Labs",
     graphzy: "Graphzy",
-    serva: "Serva"
+    forkline: "Forkline",
+    lattice: "Lattice"
   }
 };

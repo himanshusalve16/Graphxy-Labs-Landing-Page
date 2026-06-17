@@ -28,11 +28,23 @@
   --phys:           #6B3FA0;
   --phys-bg:        #F2ECFB;
 
-  /* Serva — warm, hospitality palette */
-  --serva:          #92400E;
-  --serva-mid:      #B45309;
-  --serva-bg:       #FEF7EC;
-  --serva-border:   rgba(180, 83, 9, 0.14);
+  /* Forkline — warm, hospitality palette */
+  --forkline:          #92400E;
+  --forkline-mid:      #B45309;
+  --forkline-bg:       #FEF7EC;
+  --forkline-border:   rgba(180, 83, 9, 0.14);
+
+  /* Lattice — deep corporate palette */
+  --lattice:           #1B3A6B;
+  --lattice-mid:       #0066CC;
+  --lattice-bg:        #EEF3FB;
+  --lattice-border:    rgba(27, 58, 107, 0.14);
+
+  /* Lattice — deep corporate palette */
+  --lattice:           #1B3A6B;
+  --lattice-mid:       #0066CC;
+  --lattice-bg:        #EEF3FB;
+  --lattice-border:    rgba(27, 58, 107, 0.14);
 
   /* Surface hierarchy — light only */
   --page:           #FAFAF8;        /* Page background — warm off-white */
@@ -397,7 +409,7 @@ body {
 /* ─────────────────────────────────────────────────────────────
    05 — PRODUCT CARDS
 ───────────────────────────────────────────────────────────── */
-.product-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.product-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
 .pc {
   border-radius: var(--r-xl);
@@ -408,7 +420,8 @@ body {
 }
 
 .pc-white  { background: var(--surface); box-shadow: var(--sh-md); }
-.pc-tinted { background: var(--serva-bg); border-color: var(--serva-border); }
+.pc-tinted { background: var(--forkline-bg); border-color: var(--forkline-border); }
+.pc-lattice { background: var(--lattice-bg); border-color: var(--lattice-border); }
 
 .pc-eyebrow {
   font-family: var(--ff-mono);
@@ -419,7 +432,8 @@ body {
   margin-bottom: 20px;
 }
 .pc-white  .pc-eyebrow { color: var(--math); }
-.pc-tinted .pc-eyebrow { color: var(--serva); }
+.pc-tinted .pc-eyebrow { color: var(--forkline); }
+.pc-lattice .pc-eyebrow { color: var(--lattice); }
 
 .pc-badge {
   display: inline-flex;
@@ -510,14 +524,24 @@ body {
   box-shadow: 0 4px 14px rgba(0,102,204,0.30);
 }
 
-.btn-serva {
-  background: var(--serva);
+.btn-forkline {
+  background: var(--forkline);
   color: #fff;
   box-shadow: 0 2px 8px rgba(146,64,14,0.22), 0 1px 2px rgba(146,64,14,0.10);
 }
-.btn-serva:hover {
-  background: var(--serva-mid);
+.btn-forkline:hover {
+  background: var(--forkline-mid);
   box-shadow: 0 4px 14px rgba(146,64,14,0.28);
+}
+
+.btn-lattice {
+  background: var(--lattice);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(27,58,107,0.22), 0 1px 2px rgba(27,58,107,0.10);
+}
+.btn-lattice:hover {
+  background: var(--lattice-mid);
+  box-shadow: 0 4px 14px rgba(27,58,107,0.28);
 }
 
 .btn-secondary {
@@ -573,7 +597,8 @@ body {
 .tag-chem  { background: var(--chem-bg);  color: var(--chem);  }
 .tag-bio   { background: var(--bio-bg);   color: var(--bio);   }
 .tag-phys  { background: var(--phys-bg);  color: var(--phys);  }
-.tag-serva { background: var(--serva-bg); color: var(--serva); }
+.tag-forkline { background: var(--forkline-bg); color: var(--forkline); }
+.tag-lattice { background: var(--lattice-bg); color: var(--lattice); }
 .tag-brand { background: var(--brand-bg); color: var(--brand); }
 
 .badge {
@@ -903,7 +928,7 @@ body {
   <div class="ph-inner">
     <div class="label">Graphxy Labs · Design System · v0.4</div>
     <h1>Visual language for<br>Graphxy Labs <span>&amp; its products.</span></h1>
-    <p>One coherent system serving the company brand, Graphzy, and Serva. Light-only. Premium. Restrained. Every decision here is intentional — if it doesn't earn its place, it isn't here.</p>
+    <p>One coherent system serving the company brand, Graphzy, and Forkline. Light-only. Premium. Restrained. Every decision here is intentional — if it doesn't earn its place, it isn't here.</p>
   </div>
 </header>
 
@@ -915,7 +940,7 @@ body {
 <section class="ds-section">
   <div class="section-label">01</div>
   <h2 class="section-title">Color System</h2>
-  <p class="section-desc">Color is used with restraint. Brand colors signal identity. Subject lenses signal domain in Graphzy — never UI state. Warm amber is reserved for Serva and caution — never for errors. Nothing is red.</p>
+  <p class="section-desc">Color is used with restraint. Brand colors signal identity. Subject lenses signal domain in Graphzy — never UI state. Warm amber is reserved for Forkline and caution — never for errors. Nothing is red.</p>
 
   <div class="group-label">Graphxy Labs — Brand</div>
   <div class="swatch-row">
@@ -1038,30 +1063,30 @@ body {
     </div>
   </div>
 
-  <div class="group-label">Serva — Product &amp; Caution</div>
+  <div class="group-label">Forkline — Product &amp; Caution</div>
   <div class="swatch-row">
     <div class="swatch">
       <div class="sw-color" style="background:#92400E;"></div>
       <div class="sw-body">
-        <div class="sw-name">Serva</div>
+        <div class="sw-name">Forkline</div>
         <div class="sw-hex">#92400E</div>
-        <div class="sw-use">Serva brand, caution states</div>
+        <div class="sw-use">Forkline brand, caution states</div>
       </div>
     </div>
     <div class="swatch">
       <div class="sw-color" style="background:#B45309;"></div>
       <div class="sw-body">
-        <div class="sw-name">Serva Mid</div>
+        <div class="sw-name">Forkline Mid</div>
         <div class="sw-hex">#B45309</div>
-        <div class="sw-use">Interactive hover on Serva elements</div>
+        <div class="sw-use">Interactive hover on Forkline elements</div>
       </div>
     </div>
     <div class="swatch">
       <div class="sw-color" style="background:#FEF7EC; border-bottom:1px solid rgba(180,83,9,0.10);"></div>
       <div class="sw-body">
-        <div class="sw-name">Serva Bg</div>
+        <div class="sw-name">Forkline Bg</div>
         <div class="sw-hex">#FEF7EC</div>
-        <div class="sw-use">Serva card background, warm tint</div>
+        <div class="sw-use">Forkline card background, warm tint</div>
       </div>
     </div>
   </div>
@@ -1227,7 +1252,7 @@ body {
 <section class="ds-section">
   <div class="section-label">05</div>
   <h2 class="section-title">Product Cards</h2>
-  <p class="section-desc">Used on the Graphxy Labs landing page. Graphzy is white surface with shadow. Serva is warm-tinted with amber border. Both have the same typographic structure. The badge-only treatment signals "coming soon" without greying out the card.</p>
+  <p class="section-desc">Used on the Graphxy Labs landing page. Graphzy is white surface with shadow. Forkline is warm-tinted. Lattice is tinted corporate blue. The badge-only treatment signals "coming soon" without greying out the card.</p>
 
   <div class="product-cards-grid">
     <div class="pc pc-white">
@@ -1237,14 +1262,24 @@ body {
       <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
     </div>
     <div class="pc pc-tinted">
-      <div class="pc-eyebrow">Serva · Restaurant Operations</div>
+      <div class="pc-eyebrow">Forkline · Restaurant Operations</div>
       <div class="pc-badge">
         <span class="badge-dot"></span>
         Coming Soon
       </div>
       <h3>Restaurant management built for modern operators.</h3>
       <p>A unified platform for orders, tables, inventory, staff, and analytics. Designed to run a restaurant the way a product company would.</p>
-      <button class="btn btn-md btn-serva">Join Serva Waitlist</button>
+      <button class="btn btn-md btn-forkline">Join Forkline Waitlist</button>
+    </div>
+    <div class="pc pc-lattice">
+      <div class="pc-eyebrow">Lattice · Startup Operations</div>
+      <div class="pc-badge">
+        <span class="badge-dot"></span>
+        Coming Soon
+      </div>
+      <h3>Structured workspaces built for startup execution.</h3>
+      <p>Track cap tables, investor outreach CRM, dynamic CAPEX metrics, and milestone pipelines in a cohesive corporate operating workspace.</p>
+      <button class="btn btn-md btn-lattice">Join Lattice Waitlist</button>
     </div>
   </div>
 </section>
@@ -1268,7 +1303,8 @@ body {
         </div>
         <div class="btn-row">
           <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
-          <button class="btn btn-md btn-serva">Join Serva Waitlist</button>
+          <button class="btn btn-md btn-forkline">Join Forkline Waitlist</button>
+          <button class="btn btn-md btn-lattice">Join Lattice Waitlist</button>
         </div>
         <div class="btn-row">
           <button class="btn btn-sm btn-brand">Small Primary</button>
@@ -1317,7 +1353,8 @@ body {
       <div class="group-label">Product &amp; Status</div>
       <div class="tag-row">
         <span class="tag tag-brand"><span class="tag-dot"></span>Graphxy Labs</span>
-        <span class="tag tag-serva"><span class="tag-dot"></span>Serva</span>
+        <span class="tag tag-forkline"><span class="tag-dot"></span>Forkline</span>
+        <span class="tag tag-lattice"><span class="tag-dot"></span>Lattice</span>
         <span class="badge"><span class="badge-dot"></span>Coming Soon</span>
       </div>
     </div>

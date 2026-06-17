@@ -36,7 +36,8 @@ export default function Contact() {
     "Automation & Workflows",
     "Scalable Tech Products",
     "Graphzy Partnership",
-    "Serva Early Access"
+    "Forkline Early Access",
+    "Lattice Early Access"
   ];
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm({
@@ -94,7 +95,7 @@ export default function Contact() {
                   Let's discuss your next system.
                 </h1>
                 <p className="text-xs md:text-sm text-[#525252] leading-relaxed">
-                  Have a question about Graphzy, interested in the Serva preview, or looking to build bespoke business software? Reach out to our engineering team.
+                  Have a question about Graphzy, Forkline, or Lattice, or looking to build bespoke business software? Reach out to our engineering team.
                 </p>
               </div>
 

@@ -45,7 +45,7 @@ export default function TermsOfService() {
             <section className="flex flex-col gap-3">
               <h2 className="font-serif text-lg text-[#0F0F0F] font-semibold">4. Disclaimers & Limitations of Liability</h2>
               <p>
-                Our visual products and simulations are provided "as is" and "as available". We make no warranties of any kind, explicit or implied, concerning the grading correctness, equation accuracy, or operational uptime of Graphzy, Mesa, and VentureFlow. We shall not be liable for any direct, indirect, incidental, or consequential damages resulting from platform downtime or data loss.
+                Our visual products and simulations are provided "as is" and "as available". We make no warranties of any kind, explicit or implied, concerning the grading correctness, equation accuracy, or operational uptime of Graphzy, Forkline, and Lattice. We shall not be liable for any direct, indirect, incidental, or consequential damages resulting from platform downtime or data loss.
               </p>
             </section>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 
-export default function VentureFlowFeatures() {
+export default function LatticeFeatures() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full text-left mt-16 max-w-4xl mx-auto">
       <Card variant="surface" className="p-8 bg-white border-[#1B3A6B]/10 hover:border-[#1B3A6B]/30 duration-200">

@@ -20,9 +20,9 @@ const VERTICALS = [
 ];
 
 const PRODUCTS = [
-  { id: 'p_graphzy',    name: 'Graphzy',     description: 'Equation Visualizer', status: 'Prototype Preview', color: '#0066CC', link: '/graphzy',     connects: ['v1','v3','v5'] },
-  { id: 'p_mesa',       name: 'Mesa',        description: 'Restaurant OS',       status: 'Concept Preview',   color: '#92400E', link: '/mesa',        connects: ['v0','v1','v6'] },
-  { id: 'p_ventureflow',name: 'VentureFlow', description: 'Startup OS',          status: 'Early Concept',     color: '#1B3A6B', link: '/ventureflow', connects: ['v1','v4','v7'] },
+  { id: 'p_graphzy',    name: 'Graphzy',     description: 'AI-Powered STEM Visualizer', status: 'Prototype Mockup', color: '#0066CC', link: '/graphzy',     connects: ['v1','v3','v5'] },
+  { id: 'p_forkline',   name: 'Forkline',    description: 'Restaurant Operations Platform', status: 'Concept Preview',   color: '#92400E', link: '/forkline',    connects: ['v0','v1','v6'] },
+  { id: 'p_lattice',    name: 'Lattice',     description: 'Startup Operations Platform', status: 'Early Concept',     color: '#1B3A6B', link: '/lattice',     connects: ['v1','v4','v7'] },
 ];
 
 // Product placement angles (radial): top, bottom-right, bottom-left
@@ -314,9 +314,9 @@ const SCATTER_VERTS = [
 ];
 
 const SCATTER_PRODS = [
-  { id: 'p_graphzy',    name: 'Graphzy',     x: 110, y: 110, color: '#0066CC', description: 'Prototype Preview • Equation Visualizer', link: '/graphzy',     connects: ['v1','v3','v5'] },
-  { id: 'p_mesa',       name: 'Mesa',        x: 490, y: 190, color: '#92400E', description: 'Concept Preview • Restaurant OS',          link: '/mesa',        connects: ['v0','v1','v6'] },
-  { id: 'p_ventureflow',name: 'VentureFlow', x: 220, y: 325, color: '#1B3A6B', description: 'Early Concept • Startup OS',               link: '/ventureflow', connects: ['v1','v4','v7'] },
+  { id: 'p_graphzy',    name: 'Graphzy',     x: 110, y: 110, color: '#0066CC', description: 'Prototype Mockup • AI-Powered STEM Visualizer', link: '/graphzy',     connects: ['v1','v3','v5'] },
+  { id: 'p_forkline',   name: 'Forkline',    x: 490, y: 190, color: '#92400E', description: 'Concept Preview • Restaurant Operations Platform',          link: '/forkline',    connects: ['v0','v1','v6'] },
+  { id: 'p_lattice',    name: 'Lattice',     x: 220, y: 325, color: '#1B3A6B', description: 'Early Concept • Startup Operations Platform',               link: '/lattice',     connects: ['v1','v4','v7'] },
 ];
 
 function ScatterGraph() {
@@ -458,10 +458,9 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-10 pb-12 sm:pt-16 sm:pb-20 border-b border-black/[0.06] bg-[#FAFAF8]">
-      {/* Backgrounds */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808003_1px,transparent_1px),linear-gradient(to_bottom,#80808003_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#1B3A6B]/5 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute top-1/2 left-10 w-[300px] h-[300px] bg-gradient-to-tr from-[#92400E]/3 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-10 w-[300px] h-[300px] bg-gradient-to-tr from-[#92400E]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
 
       <Container className="relative z-10 flex flex-col items-center text-center">
         {/* Header */}

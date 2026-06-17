@@ -19,7 +19,7 @@ export const Button = React.forwardRef(({
           "bg-[#0066CC] text-white shadow-[0_2px_8px_rgba(0,102,204,0.22)] hover:bg-[#0057AA] hover:shadow-[0_4px_14px_rgba(0,102,204,0.30)] hover:-translate-y-0.5 focus-visible:ring-[#0066CC]":
             variant === 'graphzy',
           "bg-[#92400E] text-white shadow-[0_2px_8px_rgba(146,64,14,0.22)] hover:bg-[#B45309] hover:shadow-[0_4px_14px_rgba(146,64,14,0.28)] hover:-translate-y-0.5 focus-visible:ring-[#92400E]":
-            variant === 'serva',
+            variant === 'forkline',
           "bg-white text-[#0F0F0F] border border-black/10 shadow-[0_1px_2px_rgba(0,0,0,0.05)] hover:border-black/20 hover:shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.05)] hover:-translate-y-0.5 focus-visible:ring-[#1B3A6B]":
             variant === 'secondary',
           "bg-transparent text-[#525252] border border-black/5 hover:border-black/15 hover:text-[#0F0F0F]":

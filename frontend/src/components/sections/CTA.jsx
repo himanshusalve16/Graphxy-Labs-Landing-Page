@@ -13,7 +13,7 @@ export default function CTA() {
               Explore our software solutions or start a project.
             </h2>
             <p className="text-sm text-[#525252] leading-relaxed">
-              Whether you want to test the Graphzy interactive math calculator or request custom software engineering services, we are ready to build.
+              Whether you want to test the Graphzy AI-powered STEM visualizer or request custom software engineering services, we are ready to build.
             </p>
           </div>
           

@@ -4,20 +4,20 @@ import { Card } from '../ui/Card';
 export default function GraphzyUseCases({ onSelectQuery }) {
   const templates = [
     {
-      tag: "quadratic",
+      tag: "math",
       query: "How does factor 'a' stretch a parabola y = ax²?",
     },
     {
-      tag: "trigonometry",
+      tag: "physics",
+      query: "Simulate a projectile launch with customizable launch angle and velocity",
+    },
+    {
+      tag: "chemistry",
+      query: "Show a 2D water molecule H2O structure with bond angle and length parameters",
+    },
+    {
+      tag: "math",
       query: "Compare sin(x) and 2*sin(x) amplitude changes",
-    },
-    {
-      tag: "cubic",
-      query: "Plot a cubic equation y = x³ - 3x and show roots",
-    },
-    {
-      tag: "transformation",
-      query: "Show how vertical shift 'c' moves a parabola y = x² + c",
     }
   ];
 

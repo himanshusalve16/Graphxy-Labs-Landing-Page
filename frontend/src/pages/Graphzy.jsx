@@ -51,9 +51,38 @@ export default function Graphzy() {
   // Heuristic mock topic responses
   const getMockTopic = (query) => {
     const q = query.toLowerCase();
-    if (q.includes('sin') || q.includes('amplitude') || q.includes('wave') || q.includes('trig')) {
+    if (q.includes('projectile') || q.includes('launch') || q.includes('velocity') || q.includes('physics')) {
+      return {
+        topicKey: "projectile",
+        subject: "physics",
+        equation: "y = x * \\tan(\\theta) - \\frac{g x^2}{2 v^2 \\cos^2(\\theta)}",
+        keyIdea: "Projectile Trajectory Mechanics",
+        summary: "In a uniform gravitational field $g$, a projectile launch trajectory forms a downward-facing parabola. Adjusting the launch angle $\\theta$ and initial velocity $v$ dynamically shifts coordinates like Peak Height, Horizontal Range, and flight duration.",
+        concepts: ["projectile kinematics", "parabolic trajectory", "vector components"],
+        sliders: [
+          { id: 'angle', label: 'Launch Angle (θ)', min: 10, max: 85, step: 1, val: 45.0 },
+          { id: 'velocity', label: 'Initial Velocity (v)', min: 5, max: 40, step: 0.5, val: 20.0 }
+        ],
+        followUps: ["What is the maximum range?", "What if launch angle is 90°?", "How does gravity affect range?"]
+      };
+    } else if (q.includes('water') || q.includes('h2o') || q.includes('chemistry') || q.includes('molecule')) {
+      return {
+        topicKey: "water_molecule",
+        subject: "chemistry",
+        equation: "H₂O Molecular Structure",
+        keyIdea: "Water Molecule Bond Parameters",
+        summary: "Water ($H_2O$) is a polar molecule with a bent geometry. This shape arises from the oxygen atom's $sp^3$ hybridization and two lone pairs. The experimental bond angle is $104.5^\\circ$ and the bond length is $95.8 \\text{ pm}$. Adjusting the parameters changes the net dipole moment vector.",
+        concepts: ["molecular geometry", "covalent bonds", "dipole moment"],
+        sliders: [
+          { id: 'bondAngle', label: 'Bond Angle (θ)', min: 80, max: 180, step: 0.5, val: 104.5 },
+          { id: 'bondLength', label: 'Bond Length (pm)', min: 50, max: 150, step: 1, val: 96.0 }
+        ],
+        followUps: ["Why is the shape bent?", "What is sp³ hybridization?", "How polar is water?"]
+      };
+    } else if (q.includes('sin') || q.includes('amplitude') || q.includes('wave') || q.includes('trig')) {
       return {
         topicKey: "sine",
+        subject: "math",
         equation: "y = a * \\sin(x)",
         keyIdea: "The amplitude stretch factor scaling the heights of trigonometric wave troughs and peaks.",
         summary: "Multiplying the sine function by a constant factor <code>a</code> scales the amplitude. A larger value stretches the wave vertically, while values between 0 and 1 compress it. A negative factor flips the wave across the x-axis.",
@@ -64,6 +93,7 @@ export default function Graphzy() {
     } else if (q.includes('parabola') || q.includes('quadratic') || q.includes('stretch') || q.includes('ax²') || q.includes('ax^2')) {
       return {
         topicKey: "parabola",
+        subject: "math",
         equation: "y = a * x^2",
         keyIdea: "The leading coefficient 'a' dictates the vertical scale and opening direction of a quadratic parabola.",
         summary: "Changing the stretch factor <code>a</code> alters how narrow or wide the parabola opens. If <code>|a| &gt; 1</code>, it grows narrower (steeper). If <code>0 &lt; |a| &lt; 1</code>, it widens. If <code>a</code> is negative, the parabola points downwards.",
@@ -74,6 +104,7 @@ export default function Graphzy() {
     } else if (q.includes('cubic') || q.includes('x³') || q.includes('x^3') || q.includes('roots')) {
       return {
         topicKey: "cubic",
+        subject: "math",
         equation: "y = x^3 - a * x",
         keyIdea: "Cubic polynomials have up to three real roots where the curve crosses the horizontal x-axis.",
         summary: "This cubic equation is of the form <code>y = x³ - ax</code>. The parameter <code>a</code> controls the separation of the local maximum and minimum. When <code>a &gt; 0</code>, the curve bends to form two turning points and three roots.",
@@ -84,6 +115,7 @@ export default function Graphzy() {
     } else if (q.includes('shift') || q.includes('c') || q.includes('y = x² + c') || q.includes('y = x^2 + c')) {
       return {
         topicKey: "transformation",
+        subject: "math",
         equation: "y = x^2 + c",
         keyIdea: "Adding a constant 'c' shifts the entire curve vertically along the y-axis without altering its shape.",
         summary: "In <code>y = x² + c</code>, <code>c</code> represents the vertical shift. When <code>c &gt; 0</code>, the parabola slides upwards. When <code>c &lt; 0</code>, it slides downwards. The vertex is always at <code>(0, c)</code>.",
@@ -95,6 +127,7 @@ export default function Graphzy() {
       // Default fallback math
       return {
         topicKey: "custom_quadratic",
+        subject: "math",
         equation: "y = a * x^2 + c",
         keyIdea: "Interactive exploration of parameterized quadratic functions.",
         summary: `You asked: "<strong>${query}</strong>". Here is an interactive graphing model graphing <code>y = ax² + c</code>. Adjust the parameters to see transformations in real-time.`,
@@ -328,7 +361,9 @@ export default function Graphzy() {
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1.5">
-                          <Tag variant="math">{item.subject}</Tag>
+                          <Tag variant={item.subject?.toLowerCase() === 'physics' ? 'phys' : item.subject?.toLowerCase() === 'chemistry' ? 'chem' : 'math'}>
+                            {item.subject}
+                          </Tag>
                           <span className="font-mono text-[9px] text-[#A3A3A3]">{item.date} • {item.time}</span>
                         </div>
                         <h3 className="font-sans text-sm font-semibold text-[#0F0F0F] truncate">

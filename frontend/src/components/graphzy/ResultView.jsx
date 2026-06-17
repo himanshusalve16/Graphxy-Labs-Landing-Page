@@ -38,7 +38,9 @@ export default function ResultView({ activeSession, followUpCount, onBack, onSen
           <ArrowLeft size={14} /> New Question
         </button>
         <div className="flex items-center gap-3">
-          <Tag variant="math">Math</Tag>
+          <Tag variant={topic.subject === 'physics' ? 'phys' : topic.subject === 'chemistry' ? 'chem' : 'math'}>
+            {topic.subject || 'math'}
+          </Tag>
           <span className="text-xs font-medium text-[#525252] truncate max-w-sm sm:max-w-md">"{query}"</span>
         </div>
       </div>
@@ -48,6 +50,7 @@ export default function ResultView({ activeSession, followUpCount, onBack, onSen
         {/* Left Visual Canvas */}
         <div className="lg:col-span-7 w-full">
           <GraphzyPreview 
+            topic={topic}
             equation={topic.equation}
             sliders={topic.sliders}
             onSliderChange={onSliderChange}

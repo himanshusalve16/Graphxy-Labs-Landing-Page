@@ -12,17 +12,17 @@ import { useIsTouch, useBreakpoint } from '../../utils/useDeviceType';
 const verticalsData = [
   { id: 'v3', name: 'AI & ML', x: 80, y: 130, icon: Cpu, products: ['p_graphzy'] },
   { id: 'v5', name: 'Custom Software', x: 150, y: 130, icon: Code, products: ['p_graphzy'] },
-  { id: 'v1', name: 'Web Development', x: 220, y: 130, icon: Monitor, products: ['p_graphzy', 'p_mesa', 'p_ventureflow'] },
-  { id: 'v0', name: 'Management Systems', x: 290, y: 130, icon: Grid, products: ['p_mesa'] },
-  { id: 'v6', name: 'Automation', x: 360, y: 130, icon: GitMerge, products: ['p_mesa'] },
-  { id: 'v4', name: 'Data Science', x: 430, y: 130, icon: LineChart, products: ['p_ventureflow'] },
-  { id: 'v7', name: 'Scalable Tech', x: 500, y: 130, icon: TrendingUp, products: ['p_ventureflow'] },
+  { id: 'v1', name: 'Web Development', x: 220, y: 130, icon: Monitor, products: ['p_graphzy', 'p_forkline', 'p_lattice'] },
+  { id: 'v0', name: 'Management Systems', x: 290, y: 130, icon: Grid, products: ['p_forkline'] },
+  { id: 'v6', name: 'Automation', x: 360, y: 130, icon: GitMerge, products: ['p_forkline'] },
+  { id: 'v4', name: 'Data Science', x: 430, y: 130, icon: LineChart, products: ['p_lattice'] },
+  { id: 'v7', name: 'Scalable Tech', x: 500, y: 130, icon: TrendingUp, products: ['p_lattice'] },
 ];
 
 const productsData = [
-  { id: 'p_graphzy', name: 'Graphzy', x: 120, y: 240, color: '#0066CC', link: '/graphzy', tag: 'Prototype Preview' },
-  { id: 'p_mesa', name: 'Mesa', x: 300, y: 240, color: '#92400E', link: '/mesa', tag: 'Concept Preview' },
-  { id: 'p_ventureflow', name: 'VentureFlow', x: 480, y: 240, color: '#1B3A6B', link: '/ventureflow', tag: 'Early Concept' },
+  { id: 'p_graphzy', name: 'Graphzy', x: 120, y: 240, color: '#0066CC', link: '/graphzy', tag: 'Prototype Mockup' },
+  { id: 'p_forkline', name: 'Forkline', x: 300, y: 240, color: '#92400E', link: '/forkline', tag: 'Concept Preview' },
+  { id: 'p_lattice', name: 'Lattice', x: 480, y: 240, color: '#1B3A6B', link: '/lattice', tag: 'Early Concept' },
 ];
 
 // ──────────────────────────────────────────────────────────────
@@ -31,17 +31,17 @@ const productsData = [
 const mobileVerticals = [
   { id: 'v3', name: 'AI & ML', x: 48, y: 100, icon: Cpu, products: ['p_graphzy'] },
   { id: 'v5', name: 'Custom Software', x: 136, y: 100, icon: Code, products: ['p_graphzy'] },
-  { id: 'v1', name: 'Web Dev', x: 224, y: 100, icon: Monitor, products: ['p_graphzy', 'p_mesa', 'p_ventureflow'] },
-  { id: 'v0', name: 'Mgmt Systems', x: 312, y: 100, icon: Grid, products: ['p_mesa'] },
-  { id: 'v6', name: 'Automation', x: 90, y: 175, icon: GitMerge, products: ['p_mesa'] },
-  { id: 'v4', name: 'Data Science', x: 180, y: 175, icon: LineChart, products: ['p_ventureflow'] },
-  { id: 'v7', name: 'Scalable Tech', x: 270, y: 175, icon: TrendingUp, products: ['p_ventureflow'] },
+  { id: 'v1', name: 'Web Dev', x: 224, y: 100, icon: Monitor, products: ['p_graphzy', 'p_forkline', 'p_lattice'] },
+  { id: 'v0', name: 'Mgmt Systems', x: 312, y: 100, icon: Grid, products: ['p_forkline'] },
+  { id: 'v6', name: 'Automation', x: 90, y: 175, icon: GitMerge, products: ['p_forkline'] },
+  { id: 'v4', name: 'Data Science', x: 180, y: 175, icon: LineChart, products: ['p_lattice'] },
+  { id: 'v7', name: 'Scalable Tech', x: 270, y: 175, icon: TrendingUp, products: ['p_lattice'] },
 ];
 
 const mobileProducts = [
-  { id: 'p_graphzy', name: 'Graphzy', x: 70, y: 260, color: '#0066CC', link: '/graphzy', tag: 'Prototype Preview', description: 'Plain text math formula to live graph conversion platform.' },
-  { id: 'p_mesa', name: 'Mesa', x: 180, y: 260, color: '#92400E', link: '/mesa', tag: 'Concept Preview', description: 'Restaurant OS orchestrating kitchen workflows and floor status.' },
-  { id: 'p_ventureflow', name: 'VentureFlow', x: 290, y: 260, color: '#1B3A6B', link: '/ventureflow', tag: 'Early Concept', description: 'Fundraising pipelines, pitch telemetry, and cap table models.' },
+  { id: 'p_graphzy', name: 'Graphzy', x: 70, y: 260, color: '#0066CC', link: '/graphzy', tag: 'Prototype Mockup', description: 'AI-Powered STEM Visualizer. Transforms natural language queries into interactive visual learning models.' },
+  { id: 'p_forkline', name: 'Forkline', x: 180, y: 260, color: '#92400E', link: '/forkline', tag: 'Concept Preview', description: 'Restaurant management and operational intelligence platform.' },
+  { id: 'p_lattice', name: 'Lattice', x: 290, y: 260, color: '#1B3A6B', link: '/lattice', tag: 'Early Concept', description: 'Structured workspace for startup execution and operational clarity.' },
 ];
 
 function MobileTreeGraph() {
@@ -440,8 +440,8 @@ export default function EcosystemTree() {
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-[#FAFAF8] border-b border-black/[0.06] relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-gradient-to-br from-[#1B3A6B]/5 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808003_1px,transparent_1px),linear-gradient(to_bottom,#80808003_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-gradient-to-br from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       <Container className="relative z-10">
         <SectionHeading
@@ -472,19 +472,19 @@ export default function EcosystemTree() {
           <Card variant="surface" className="p-5 bg-white border-[#0066CC]/10 flex flex-col justify-between active:scale-[0.98] hover:border-[#0066CC]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
-                <Tag variant="math">Prototype Preview</Tag>
+                <Tag variant="math">Prototype Mockup</Tag>
                 <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2026</span>
               </div>
               <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Graphzy</h4>
               <p className="text-[11.5px] text-[#525252] leading-relaxed mb-4">
-                Visualization platform converting plain text math inquiries into live, parameter-rich graphing templates.
+                AI-Powered STEM Visualizer translating natural language queries into interactive mathematical models, physics trajectory simulations, and 2D chemical structures.
               </p>
               <div className="border-t border-black/[0.04] pt-3 mb-5">
                 <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
                 <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />Desmos graph canvas</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />Parameter Auto-Mapping</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />Dynamic parameter sliders</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />AI Simulation Generator</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />2D Chemistry structures</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />Interactive physics models</li>
                 </ul>
               </div>
             </div>
@@ -495,54 +495,54 @@ export default function EcosystemTree() {
             </Link>
           </Card>
 
-          {/* Mesa */}
+          {/* Forkline */}
           <Card variant="surface" className="p-5 bg-[#FEF7EC] border-[#B45309]/14 flex flex-col justify-between active:scale-[0.98] hover:border-[#B45309]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
-                <Tag variant="serva">Concept Preview</Tag>
+                <Tag variant="forkline">Concept Preview</Tag>
                 <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2027</span>
               </div>
-              <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Mesa</h4>
+              <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Forkline</h4>
               <p className="text-[11.5px] text-[#525252] leading-relaxed mb-4">
-                Hospitality operations engine designed to automate floor layout orders and monitor kitchen task velocities.
+                Restaurant management and operational intelligence platform designed to sync floor seating layouts, order ticketing, and kitchen task workflows.
               </p>
               <div className="border-t border-black/[0.04] pt-3 mb-5">
                 <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
                 <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Floor & table layout status</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Tablet kitchen displays</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Low inventory SMS alerts</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />POS & seating layout status</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Kitchen workflow displays</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Multi-location operational data</li>
                 </ul>
               </div>
             </div>
-            <Link to="/products#mesa" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
-              <Button variant="serva" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
+            <Link to="/products#forkline" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+              <Button variant="forkline" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
                 Register for Waitlist <ArrowRight size={12} />
               </Button>
             </Link>
           </Card>
 
-          {/* VentureFlow */}
+          {/* Lattice */}
           <Card variant="surface" className="p-5 bg-white border-[#1B3A6B]/10 flex flex-col justify-between active:scale-[0.98] hover:border-[#1B3A6B]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
                 <Tag variant="brand">Early Concept</Tag>
                 <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2027</span>
               </div>
-              <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">VentureFlow</h4>
+              <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Lattice</h4>
               <p className="text-[11.5px] text-[#525252] leading-relaxed mb-4">
-                Startup fundraising operating platform to coordinate investor pipelines, track CRM deal stages, and model cap tables.
+                Structured workspace for startup execution and operational clarity, consolidating fundraising trackers, runway logs, and team coordination workflows.
               </p>
               <div className="border-t border-black/[0.04] pt-3 mb-5">
                 <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
                 <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Investor Deal Pipeline CRM</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Pitch Deck Telemetry</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Dilution Cap Table Models</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Funding & Investor Tracker CRM</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />KPI Tracking & Runway Logs</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Pitch Deck & Dilution Modeling</li>
                 </ul>
               </div>
             </div>
-            <Link to="/products#ventureflow" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+            <Link to="/products#lattice" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
               <Button variant="brand" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
                 Explore Concept <ArrowRight size={12} />
               </Button>

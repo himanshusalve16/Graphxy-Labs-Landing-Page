@@ -1,7 +1,7 @@
 # Feature Specification Document
 ## Graphzy — Visualization Platform by Graphxy Labs
 
-Scope: MVP (Math-first pilot). V2 features are listed at the end. This document covers Graphzy only; Serva feature specs are a separate document produced during the Serva pre-development phase.
+Scope: MVP (Math-first pilot). V2 features are listed at the end. This document covers Graphzy only; Forkline feature specs are a separate document produced during the Forkline pre-development phase.
 
 ---
 
@@ -147,4 +147,4 @@ Scope: MVP (Math-first pilot). V2 features are listed at the end. This document 
 
 ---
 
-*Serva feature specifications are maintained as a separate document. This file covers Graphzy only.*
+*Forkline and Lattice feature specifications are maintained as separate documents. This file covers Graphzy only.*

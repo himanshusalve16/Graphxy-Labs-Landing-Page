@@ -1,7 +1,7 @@
 # Competitive Analysis
-## Graphxy Labs — Graphzy + Serva
+## Graphxy Labs — Graphzy + Forkline
 
-This document covers two competitive landscapes: the AI tutoring/visualization space (for Graphzy) and the restaurant management and operations space (for Serva).
+This document covers two competitive landscapes: the AI tutoring/visualization space (for Graphzy) and the restaurant management and operations space (for Forkline).
 
 ---
 
@@ -48,7 +48,7 @@ The AI tutoring space is crowded, but almost every player converges on the same 
 
 ---
 
-## Part 2 — Serva: Restaurant Management & Operations
+## Part 2 — Forkline: Restaurant Management & Operations
 
 ### 2.1 Landscape Summary
 
@@ -67,40 +67,53 @@ Restaurant management software (often called "restaurant tech" or "hospitality t
 | **Upserve / Lightspeed (Upserve)** | Strong analytics and reporting for data-driven operators | Acquired and absorbed; brand identity diluted | Part of Lightspeed suite |
 | **7shifts** | Best-in-class staff scheduling | Single-purpose tool; not a full management platform | $17.99–$69.99+/month |
 
-### 2.3 Where Serva Differs
+### 2.3 Where Forkline Differs
 
-1. **Design and product experience as a primary differentiator.** Every incumbent's UX reflects the era it was built in (early 2010s iPad apps, Windows POS terminals). Serva is designed from the ground up with a premium, modern product identity — the kind of operator experience that Toast's price commands but doesn't deliver in usability.
+1. **Design and product experience as a primary differentiator.** Every incumbent's UX reflects the era it was built in (early 2010s iPad apps, Windows POS terminals). Forkline is designed from the ground up with a premium, modern product identity — the kind of operator experience that Toast's price commands but doesn't deliver in usability.
 
-2. **Unified platform without the hardware lock-in.** Toast wins by bundling hardware; Serva's bet is that software-first, hardware-agnostic design — bring your own tablet/terminal — is a more attractive entry point for the 1–50 location operator segment that can't afford enterprise contracts or bespoke hardware rollouts.
+2. **Unified platform without the hardware lock-in.** Toast wins by bundling hardware; Forkline's bet is that software-first, hardware-agnostic design — bring your own tablet/terminal — is a more attractive entry point for the 1–50 location operator segment that can't afford enterprise contracts or bespoke hardware rollouts.
 
-3. **Workflow automation built in, not bolted on.** Most competitors treat automation (approval flows, low-stock alerts, staff notifications) as integration add-ons. Serva treats it as core functionality.
+3. **Workflow automation built in, not bolted on.** Most competitors treat automation (approval flows, low-stock alerts, staff notifications) as integration add-ons. Forkline treats it as core functionality.
 
 4. **Built under Graphxy Labs** — a technology company, not a payments company or a hardware company. This matters for credibility with the operator segment that is increasingly tech-literate and skeptical of being locked into a payments processor.
 
 ### 2.4 Competitive Risks
 
-- **Toast's installed base and brand trust** are very strong in the US market. Serva cannot compete on brand awareness at launch; differentiation must be earned through product quality and word-of-mouth.
-- **Square's free tier** makes it the default for new/small operators; Serva needs a compelling entry tier to compete at that bottom end, or should focus on the 5–50 location "modern SMB" segment above the Square floor.
-- **Multi-location complexity** is where most competitors stumble; if Serva ships this well early, it becomes a strong hook for growing restaurant groups.
+- **Toast's installed base and brand trust** are very strong in the US market. Forkline cannot compete on brand awareness at launch; differentiation must be earned through product quality and word-of-mouth.
+- **Square's free tier** makes it the default for new/small operators; Forkline needs a compelling entry tier to compete at that bottom end, or should focus on the 5–50 location "modern SMB" segment above the Square floor.
+- **Multi-location complexity** is where most competitors stumble; if Forkline ships this well early, it becomes a strong hook for growing restaurant groups.
 
-### 2.5 Positioning Statement (Serva)
+### 2.5 Positioning Statement (Forkline)
 
-> "Restaurant management software built for operators who care about both the guest experience and the operational one. Serva is what happens when a premium product company decides to build for hospitality."
+> "Restaurant management software built for operators who care about both the guest experience and the operational one. Forkline is what happens when a premium product company decides to build for hospitality."
 
 ---
 
-## Part 3 — Graphxy Labs Company Positioning
+## Part 3 — Lattice: Startup Operations Platform
+
+### 3.1 Landscape Summary
+Early-stage founders spend substantial administrative energy jumping between Notion docs, Pitch deck tools, fundraising spreadsheets, and Linear project managers. Lattice integrates execution roadmaps, fundraising investor pipelines, and KPI tracking into one cohesive workflow platform.
+
+### 3.2 Competitor Map
+- **Notion / Airtable:** Powerful but require complex, custom templates to be useful.
+- **Linear / Jira:** Built for engineering tasks, not for high-level company builder metrics or investor tracking.
+- **Slidebean / Pitch:** Focus on presentation decks rather than live execution metrics.
+
+### 3.3 Positioning Statement (Lattice)
+> "Lattice is a structured execution workspace built specifically for startup operations. We coordinate your investor pipelines and engineering roadmaps so you can focus on building, not templates."
+
+## Part 4 — Graphxy Labs Company Positioning
 
 ### 3.1 Where Graphxy Labs Fits
 
-Graphxy Labs is not competing as a systems integrator, a freelance agency, or a generic software consultancy. The competitive reference point for the company brand is the class of modern, premium product companies (Linear, Vercel, Clerk, Raycast) that have built strong engineering-first identities before scaling. The company's portfolio approach — Graphzy (visualization) + Serva (restaurant operations) + eight technology service verticals — positions it as a full-spectrum product and engineering studio, not a single-product startup.
+Graphxy Labs is not competing as a systems integrator, a freelance agency, or a generic software consultancy. The competitive reference point for the company brand is the class of modern, premium product companies (Linear, Vercel, Clerk, Raycast) that have built strong engineering-first identities before scaling. The company's portfolio approach — Graphzy (visualization) + Forkline (restaurant operations) + eight technology service verticals — positions it as a full-spectrum product and engineering studio, not a single-product startup.
 
 ### 3.2 Company Differentiators
 
 - Product-first, engineering-driven — every product is designed and built in-house, not outsourced.
-- Premium visual identity applied consistently across products (Graphzy, Serva) and the corporate brand.
+- Premium visual identity applied consistently across products (Graphzy, Forkline) and the corporate brand.
 - Cross-vertical technical depth: ML/AI, data visualization, management systems, mobile, web — Graphxy Labs can credibly serve clients across these areas while building its own flagship products.
 
 ### 3.3 Company-Level Competitive Risk
 
-The company-as-agency risk: if Graphxy Labs takes on too many client service engagements before Graphzy and Serva reach meaningful scale, the brand risks reading as a consultancy rather than a product company. Mitigation: client work is scoped to fund product R&D, not to define the company's identity — the public brand always leads with products (Graphzy, Serva), and services are listed second.
+The company-as-agency risk: if Graphxy Labs takes on too many client service engagements before Graphzy and Forkline reach meaningful scale, the brand risks reading as a consultancy rather than a product company. Mitigation: client work is scoped to fund product R&D, not to define the company's identity — the public brand always leads with products (Graphzy, Forkline), and services are listed second.

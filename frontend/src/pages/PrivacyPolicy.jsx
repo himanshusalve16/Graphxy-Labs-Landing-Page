@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
             <section className="flex flex-col gap-3">
               <h2 className="font-serif text-lg text-[#0F0F0F] font-semibold">2. Form Submissions & Email Processing</h2>
               <p>
-                All form payloads submitted through the Mesa Waitlist, VentureFlow Waitlist, and Contact Us portals are processed directly using third-party email routing systems provided by Formspree Inc. Submissions are securely delivered to our operational inbox at <strong>himanshusalve9@gmail.com</strong>. By submitting forms, you consent to our retrieval and storage of your contact information to reply to your inquiry.
+                All form payloads submitted through the Forkline Waitlist, Lattice Waitlist, and Contact Us portals are processed directly using third-party email routing systems provided by Formspree Inc. Submissions are securely delivered to our operational inbox at <strong>himanshusalve9@gmail.com</strong>. By submitting forms, you consent to our retrieval and storage of your contact information to reply to your inquiry.
               </p>
             </section>
 

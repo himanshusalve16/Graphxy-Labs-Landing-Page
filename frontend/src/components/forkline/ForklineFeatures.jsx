@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 
-export default function MesaFeatures() {
+export default function ForklineFeatures() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full text-left mt-16 max-w-4xl mx-auto">
       <Card variant="surface" className="p-8 bg-white border-[#B45309]/14 hover:border-[#B45309]/30 duration-200">

@@ -14,7 +14,7 @@ const waitlistSchema = z.object({
 });
 
 /**
- * useWaitlistForm — shared hook for Mesa and VentureFlow waitlist forms.
+ * useWaitlistForm — shared hook for Forkline and Lattice waitlist forms.
  *
  * @param {Object} options
  * @param {string}   options.formId        — Formspree form ID (from env var)

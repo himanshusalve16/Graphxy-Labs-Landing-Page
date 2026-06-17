@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 
-export default function MesaBenefits() {
+export default function ForklineBenefits() {
   const benefits = [
     {
       title: "Bring Your Own Device",
-      desc: "No expensive hardware lock-ins. Mesa works seamlessly on iPads, Android tablets, and generic touch monitors."
+      desc: "No expensive hardware lock-ins. Forkline works seamlessly on iPads, Android tablets, and generic touch monitors."
     },
     {
       title: "Immediate Syncing",

@@ -1,16 +1,17 @@
 # Product Requirements Document (PRD)
-## Graphxy Labs — Graphzy Visualization Platform
+## Graphxy Labs — Graphzy, Forkline, & Lattice Platforms
 
 ---
 
 ### 1. Company Context
 
-**Graphxy Labs** is a modern, premium technology company building software products, intelligent systems, business platforms, automation solutions, and scalable digital experiences for startups, businesses, and enterprises. Its product portfolio currently comprises two flagships:
+**Graphxy Labs** is a modern, premium technology company building software products, intelligent systems, business platforms, automation solutions, and scalable digital experiences for startups, businesses, and enterprises. Its product portfolio currently comprises three flagships:
 
 | Product | Category | Status |
 |---|---|---|
-| **Graphzy** | Visualization Platform | Under Development |
-| **Serva** | Restaurant Management & Operations Platform | Coming Soon |
+| **Graphzy** | AI-Powered STEM Visualizer | Prototype Mockup / Under Active Development |
+| **Forkline** | Restaurant Operations Platform | Concept Preview |
+| **Lattice** | Startup Operations Platform | Early Concept |
 
 This document covers the requirements for **Graphzy**, Graphxy Labs' core visualization product.
 
@@ -69,8 +70,8 @@ Out of scope for the pilot: institutional/classroom accounts, teachers as a dist
 - "Explain like I'm 12" mode, difficulty slider
 - Daily practice plans, progress analytics
 
-#### Parallel Track — Serva
-While Graphzy is in pilot, Graphxy Labs will begin the Serva product specification (see Roadmap). Serva is a restaurant management and operations platform covering order management, POS integration, table management, inventory tracking, staff management, reporting and analytics, customer loyalty, multi-location operations, and workflow automation. Serva is listed as Coming Soon on the Graphxy Labs landing page during the Graphzy pilot window.
+#### Parallel Track — Forkline & Lattice
+While Graphzy is in pilot, Graphxy Labs will begin the Forkline and Lattice product specifications (see Roadmap). Lattice is a startup operations platform managing investor pipelines, KPI dashboards, and execution roadmaps. Forkline is a restaurant operations platform. Forkline is a restaurant management and operations platform covering order management, POS integration, table management, inventory tracking, staff management, reporting and analytics, customer loyalty, multi-location operations, and workflow automation. Forkline is listed as Coming Soon on the Graphxy Labs landing page during the Graphzy pilot window.
 
 ---
 
@@ -99,7 +100,7 @@ While Graphzy is in pilot, Graphxy Labs will begin the Serva product specificati
 | Subject misclassification | Wrong visual engine, breaks trust | Confidence-based routing + manual "switch lens" option |
 | Desmos licensing changes | Core math visualization breaks | Abstract graphing layer so Plotly/D3 can substitute |
 | Scope creep into V2 during pilot | Pilot ships late | Hard MVP freeze; V2 items in roadmap only |
-| Serva expectations outpacing Graphzy | Brand dilution | Maintain clear "Coming Soon" status; no pre-launch overpromising |
+| Forkline expectations outpacing Graphzy | Brand dilution | Maintain clear "Coming Soon" status; no pre-launch overpromising |
 
 ---
 
@@ -113,4 +114,4 @@ See **Success Metrics Document** for full detail. At minimum, the pilot must sho
 
 - **Graphxy Labs Founder / Product Owner:** defines scope, prioritizes roadmap, runs pilot
 - **Pilot users:** students providing usage data and qualitative feedback
-- **Future contributors:** if open-sourced or team grows — frontend, backend, AI prompt-engineering, and eventually Serva product roles
+- **Future contributors:** if open-sourced or team grows — frontend, backend, AI prompt-engineering, and eventually Forkline product roles

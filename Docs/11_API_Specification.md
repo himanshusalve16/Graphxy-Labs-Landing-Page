@@ -185,14 +185,22 @@ Called immediately after a guest signs up. Reassigns guest-owned sessions to the
 
 ---
 
-## POST `/waitlist` (graphxylabs.com / Serva)
+## POST `/waitlist/forkline`
 **No auth required**
 
-Captures Serva waitlist email submissions from the /serva landing page.
-
+Captures Forkline waitlist email submissions.
 **Request body:**
 ```json
-{ "email": "user@example.com", "product": "serva" }
+{ "email": "user@example.com" }
+```
+
+## POST `/waitlist/lattice`
+**No auth required**
+
+Captures Lattice waitlist email submissions.
+**Request body:**
+```json
+{ "email": "user@example.com" }
 ```
 
 **Response `200`:**

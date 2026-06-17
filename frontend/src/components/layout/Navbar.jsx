@@ -22,6 +22,18 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   // Check if link is active
   const isActive = (path) => {
     return location.pathname === path || (path.startsWith('/#') && location.pathname === '/' && location.hash === path.slice(1));
@@ -50,7 +62,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`h-[54px] px-5 md:px-10 flex items-center justify-between sticky top-0 z-50 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      <nav className={`h-[54px] px-5 md:px-10 flex items-center justify-between sticky top-0 z-[100] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         scrolled || mobileMenuOpen
           ? 'bg-[#FAFAF8]/92 backdrop-blur-md border-b border-black/[0.06]' 
           : 'bg-transparent border-b border-transparent'
@@ -108,7 +120,7 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 top-[54px] bg-[#FAFAF8]/98 backdrop-blur-md z-45 md:hidden flex flex-col p-6 animate-fade-in border-t border-black/[0.04]"
+          className="fixed inset-0 top-[54px] bg-[#FAFAF8]/98 backdrop-blur-md z-[99] md:hidden flex flex-col p-6 animate-fade-in border-t border-black/[0.04]"
           role="dialog"
           aria-modal="true"
         >

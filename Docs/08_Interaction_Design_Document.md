@@ -79,8 +79,8 @@ The most important moment in the product — the gap between asking and the visu
 
 ## 9. Graphxy Labs Landing Page Interactions
 
-- **Hero CTA buttons:** hover → subtle 1px translateY lift + shadow deepening. Primary CTA (Explore Graphzy) uses Graphzy blue; secondary CTA (Join Serva Waitlist) uses Serva amber.
-- **Product cards (Graphzy / Serva):** on hover, a soft scale(1.015) with shadow elevation shift (~200ms ease-out). Serva card uses a "Coming Soon" badge with a distinct but restrained visual treatment — not a disabled/greyed state, since interest should still be driven.
+- **Hero CTA buttons:** hover → subtle 1px translateY lift + shadow deepening. Primary CTA (Explore Graphzy) uses Graphzy blue; secondary CTA (Join Forkline Waitlist) uses Forkline amber.
+- **Product cards (Graphzy / Forkline / Lattice):** on hover, a soft scale(1.015) with shadow elevation shift (~200ms ease-out). Forkline and Lattice cards display their respective badges ("Concept Preview" / "Early Concept") with custom tag fills and subtle border glows on hover.
 - **Service vertical sections:** reveal on scroll into view with a fade+slight-rise (opacity 0→1, y +8px→0, ~300ms, staggered per section), controlled via IntersectionObserver + Framer Motion. Never more than one animated entrance zone visible at a time to avoid visual noise.
 - **Navigation:** sticky top nav with a frosted-glass background (backdrop-blur) that only activates when the page scrolls past the hero — no blur on initial load to keep the hero clean.
 
@@ -99,5 +99,5 @@ The most important moment in the product — the gap between asking and the visu
 - **Settle, don't bounce.** All easing is ease-out for entrances, ease-in-out for state changes. No spring or overshoot.
 - **One orchestrated moment per screen.** The thinking → reveal sequence on the result view is the signature motion. Everything else is quick (<200ms) and subordinate.
 - **Respect reduced motion.** All entrance animations degrade to simple opacity fades when `prefers-reduced-motion` is set.
-- **Color signals subject identity, not UI state.** Accent colors (math/chem/bio/physics/Serva amber) are reserved for domain identity. Error states use neutral tones.
+- **Color signals subject identity, not UI state.** Accent colors (math/chem/bio/physics/Forkline amber) are reserved for domain identity. Error states use neutral tones.
 - **Landing page: one reveal per section, not per element.** Do not animate individual paragraph lines or icon items — animate the containing section block as a unit.

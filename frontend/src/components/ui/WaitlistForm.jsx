@@ -6,14 +6,14 @@ import { useWaitlistForm } from '../../utils/useWaitlistForm';
 
 /**
  * WaitlistForm — Reusable waitlist form component.
- * Used by MesaWaitlist and VentureFlowWaitlist.
+ * Used by ForklineWaitlist and LatticeWaitlist.
  *
  * @param {Object}   props
  * @param {string}   props.formId           — Formspree form ID from env var
  * @param {string}   props.accentColor      — Brand color (e.g. '#92400E')
  * @param {string}   props.accentBg         — Light tint background (e.g. '#FEF7EC')
  * @param {string}   props.accentRing       — Focus ring color (e.g. '#FEF3E2')
- * @param {string}   props.buttonVariant    — Button variant ('serva' | 'brand')
+ * @param {string}   props.buttonVariant    — Button variant ('forkline' | 'brand')
  * @param {string}   props.buttonLabel      — Submit button text
  * @param {string}   props.emailPlaceholder — Email field placeholder
  * @param {string}   props.subject          — Formspree email subject

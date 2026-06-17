@@ -1,7 +1,7 @@
 # Database Schema Document
 ## Graphzy — Visualization Platform by Graphxy Labs
 
-Target: Supabase (managed Postgres + Auth). This schema covers **Graphzy only**. Serva will use a separate Supabase project (or separate schema namespace with strict RLS separation) to maintain clean product-level isolation.
+Target: Supabase (managed Postgres + Auth). This schema covers **Graphzy only**. Forkline will use a separate Supabase project (or separate schema namespace with strict RLS separation) to maintain clean product-level isolation.
 
 ---
 
@@ -79,6 +79,18 @@ erDiagram
 
 ### `users` (managed by Supabase Auth)
 Standard Supabase Auth table. Referenced via `user_id` foreign keys. No custom columns needed for the Graphzy MVP.
+
+### `lattice_waitlist`
+Stores waitlist signups specifically for the Lattice early concept platform.
+- `id` (uuid, PK)
+- `email` (text, unique)
+- `created_at` (timestamptz)
+
+### `lattice_waitlist`
+Stores waitlist signups specifically for the Lattice early concept platform.
+- `id` (uuid, PK)
+- `email` (text, unique)
+- `created_at` (timestamptz)
 
 ### `sessions`
 One row per topic thread — the initial question plus everything generated from it.
@@ -176,6 +188,6 @@ Caches full AI JSON responses keyed by normalized-question hash, to reduce Gemin
 
 ---
 
-## 6. Serva Database (Future — Reference)
+## 6. Forkline Database (Future — Reference)
 
-Serva will require its own tables covering orders, tables, inventory, staff, loyalty programs, locations, and POS integrations. These will either live in a separate Supabase project or a fully isolated `serva_` schema namespace with no foreign key relationships to the `graphzy_` tables. Schema design for Serva is part of the Serva pre-development documentation.
+Forkline will require its own tables covering orders, tables, inventory, staff, loyalty programs, locations, and POS integrations. These will either live in a separate Supabase project or a fully isolated `forkline_` schema namespace with no foreign key relationships to the `graphzy_` tables. Schema design for Forkline is part of the Forkline pre-development documentation.

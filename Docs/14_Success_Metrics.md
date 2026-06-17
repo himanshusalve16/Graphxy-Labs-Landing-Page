@@ -81,15 +81,15 @@ Yes on (1) + workable (2) → invest in Graphzy V2 (chemistry layer next). Weak 
 
 ---
 
-## Part 2 — Serva Pre-Launch Metrics
+## Part 2 — Forkline Pre-Launch Metrics
 
-Serva is Coming Soon during the Graphzy pilot. The relevant metrics at this stage are waitlist and interest signals.
+Forkline is Coming Soon during the Graphzy pilot. The relevant metrics at this stage are waitlist and interest signals.
 
 | Metric | Definition | Target |
 |---|---|---|
-| Serva waitlist sign-ups | Total emails captured at /serva during the Graphzy pilot window | 100+ (validates market interest before build begins) |
-| Waitlist source attribution | Traffic source breakdown for /serva page (direct, organic, referral) | Track — informs future marketing channels |
-| Qualitative interest signals | Replies to waitlist confirmation email asking one open question ("What's your biggest operations headache?") | Qualitative input for Serva PRD |
+| Forkline waitlist sign-ups | Total emails captured at /forkline during the Graphzy pilot window | 100+ (validates market interest before build begins) |
+| Waitlist source attribution | Traffic source breakdown for /forkline page (direct, organic, referral) | Track — informs future marketing channels |
+| Qualitative interest signals | Replies to waitlist confirmation email asking one open question ("What's your biggest operations headache?") | Qualitative input for Forkline PRD |
 
 ---
 
@@ -100,15 +100,15 @@ These are brand/presence metrics for the company during the pilot phase, not pro
 | Metric | Definition | Note |
 |---|---|---|
 | graphxylabs.com traffic | Monthly unique visitors to the landing page | Baseline measurement; no hard target for pilot |
-| Product page split | % of visitors routing to /graphzy vs. /serva vs. /services | Signals which draw is strongest; informs landing page copy optimization |
+| Product page split | % of visitors routing to /graphzy vs. /forkline vs. /services | Signals which draw is strongest; informs landing page copy optimization |
 | Brand credibility signal | Inbound enquiries for services (Management Systems, Web Dev, AI/ML etc.) from graphxylabs.com | Validates the company positioning alongside the products |
 
 ---
 
 ## Part 4 — Success Definition by Phase
 
-| Phase | Graphzy | Serva | Graphxy Labs (Company) |
-|---|---|---|---|
-| Pilot (now) | Interactivity hypothesis validated; ≥25% guest→signup; week-2 return ≥30% | ≥100 waitlist sign-ups; clear qualitative problem signal | Landing page live; services sections visible; brand coherent |
-| Post-pilot (V2) | Chemistry layer shipped; 3+ subjects available; paying tier launched | Serva closed beta with 2–5 restaurant partners | First client service engagements sourced; team growing |
-| Growth | 10k+ MAU Graphzy; paying subscription cohort; strong retention | Serva open beta; 20+ restaurant locations | Both flagships publicly available; Graphxy Labs brand established |
+| Phase | Graphzy | Forkline | Lattice | Graphxy Labs (Company) |
+|---|---|---|---|---|
+| Pilot (now) | Interactivity hypothesis validated; ≥25% guest→signup; week-2 return ≥30% | ≥100 waitlist sign-ups | ≥100 waitlist sign-ups | Landing page live; services sections visible; brand coherent |
+| Post-pilot (V2) | Chemistry layer shipped; 3+ subjects available; paying tier launched | Forkline closed beta with 2–5 restaurant partners | First client service engagements sourced; team growing |
+| Growth | 10k+ MAU Graphzy; paying subscription cohort; strong retention | Forkline open beta; 20+ restaurant locations | Both flagships publicly available; Graphxy Labs brand established |

@@ -17,8 +17,9 @@ flowchart TD
     Root --> Company[Company]
     Root --> Contact[Contact]
 
-    Products --> Graphzy[/graphzy — Visualization Platform]
-    Products --> Serva[/serva — Restaurant Ops Platform — Coming Soon]
+    Products --> Graphzy[/graphzy — AI-Powered STEM Visualizer]
+    Products --> Forkline[/forkline — Restaurant Ops Platform — Concept Preview]
+    Products --> Lattice[/lattice — Startup Ops Platform — Early Concept]
 
     Services --> S1[Management Systems]
     Services --> S2[Web Development]
@@ -42,8 +43,8 @@ Section order on the Graphxy Labs homepage:
 
 | # | Section | Purpose |
 |---|---|---|
-| 1 | **Hero** | Who Graphxy Labs is and what the company builds — one strong headline, brief descriptor, two primary CTAs (Explore Graphzy, Join Serva Waitlist) |
-| 2 | **Products** | Graphzy card (active, Explore Graphzy CTA, route /graphzy) + Serva card (Coming Soon, Join Waitlist CTA, route /serva) |
+| 1 | **Hero** | Who Graphxy Labs is and what the company builds — one strong headline, brief descriptor, two primary CTAs (Explore Graphzy, Join Forkline Waitlist) |
+| 2 | **Products** | Graphzy card (active, Explore Graphzy CTA, route /graphzy) + Forkline card (Concept Preview, Join Waitlist CTA, route /forkline) + Lattice card (Early Concept, Join Waitlist CTA, route /lattice) |
 | 3 | **What We Build** | Eight verticals, each with a concise description and example offerings |
 | 4 | **Company Positioning** | Short prose block: engineering-driven, product-first, premium, trustworthy |
 | 5 | **Footer** | Products, Services, Company, Legal, Social |
@@ -103,17 +104,33 @@ The **Explanation + Visual view** is not a standalone nav destination — it is 
 
 ---
 
-## 5. Serva Product Site Map (/serva)
+## 5. Forkline Product Site Map (/forkline)
+Status: Concept Preview. The /forkline route in the pilot period is a waitlist page.
 
-Status: Coming Soon. The /serva route in the pilot period is a waitlist page only.
+## 6. Lattice Product Site Map (/lattice)
+Status: Early Concept. The /lattice route in the pilot period is a waitlist page.
+```mermaid
+flowchart TD
+    Root[lattice — Coming Soon] --> WL[Waitlist page: headline, brief product description, email capture]
+```
+Status: Concept Preview. The /forkline route in the pilot period is a waitlist page.
+
+## 6. Lattice Product Site Map (/lattice)
+Status: Early Concept. The /lattice route in the pilot period is a waitlist page.
+```mermaid
+flowchart TD
+    Root[lattice — Coming Soon] --> WL[Waitlist page: headline, brief product description, email capture]
+```
+
+Status: Coming Soon. The /forkline route in the pilot period is a waitlist page only.
 
 ```mermaid
 flowchart TD
-    Root[serva — Coming Soon] --> WL[Waitlist page: headline, brief product description, email capture]
+    Root[forkline — Coming Soon] --> WL[Waitlist page: headline, brief product description, email capture]
     WL --> Confirm[Confirmation: You are on the list]
 ```
 
-Full Serva IA will be documented separately during Serva's pre-development phase.
+Full Forkline IA will be documented separately during Forkline's pre-development phase.
 
 ---
 
@@ -153,7 +170,9 @@ Full Serva IA will be documented separately during Serva's pre-development phase
 |---|---|
 | `/` | Home / Landing Page |
 | `/graphzy` | Graphzy product page / app entry |
-| `/serva` | Serva waitlist page |
+| `/forkline` | Forkline waitlist page |
+| `/lattice` | Lattice waitlist page |
+| `/lattice` | Lattice waitlist page |
 | `/services` | Services / verticals overview |
 | `/contact` | Contact |
 

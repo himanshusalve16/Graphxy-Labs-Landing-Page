@@ -28,8 +28,8 @@ export default function Footer() {
           <h4 className="font-mono text-[10px] font-semibold tracking-wider uppercase text-black/40 mb-4">Products</h4>
           <ul className="list-none p-0 m-0 flex flex-col gap-1">
             <li><Link to="/graphzy" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Graphzy</Link></li>
-            <li><Link to="/mesa" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Mesa</Link></li>
-            <li><Link to="/ventureflow" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">VentureFlow</Link></li>
+            <li><Link to="/forkline" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Forkline</Link></li>
+            <li><Link to="/lattice" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Lattice</Link></li>
           </ul>
         </div>
         

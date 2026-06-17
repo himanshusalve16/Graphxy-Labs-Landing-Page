@@ -21,11 +21,17 @@ export default {
           DEFAULT: "#0066CC",
           bg: "#EBF3FF"
         },
-        serva: {
+        forkline: {
           DEFAULT: "#92400E",
           mid: "#B45309",
           bg: "#FEF7EC",
           border: "rgba(180, 83, 9, 0.14)"
+        },
+        lattice: {
+          DEFAULT: "#1B3A6B",
+          mid: "#0066CC",
+          bg: "#EEF3FB",
+          border: "rgba(27, 58, 107, 0.14)"
         }
       }
     }

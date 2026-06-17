@@ -24,10 +24,20 @@
   --bio:         #B85C00;
   --phys:        #6B3FA0;
 
-  --serva:       #92400E;
-  --serva-mid:   #B45309;
-  --serva-bg:    #FEF7EC;
-  --serva-bdr:   rgba(180,83,9,0.14);
+  --forkline:       #92400E;
+  --forkline-mid:   #B45309;
+  --forkline-bg:    #FEF7EC;
+  --forkline-bdr:   rgba(180,83,9,0.14);
+  
+  --lattice:        #1B3A6B;
+  --lattice-mid:    #0066CC;
+  --lattice-bg:     #EEF3FB;
+  --lattice-bdr:    rgba(27,58,107,0.14);
+  
+  --lattice:        #1B3A6B;
+  --lattice-mid:    #0066CC;
+  --lattice-bg:     #EEF3FB;
+  --lattice-bdr:    rgba(27,58,107,0.14);
 
   --page:        #FAFAF8;
   --surface:     #FFFFFF;
@@ -229,7 +239,7 @@ body {
 
 .btn-brand    { background: var(--brand); color: #fff; box-shadow: 0 2px 8px rgba(27,58,107,0.22); }
 .btn-graphzy  { background: var(--math);  color: #fff; box-shadow: 0 2px 8px rgba(0,102,204,0.22); }
-.btn-serva    { background: var(--serva); color: #fff; box-shadow: 0 2px 8px rgba(146,64,14,0.22); }
+.btn-forkline    { background: var(--forkline); color: #fff; box-shadow: 0 2px 8px rgba(146,64,14,0.22); }
 .btn-outline  { background: transparent; color: var(--text-2); border: 1px solid var(--bdr-soft); }
 .btn-outline:hover { border-color: var(--bdr-mid); }
 
@@ -242,7 +252,7 @@ body {
 .tag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
 .tag-math  { background: var(--math-bg);  color: var(--math);  }
 .tag-brand { background: var(--brand-bg); color: var(--brand); }
-.tag-serva { background: var(--serva-bg); color: var(--serva); }
+.tag-forkline { background: var(--forkline-bg); color: var(--forkline); }
 
 /* App layout */
 .app-frame {
@@ -373,7 +383,7 @@ body {
   border-bottom: 1px solid var(--bdr-fine);
 }
 
-.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
 .pcard {
   border-radius: var(--r-xl);
@@ -387,8 +397,12 @@ body {
   box-shadow: var(--sh-md);
 }
 .pcard-warm {
-  background: var(--serva-bg);
-  border: 1px solid var(--serva-bdr);
+  background: var(--forkline-bg);
+  border: 1px solid var(--forkline-bdr);
+}
+.pcard-lattice {
+  background: var(--lattice-bg);
+  border: 1px solid var(--lattice-bdr);
 }
 
 .pcard-eyebrow {
@@ -397,7 +411,8 @@ body {
   text-transform: uppercase; margin-bottom: 20px;
 }
 .pcard-white .pcard-eyebrow { color: var(--math); }
-.pcard-warm  .pcard-eyebrow { color: var(--serva); }
+.pcard-warm  .pcard-eyebrow { color: var(--forkline); }
+.pcard-lattice .pcard-eyebrow { color: var(--lattice); }
 
 .pcard-badge {
   display: inline-flex; align-items: center; gap: 5px;
@@ -736,28 +751,28 @@ body {
 .w-action { font-size: 11px; font-weight: 700; color: var(--math); display: inline-block; margin-top: 4px; }
 
 /* ═══════════════════════════════════════════════════════
-   SERVA WAITLIST PAGE
+   FORKLINE & LATTICE WAITLIST PAGE
 ═══════════════════════════════════════════════════════ */
 
-.serva-nav {
+.forkline-nav {
   height: 54px; padding: 0 48px;
   display: flex; align-items: center; justify-content: space-between;
   background: rgba(254,247,236,0.94);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--serva-bdr);
+  border-bottom: 1px solid var(--forkline-bdr);
 }
 .sv-logo {
   font-family: var(--ff-d); font-size: 16px; font-weight: 500;
-  letter-spacing: -0.012em; color: var(--serva);
+  letter-spacing: -0.012em; color: var(--forkline);
   display: flex; align-items: center; gap: 6px;
 }
-.sv-logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--serva); }
+.sv-logo .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--forkline); }
 
 .sv-back { font-size: 13px; color: var(--text-3); }
 
-.serva-hero {
+.forkline-hero {
   padding: 96px 48px 100px;
-  background: var(--serva-bg);
+  background: var(--forkline-bg);
   display: flex; flex-direction: column;
   align-items: center; text-align: center;
   position: relative;
@@ -766,14 +781,14 @@ body {
 .sv-eyebrow {
   font-family: var(--ff-m); font-size: 11px; font-weight: 500;
   letter-spacing: 0.09em; text-transform: uppercase;
-  color: var(--serva); margin-bottom: 20px;
+  color: var(--forkline); margin-bottom: 20px;
   display: inline-flex; align-items: center; gap: 8px;
 }
 .sv-eyebrow::before {
   content: '';
   display: block;
   width: 16px; height: 1px;
-  background: var(--serva); opacity: 0.5;
+  background: var(--forkline); opacity: 0.5;
 }
 
 .sv-headline {
@@ -790,7 +805,7 @@ body {
 .sv-form { display: flex; gap: 10px; max-width: 440px; width: 100%; }
 .sv-input {
   flex: 1; height: 46px;
-  background: var(--surface); border: 1px solid var(--serva-bdr);
+  background: var(--surface); border: 1px solid var(--forkline-bdr);
   border-radius: var(--r-md); padding: 0 16px;
   font-size: 14px; color: var(--text-1);
   font-family: var(--ff-b); box-shadow: var(--sh-xs);
@@ -798,7 +813,7 @@ body {
 .sv-input::placeholder { color: var(--text-3); }
 .sv-submit {
   height: 46px; padding: 0 22px;
-  background: var(--serva); color: #fff;
+  background: var(--forkline); color: #fff;
   border: none; border-radius: var(--r-md);
   font-family: var(--ff-b); font-size: 14px; font-weight: 600;
   cursor: pointer; box-shadow: 0 2px 8px rgba(146,64,14,0.25);
@@ -807,10 +822,10 @@ body {
 
 .sv-note { font-size: 12px; color: var(--text-3); margin-top: 12px; }
 
-.serva-feature-strip {
+.forkline-feature-strip {
   padding: 48px 48px;
   background: var(--surface);
-  border-top: 1px solid var(--serva-bdr);
+  border-top: 1px solid var(--forkline-bdr);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
@@ -835,7 +850,7 @@ body {
 @media (max-width: 900px) {
   body { padding: 32px 16px 100px; }
   .product-grid, .services-grid, .positioning-section,
-  .exp-grid, .dash-lower, .footer-grid, .serva-feature-strip { grid-template-columns: 1fr; }
+  .exp-grid, .dash-lower, .footer-grid, .forkline-feature-strip { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
   .app-frame { grid-template-columns: 1fr; }
@@ -886,17 +901,17 @@ body {
     <div class="landing-hero">
       <div class="hero-eyebrow">Graphxy Labs</div>
       <h1 class="hero-headline">Software that thinks,<br>scales, <em>and performs.</em></h1>
-      <p class="hero-sub">We build precision software products, intelligent systems, and scalable digital experiences — starting with Graphzy and Serva.</p>
+      <p class="hero-sub">We build precision software products, intelligent systems, and scalable digital experiences — starting with Graphzy, Forkline, and Lattice.</p>
       <div class="hero-ctas">
         <button class="btn btn-lg btn-graphzy">Explore Graphzy</button>
-        <button class="btn btn-lg btn-outline">Join Serva Waitlist</button>
+        <button class="btn btn-lg btn-outline">Join Forkline Waitlist</button>
       </div>
     </div>
 
     <!-- Products -->
     <div class="products-section">
       <div class="section-label">Our Products</div>
-      <div class="section-heading">Two flagship products,<br>built in-house.</div>
+      <div class="section-heading">Three flagship products,<br>built in-house.</div>
       <div class="product-grid">
         <div class="pcard pcard-white">
           <div class="pcard-eyebrow">Graphzy · Visualization Platform</div>
@@ -905,11 +920,18 @@ body {
           <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
         </div>
         <div class="pcard pcard-warm">
-          <div class="pcard-eyebrow">Serva · Restaurant Operations</div>
+          <div class="pcard-eyebrow">Forkline · Restaurant Operations</div>
           <div class="pcard-badge"><span class="pcard-badge-dot"></span>Coming Soon</div>
           <h3>Restaurant management built for modern operators.</h3>
           <p>A unified platform for orders, tables, inventory, staff, and analytics — designed to run a restaurant the way a product company would.</p>
-          <button class="btn btn-md btn-serva">Join Serva Waitlist</button>
+          <button class="btn btn-md btn-forkline">Join Forkline Waitlist</button>
+        </div>
+        <div class="pcard pcard-lattice">
+          <div class="pcard-eyebrow">Lattice · Startup Operations</div>
+          <div class="pcard-badge"><span class="pcard-badge-dot"></span>Coming Soon</div>
+          <h3>Structured workspaces built for startup execution.</h3>
+          <p>Track cap tables, investor outreach CRM, dynamic CAPEX metrics, and milestone pipelines in a cohesive corporate operating workspace.</p>
+          <button class="btn btn-md btn-lattice">Join Lattice Waitlist</button>
         </div>
       </div>
     </div>
@@ -992,10 +1014,10 @@ body {
             </div>
           </div>
           <div class="pos-item">
-            <div class="pos-bullet" style="background:var(--serva);"></div>
+            <div class="pos-bullet" style="background:var(--forkline);"></div>
             <div>
               <div class="pos-text">Products built in-house, not outsourced</div>
-              <div class="pos-sub">Graphzy and Serva are our own</div>
+              <div class="pos-sub">Graphzy, Forkline, and Lattice are our own</div>
             </div>
           </div>
           <div class="pos-item">
@@ -1025,7 +1047,8 @@ body {
           <h4>Products</h4>
           <ul>
             <li><a href="#">Graphzy</a></li>
-            <li><a href="#">Serva</a></li>
+            <li><a href="#">Forkline</a></li>
+            <li><a href="#">Lattice</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1412,42 +1435,42 @@ body {
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     SCREEN F — SERVA WAITLIST PAGE
+     SCREEN F — FORKLINE & LATTICE WAITLIST PAGE
 ═══════════════════════════════════════════════════════════ -->
 <div class="screen-wrap">
   <div class="screen-meta">
     <span class="screen-id">Screen F</span>
-    <span class="screen-desc">Serva — Waitlist Page (/serva) — light warm palette, no dark sections</span>
+    <span class="screen-desc">Forkline — Waitlist Page (/forkline) — light warm palette, no dark sections</span>
   </div>
   <div class="device">
 
-    <!-- Serva nav -->
-    <nav class="serva-nav">
-      <div class="sv-logo"><span class="dot"></span>Serva</div>
+    <!-- Forkline nav -->
+    <nav class="forkline-nav">
+      <div class="sv-logo"><span class="dot"></span>Forkline</div>
       <span class="sv-back">← graphxylabs.com</span>
     </nav>
 
     <!-- Hero -->
-    <div class="serva-hero">
-      <div class="sv-eyebrow">Serva · Coming Soon</div>
+    <div class="forkline-hero">
+      <div class="sv-eyebrow">Forkline · Coming Soon</div>
       <h1 class="sv-headline">Restaurant management built for modern operators.</h1>
       <p class="sv-sub">A premium, unified platform for orders, tables, inventory, staff, and analytics. Designed the way a product company would design for hospitality.</p>
       <div class="sv-form">
         <input class="sv-input" type="email" placeholder="your@email.com" />
         <button class="sv-submit">Join Waitlist</button>
       </div>
-      <p class="sv-note">We'll reach out when Serva is ready for early access. No spam, ever.</p>
+      <p class="sv-note">We'll reach out when Forkline is ready for early access. No spam, ever.</p>
     </div>
 
     <!-- Feature strip -->
-    <div class="serva-feature-strip">
+    <div class="forkline-feature-strip">
       <div class="sf-item">
         <div class="sf-label">Order management</div>
         <div class="sf-desc">Real-time order tracking across tables, takeaway, and delivery channels</div>
       </div>
       <div class="sf-item">
         <div class="sf-label">Table &amp; floor management</div>
-        <div class="sf-desc">Visual floor plan, reservation logic, turn time analytics</div>
+        <div class="sf-desc">Visual floor plan, reforklinetion logic, turn time analytics</div>
       </div>
       <div class="sf-item">
         <div class="sf-label">Staff &amp; inventory</div>

@@ -4,12 +4,12 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import Graphzy from './pages/Graphzy';
-import Mesa from './pages/Mesa';
+import Forkline from './pages/Forkline';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import VentureFlow from './pages/VentureFlow';
+import Lattice from './pages/Lattice';
 import Products from './pages/Products';
 
 function MainApp() {
@@ -24,12 +24,12 @@ function MainApp() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/graphzy" element={<Graphzy />} />
-          <Route path="/mesa" element={<Mesa />} />
+          <Route path="/forkline" element={<Forkline />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/ventureflow" element={<VentureFlow />} />
+          <Route path="/lattice" element={<Lattice />} />
         </Routes>
       </div>
       {!isGraphzy && <Footer />}
@@ -37,9 +37,12 @@ function MainApp() {
   );
 }
 
+import ScrollToTop from './components/layout/ScrollToTop';
+
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <MainApp />
     </Router>
   );
