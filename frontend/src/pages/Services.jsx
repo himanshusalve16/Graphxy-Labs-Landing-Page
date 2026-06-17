@@ -5,6 +5,7 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsTouch } from '../utils/useDeviceType';
 import { 
   Building2, 
   Globe, 
@@ -112,6 +113,7 @@ function InteractiveDBSync() {
 // ==========================================
 function InteractiveNeuralML() {
   const [activeNode, setActiveNode] = useState(null);
+  const isTouch = useIsTouch();
   
   const nodeInfo = {
     0: 'Raw Telemetry Input Layer (Client Metrics)',
@@ -119,11 +121,19 @@ function InteractiveNeuralML() {
     2: 'Sigmoid Probability Output (Classifier Flag)'
   };
 
+  const handleNode = (idx) => {
+    if (isTouch) {
+      setActiveNode(prev => prev === idx ? null : idx);
+    } else {
+      setActiveNode(idx);
+    }
+  };
+
   return (
     <div className="relative w-full bg-white border border-black/5 rounded-xl p-4 flex flex-col gap-3 shadow-xs">
       <div className="flex justify-between items-center text-[9px] font-mono text-black/40">
         <span>NEURAL GRAPH PROPAGATION</span>
-        <span>{activeNode !== null ? nodeInfo[activeNode] : 'HOVER NODES TO MAP WEIGHTS'}</span>
+        <span className="text-right max-w-[160px] truncate">{activeNode !== null ? nodeInfo[activeNode] : (isTouch ? 'TAP NODES TO MAP WEIGHTS' : 'HOVER NODES TO MAP WEIGHTS')}</span>
       </div>
 
       <svg className="w-full h-[95px]" viewBox="0 0 320 95">
@@ -147,10 +157,19 @@ function InteractiveNeuralML() {
           transition={{ duration: 2.2, repeat: Infinity, ease: "linear", delay: 0.7 }}
         />
 
-        {/* Node interaction mappings */}
-        <circle cx="50" cy="50" r="7" fill="#FFFFFF" stroke="rgba(0,0,0,0.15)" className="cursor-pointer hover:stroke-[#0066CC]" onMouseEnter={() => setActiveNode(0)} onMouseLeave={() => setActiveNode(null)} />
-        <circle cx="160" cy="38" r="7" fill="#EEF3FB" stroke="#0066CC" strokeWidth="1.5" className="cursor-pointer" onMouseEnter={() => setActiveNode(1)} onMouseLeave={() => setActiveNode(null)} />
-        <circle cx="270" cy="70" r="7" fill="#FFFFFF" stroke="rgba(0,0,0,0.15)" className="cursor-pointer hover:stroke-[#0066CC]" onMouseEnter={() => setActiveNode(2)} onMouseLeave={() => setActiveNode(null)} />
+        {/* Visible nodes */}
+        <circle cx="50" cy="50" r={isTouch ? 11 : 7} fill="#FFFFFF" stroke={activeNode === 0 ? '#0066CC' : 'rgba(0,0,0,0.15)'} strokeWidth={activeNode === 0 ? 2 : 1} className="cursor-pointer transition-all" onMouseEnter={() => !isTouch && handleNode(0)} onMouseLeave={() => !isTouch && setActiveNode(null)} onClick={() => isTouch && handleNode(0)} style={{ touchAction: 'manipulation' }} />
+        <circle cx="160" cy="38" r={isTouch ? 11 : 7} fill="#EEF3FB" stroke="#0066CC" strokeWidth={activeNode === 1 ? 2 : 1.5} className="cursor-pointer transition-all" onMouseEnter={() => !isTouch && handleNode(1)} onMouseLeave={() => !isTouch && setActiveNode(null)} onClick={() => isTouch && handleNode(1)} style={{ touchAction: 'manipulation' }} />
+        <circle cx="270" cy="70" r={isTouch ? 11 : 7} fill="#FFFFFF" stroke={activeNode === 2 ? '#0066CC' : 'rgba(0,0,0,0.15)'} strokeWidth={activeNode === 2 ? 2 : 1} className="cursor-pointer transition-all" onMouseEnter={() => !isTouch && handleNode(2)} onMouseLeave={() => !isTouch && setActiveNode(null)} onClick={() => isTouch && handleNode(2)} style={{ touchAction: 'manipulation' }} />
+
+        {/* Invisible expanded hit areas for touch */}
+        {isTouch && (
+          <>
+            <circle cx="50" cy="50" r="22" fill="transparent" onClick={() => handleNode(0)} style={{ touchAction: 'manipulation' }} />
+            <circle cx="160" cy="38" r="22" fill="transparent" onClick={() => handleNode(1)} style={{ touchAction: 'manipulation' }} />
+            <circle cx="270" cy="70" r="22" fill="transparent" onClick={() => handleNode(2)} style={{ touchAction: 'manipulation' }} />
+          </>
+        )}
       </svg>
     </div>
   );
@@ -159,7 +178,9 @@ function InteractiveNeuralML() {
 // ==========================================
 // 3. CAPABILITY MAP DIAGRAM
 // ==========================================
-function CapabilityMap({ onHoverNode, hoveredNode }) {
+function CapabilityMap({ onSelectNode, selectedNode }) {
+  const isTouch = useIsTouch();
+
   const verticalsNodes = [
     { id: 'management', name: 'Management Systems', x: 160, y: 30, color: '#1B3A6B' },
     { id: 'web', name: 'Web Development', x: 70, y: 75, color: '#0066CC' },
@@ -167,56 +188,69 @@ function CapabilityMap({ onHoverNode, hoveredNode }) {
     { id: 'ai', name: 'AI & Machine Learning', x: 160, y: 120, color: '#1B3A6B' }
   ];
 
+  const nodeR = isTouch ? 18 : 12;
+
+  const handleNode = (name) => {
+    if (isTouch) {
+      onSelectNode(prev => prev === name ? null : name);
+    } else {
+      onSelectNode(name);
+    }
+  };
+
   return (
-    <Card variant="glass" className="w-full p-6 bg-white/70 border-white/80 shadow-md relative overflow-hidden">
-      <div className="text-[10px] font-mono text-black/40 border-b border-black/[0.04] pb-3 mb-4 flex justify-between items-center">
-        <span>ACTIVE ENGINEERING DIVISION LINKS</span>
-        <span className="text-[#1B3A6B] font-bold uppercase tracking-wider">
-          {hoveredNode ? hoveredNode : 'Hover nodes to visualize mapping'}
+    <Card variant="glass" className="w-full p-5 sm:p-6 bg-white/70 border-white/80 shadow-md relative overflow-hidden">
+      <div className="text-[10px] font-mono text-black/40 border-b border-black/[0.04] pb-3 mb-4 flex justify-between items-center gap-2">
+        <span className="flex-shrink-0">ACTIVE ENGINEERING DIVISION LINKS</span>
+        <span className="text-[#1B3A6B] font-bold uppercase tracking-wider text-right truncate max-w-[150px]">
+          {selectedNode ? selectedNode : (isTouch ? 'Tap nodes' : 'Hover nodes to visualize mapping')}
         </span>
       </div>
 
       <div className="w-full aspect-[320/160] relative">
         <svg viewBox="0 0 320 160" className="w-full h-full select-none">
-          {/* Parent to branches */}
+          {/* Connection lines */}
           <line x1="160" y1="30" x2="70" y2="75" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
           <line x1="160" y1="30" x2="250" y2="75" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
           <line x1="70" y1="75" x2="160" y2="120" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
           <line x1="250" y1="75" x2="160" y2="120" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" />
           <line x1="160" y1="30" x2="160" y2="120" stroke="rgba(0,0,0,0.06)" strokeWidth="1.2" strokeDasharray="3 3" />
 
-          {/* Active highlighted links */}
           {verticalsNodes.map((n) => {
-            const isSelf = hoveredNode === n.name;
+            const isSelf = selectedNode === n.name;
             return (
-              <g 
+              <g
                 key={n.id}
                 className="cursor-pointer"
-                onMouseEnter={() => onHoverNode(n.name)}
-                onMouseLeave={() => onHoverNode(null)}
+                onMouseEnter={() => !isTouch && handleNode(n.name)}
+                onMouseLeave={() => !isTouch && onSelectNode(null)}
+                onClick={() => isTouch && handleNode(n.name)}
+                style={{ touchAction: 'manipulation' }}
               >
-                <circle 
-                  cx={n.x} 
-                  cy={n.y} 
-                  r={isSelf ? 15 : 12}
-                  fill={isSelf ? n.color : '#FFFFFF'} 
+                <circle
+                  cx={n.x} cy={n.y}
+                  r={isSelf ? nodeR + 4 : nodeR}
+                  fill={isSelf ? n.color : '#FFFFFF'}
                   stroke={isSelf ? '#FFFFFF' : 'rgba(0,0,0,0.08)'}
                   strokeWidth={isSelf ? 2 : 1}
-                  className="transition-all duration-150 shadow-xs"
+                  className="transition-all duration-150"
                 />
-                <circle 
-                  cx={n.x} 
-                  cy={n.y} 
-                  r={isSelf ? 20 : 16}
-                  fill="none" 
+                <circle
+                  cx={n.x} cy={n.y}
+                  r={isSelf ? nodeR + 9 : nodeR + 5}
+                  fill="none"
                   stroke={n.color}
                   strokeWidth={1}
                   className={`opacity-10 transition-all ${isSelf ? 'animate-ping' : ''}`}
                 />
-                <text 
-                  x={n.x} 
-                  y={n.y + (n.y > 75 ? 24 : -18)} 
-                  textAnchor="middle" 
+                {/* Extra transparent hit area for touch */}
+                {isTouch && (
+                  <circle cx={n.x} cy={n.y} r="30" fill="transparent" />
+                )}
+                <text
+                  x={n.x}
+                  y={n.y + (n.y > 75 ? nodeR + 14 : -(nodeR + 8))}
+                  textAnchor="middle"
                   className={`font-mono text-[8px] font-semibold tracking-tight transition-colors duration-150 ${
                     isSelf ? 'fill-[#0F0F0F] font-bold' : 'fill-black/45'
                   }`}
@@ -236,7 +270,7 @@ function CapabilityMap({ onHoverNode, hoveredNode }) {
 // 4. MAIN CAPABILITIES COMPONENT
 // ==========================================
 export default function Services() {
-  const [hoveredNode, setHoveredNode] = useState(null);
+  const [selectedNode, setSelectedNode] = useState(null);
 
   const capabilities = [
     {
@@ -373,7 +407,7 @@ export default function Services() {
   return (
     <PageShell>
       {/* Background Gradients & Mesh overlay */}
-      <div className="relative overflow-hidden bg-[#FAFAF8] py-16 md:py-24 border-b border-black/[0.04]">
+      <div className="relative overflow-hidden bg-[#FAFAF8] py-10 md:py-16 lg:py-24 border-b border-black/[0.04]">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#1B3A6B]/5 to-transparent blur-3xl pointer-events-none rounded-full" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#0066CC]/5 to-transparent blur-3xl pointer-events-none rounded-full" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808003_1px,transparent_1px),linear-gradient(to_bottom,#80808003_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
@@ -381,10 +415,10 @@ export default function Services() {
         <Container className="relative z-10">
           
           {/* Layout Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-12 sm:mb-16">
             <div className="lg:col-span-7 max-w-xl text-left">
               <span className="font-mono text-[9px] font-bold text-[#1B3A6B] uppercase tracking-wider">Active Capabilities</span>
-              <h1 className="font-serif text-3xl md:text-5xl font-light text-[#0F0F0F] mt-2 mb-4 tracking-tight">
+              <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl font-light text-[#0F0F0F] mt-2 mb-3 sm:mb-4 tracking-tight">
                 Eight divisions of technological execution.
               </h1>
               <p className="text-sm md:text-base text-[#525252] leading-relaxed">
@@ -393,25 +427,25 @@ export default function Services() {
             </div>
             
             <div className="lg:col-span-5 w-full">
-              <CapabilityMap 
-                onHoverNode={setHoveredNode} 
-                hoveredNode={hoveredNode} 
+              <CapabilityMap
+                onSelectNode={setSelectedNode}
+                selectedNode={selectedNode}
               />
             </div>
           </div>
 
           {/* Active capability pipelines instead of static grid cards */}
-          <div className="flex flex-col gap-12 mt-12 max-w-4xl mx-auto">
+          <div className="flex flex-col gap-8 sm:gap-12 mt-8 sm:mt-12 max-w-4xl mx-auto">
             {capabilities.map((c) => {
               const IconComp = c.icon;
-              const isHighlighted = hoveredNode === c.title;
+              const isHighlighted = selectedNode === c.title;
 
               return (
                 <Card 
                   key={c.id} 
                   id={c.id}
                   variant="surface" 
-                  className={`p-6 md:p-8 bg-white border-black/5 flex flex-col md:grid md:grid-cols-12 gap-8 items-center transition-all duration-300 ${
+                  className={`p-5 sm:p-6 md:p-8 bg-white border-black/5 flex flex-col md:grid md:grid-cols-12 gap-6 sm:gap-8 items-center transition-all duration-300 active:scale-[0.99] ${
                     isHighlighted ? 'border-[#1B3A6B]/25 shadow-md scale-[1.01]' : ''
                   }`}
                 >

@@ -26,33 +26,33 @@ export default function Footer() {
         
         <div>
           <h4 className="font-mono text-[10px] font-semibold tracking-wider uppercase text-black/40 mb-4">Products</h4>
-          <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
-            <li><Link to="/graphzy" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Graphzy</Link></li>
-            <li><Link to="/mesa" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Mesa</Link></li>
-            <li><Link to="/ventureflow" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">VentureFlow</Link></li>
+          <ul className="list-none p-0 m-0 flex flex-col gap-1">
+            <li><Link to="/graphzy" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Graphzy</Link></li>
+            <li><Link to="/mesa" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Mesa</Link></li>
+            <li><Link to="/ventureflow" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">VentureFlow</Link></li>
           </ul>
         </div>
         
         <div className="md:col-span-2">
           <h4 className="font-mono text-[10px] font-semibold tracking-wider uppercase text-black/40 mb-4">Verticals</h4>
-          <ul className="list-none p-0 m-0 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5">
-            <li><Link to="/services#management-systems" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Management Systems</Link></li>
-            <li><Link to="/services#web-development" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Web Development</Link></li>
-            <li><Link to="/services#mobile-apps" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Mobile App Dev</Link></li>
-            <li><Link to="/services#ai-ml" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">AI & Machine Learning</Link></li>
-            <li><Link to="/services#data-science" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Data Science & Analytics</Link></li>
-            <li><Link to="/services#custom-software" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Custom Software</Link></li>
-            <li><Link to="/services#automation" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Automation & Workflow</Link></li>
-            <li><Link to="/services#scalable-products" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Scalable Tech Products</Link></li>
+          <ul className="list-none p-0 m-0 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
+            <li><Link to="/services#management-systems" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Management Systems</Link></li>
+            <li><Link to="/services#web-development" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Web Development</Link></li>
+            <li><Link to="/services#mobile-apps" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Mobile App Dev</Link></li>
+            <li><Link to="/services#ai-ml" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">AI & Machine Learning</Link></li>
+            <li><Link to="/services#data-science" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Data Science & Analytics</Link></li>
+            <li><Link to="/services#custom-software" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Custom Software</Link></li>
+            <li><Link to="/services#automation" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Automation & Workflow</Link></li>
+            <li><Link to="/services#scalable-products" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Scalable Tech Products</Link></li>
           </ul>
         </div>
         
         <div>
           <h4 className="font-mono text-[10px] font-semibold tracking-wider uppercase text-black/40 mb-4">Company</h4>
-          <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
-            <li><Link to="/contact" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Contact</Link></li>
-            <li><Link to="/privacy-policy" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Privacy Policy</Link></li>
-            <li><Link to="/terms-of-service" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline">Terms of Service</Link></li>
+          <ul className="list-none p-0 m-0 flex flex-col gap-1">
+            <li><Link to="/contact" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Contact</Link></li>
+            <li><Link to="/privacy-policy" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Privacy Policy</Link></li>
+            <li><Link to="/terms-of-service" style={{ touchAction: 'manipulation' }} className="min-h-[36px] flex items-center text-xs text-[#525252] hover:text-[#0F0F0F] no-underline active:opacity-70">Terms of Service</Link></li>
           </ul>
         </div>
       </Container>

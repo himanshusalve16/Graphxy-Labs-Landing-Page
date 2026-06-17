@@ -9,7 +9,7 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Check, Mail, Phone, MapPin, Send, AlertCircle, Loader2 } from 'lucide-react';
-import { FORMSPREE_CONFIG, submitToFormspree } from '../utils/formspree';
+import { submitToFormspree } from '../utils/formspree';
 
 // Contact Zod validation schema
 const contactSchema = z.object({
@@ -70,7 +70,7 @@ export default function Contact() {
       message: data.message.trim()
     };
 
-    const result = await submitToFormspree(FORMSPREE_CONFIG.CONTACT_FORM_ID, payload);
+    const result = await submitToFormspree(import.meta.env.VITE_FORMSPREE_CONTACT_ID, payload);
 
     if (result.success) {
       setStatus('success');
@@ -82,7 +82,7 @@ export default function Contact() {
 
   return (
     <PageShell>
-      <div className="bg-[#FAFAF8] py-16 md:py-24">
+      <div className="bg-[#FAFAF8] py-10 sm:py-16 md:py-24">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
 
@@ -90,7 +90,7 @@ export default function Contact() {
             <div className="lg:col-span-5 flex flex-col gap-8">
               <div>
                 <span className="font-mono text-[9px] font-bold text-[#1B3A6B] uppercase tracking-wider">Contact Us</span>
-                <h1 className="font-serif text-3xl md:text-4xl font-light text-[#0F0F0F] mt-2 mb-4">
+                <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-[#0F0F0F] mt-2 mb-4">
                   Let's discuss your next system.
                 </h1>
                 <p className="text-xs md:text-sm text-[#525252] leading-relaxed">
@@ -134,7 +134,7 @@ export default function Contact() {
             </div>
 
             {/* Form */}
-            <Card variant="surface" className="lg:col-span-7 bg-white p-8 border-black/5 shadow-sm">
+            <Card variant="surface" className="lg:col-span-7 bg-white p-6 sm:p-8 border-black/5 shadow-sm">
               {status === 'success' ? (
                 <div className="flex flex-col items-center text-center py-12 animate-fade-in">
                   <div className="w-14 h-14 rounded-full bg-[#E8F5EE] text-[#1E8A4A] flex items-center justify-center mb-6">
@@ -147,7 +147,7 @@ export default function Contact() {
                 </div>
               ) : (
                 <>
-                  <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
+                  <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate style={{ touchAction: 'manipulation' }}>
                     {/* Row 1: Name and Email */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1.5 text-left">
@@ -219,7 +219,7 @@ export default function Contact() {
                           <select
                             id="contact-subject"
                             disabled={status === 'loading'}
-                            className="flex h-11 w-full rounded-xl border border-black/10 bg-white px-4 py-2 text-sm text-[#0F0F0F] outline-none transition-all duration-120 focus:border-[#1B3A6B] focus:ring-2 focus:ring-[#EEF3FB] disabled:cursor-not-allowed disabled:opacity-50"
+                            className="flex h-12 w-full rounded-xl border border-black/10 bg-white px-4 py-2 text-sm text-[#0F0F0F] outline-none transition-all duration-120 focus:border-[#1B3A6B] focus:ring-2 focus:ring-[#EEF3FB] disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
                             aria-required="true"
                             {...register('subject')}
                           >
@@ -260,8 +260,9 @@ export default function Contact() {
                     <Button
                       type="submit"
                       variant="brand"
-                      className="w-full flex items-center justify-center gap-2 mt-2 h-11"
+                      className="w-full flex items-center justify-center gap-2 mt-2 min-h-[52px]"
                       disabled={status === 'loading'}
+                      style={{ touchAction: 'manipulation' }}
                     >
                       {status === 'loading' ? (
                         <>

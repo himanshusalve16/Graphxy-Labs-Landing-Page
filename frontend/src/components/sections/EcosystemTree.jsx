@@ -4,28 +4,327 @@ import { SectionHeading } from '../ui/SectionHeading';
 import { Card } from '../ui/Card';
 import { Tag } from '../ui/Tag';
 import { Button } from '../ui/Button';
-import { ArrowRight, Layers, Cpu, Code, Monitor, Grid, GitMerge, LineChart, TrendingUp, Smartphone } from 'lucide-react';
+import { ArrowRight, Layers, Cpu, Code, Monitor, Grid, GitMerge, LineChart, TrendingUp, Smartphone, ChevronDown, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useIsTouch, useBreakpoint } from '../../utils/useDeviceType';
 
-export default function EcosystemTree() {
-  const [hoveredNode, setHoveredNode] = useState(null); // node ID or null
+const verticalsData = [
+  { id: 'v3', name: 'AI & ML', x: 80, y: 130, icon: Cpu, products: ['p_graphzy'] },
+  { id: 'v5', name: 'Custom Software', x: 150, y: 130, icon: Code, products: ['p_graphzy'] },
+  { id: 'v1', name: 'Web Development', x: 220, y: 130, icon: Monitor, products: ['p_graphzy', 'p_mesa', 'p_ventureflow'] },
+  { id: 'v0', name: 'Management Systems', x: 290, y: 130, icon: Grid, products: ['p_mesa'] },
+  { id: 'v6', name: 'Automation', x: 360, y: 130, icon: GitMerge, products: ['p_mesa'] },
+  { id: 'v4', name: 'Data Science', x: 430, y: 130, icon: LineChart, products: ['p_ventureflow'] },
+  { id: 'v7', name: 'Scalable Tech', x: 500, y: 130, icon: TrendingUp, products: ['p_ventureflow'] },
+];
 
-  const verticals = [
-    { id: 'v3', name: 'AI & ML', x: 80, y: 130, icon: Cpu, products: ['p_graphzy'] },
-    { id: 'v5', name: 'Custom Software', x: 150, y: 130, icon: Code, products: ['p_graphzy'] },
-    { id: 'v1', name: 'Web Development', x: 220, y: 130, icon: Monitor, products: ['p_graphzy', 'p_mesa', 'p_ventureflow'] },
-    { id: 'v0', name: 'Management Systems', x: 290, y: 130, icon: Grid, products: ['p_mesa'] },
-    { id: 'v6', name: 'Automation', x: 360, y: 130, icon: GitMerge, products: ['p_mesa'] },
-    { id: 'v4', name: 'Data Science', x: 430, y: 130, icon: LineChart, products: ['p_ventureflow'] },
-    { id: 'v7', name: 'Scalable Tech', x: 500, y: 130, icon: TrendingUp, products: ['p_ventureflow'] },
-  ];
+const productsData = [
+  { id: 'p_graphzy', name: 'Graphzy', x: 120, y: 240, color: '#0066CC', link: '/graphzy', tag: 'Prototype Preview' },
+  { id: 'p_mesa', name: 'Mesa', x: 300, y: 240, color: '#92400E', link: '/mesa', tag: 'Concept Preview' },
+  { id: 'p_ventureflow', name: 'VentureFlow', x: 480, y: 240, color: '#1B3A6B', link: '/ventureflow', tag: 'Early Concept' },
+];
 
-  const products = [
-    { id: 'p_graphzy', name: 'Graphzy', x: 120, y: 240, color: '#0066CC', link: '/graphzy', tag: 'Prototype Preview' },
-    { id: 'p_mesa', name: 'Mesa', x: 300, y: 240, color: '#92400E', link: '/mesa', tag: 'Concept Preview' },
-    { id: 'p_ventureflow', name: 'VentureFlow', x: 480, y: 240, color: '#1B3A6B', link: '/ventureflow', tag: 'Early Concept' },
-  ];
+// ──────────────────────────────────────────────────────────────
+// MOBILE COMPACT TREE GRAPH
+// ──────────────────────────────────────────────────────────────
+const mobileVerticals = [
+  { id: 'v3', name: 'AI & ML', x: 48, y: 100, icon: Cpu, products: ['p_graphzy'] },
+  { id: 'v5', name: 'Custom Software', x: 136, y: 100, icon: Code, products: ['p_graphzy'] },
+  { id: 'v1', name: 'Web Dev', x: 224, y: 100, icon: Monitor, products: ['p_graphzy', 'p_mesa', 'p_ventureflow'] },
+  { id: 'v0', name: 'Mgmt Systems', x: 312, y: 100, icon: Grid, products: ['p_mesa'] },
+  { id: 'v6', name: 'Automation', x: 90, y: 175, icon: GitMerge, products: ['p_mesa'] },
+  { id: 'v4', name: 'Data Science', x: 180, y: 175, icon: LineChart, products: ['p_ventureflow'] },
+  { id: 'v7', name: 'Scalable Tech', x: 270, y: 175, icon: TrendingUp, products: ['p_ventureflow'] },
+];
+
+const mobileProducts = [
+  { id: 'p_graphzy', name: 'Graphzy', x: 70, y: 260, color: '#0066CC', link: '/graphzy', tag: 'Prototype Preview', description: 'Plain text math formula to live graph conversion platform.' },
+  { id: 'p_mesa', name: 'Mesa', x: 180, y: 260, color: '#92400E', link: '/mesa', tag: 'Concept Preview', description: 'Restaurant OS orchestrating kitchen workflows and floor status.' },
+  { id: 'p_ventureflow', name: 'VentureFlow', x: 290, y: 260, color: '#1B3A6B', link: '/ventureflow', tag: 'Early Concept', description: 'Fundraising pipelines, pitch telemetry, and cap table models.' },
+];
+
+function MobileTreeGraph() {
+  const [active, setActive] = useState(null); // { type, id }
+
+  const tap = (type, id) => {
+    setActive(prev => prev?.type === type && prev?.id === id ? null : { type, id });
+  };
+  const dismiss = (e) => {
+    if (e.target === e.currentTarget) setActive(null);
+  };
+
+  const isPathActive = (fromId, toId) => {
+    if (!active) return false;
+    if (active.type === 'center') return true;
+    
+    // Check if it's a center-to-vertical line
+    if (fromId === 'center') {
+      const vId = toId;
+      if (active.type === 'vertical') {
+        return active.id === vId;
+      }
+      if (active.type === 'product') {
+        const v = mobileVerticals.find(vv => vv.id === vId);
+        return v ? v.products.includes(active.id) : false;
+      }
+    }
+    
+    // Check if it's a vertical-to-product line
+    const vId = fromId;
+    const pId = toId;
+    if (active.type === 'vertical') {
+      return active.id === vId && mobileVerticals.find(vv => vv.id === vId)?.products.includes(pId);
+    }
+    if (active.type === 'product') {
+      return active.id === pId && mobileVerticals.find(vv => vv.id === vId)?.products.includes(active.id);
+    }
+    
+    return false;
+  };
+
+  const isVertActive = (vId) => {
+    if (!active) return false;
+    if (active.type === 'center') return true;
+    if (active.type === 'vertical' && active.id === vId) return true;
+    if (active.type === 'product') {
+      const v = mobileVerticals.find(vv => vv.id === vId);
+      return v ? v.products.includes(active.id) : false;
+    }
+    return false;
+  };
+
+  const isProdActive = (pId) => {
+    if (!active) return false;
+    if (active.type === 'center') return true;
+    if (active.type === 'product' && active.id === pId) return true;
+    if (active.type === 'vertical') {
+      const v = mobileVerticals.find(vv => vv.id === active.id);
+      return v ? v.products.includes(pId) : false;
+    }
+    return false;
+  };
+
+  const panelContent = () => {
+    if (!active) return null;
+    if (active.type === 'center') {
+      return (
+        <div className="flex flex-col items-center text-center">
+          <span className="font-mono text-[9px] text-[#1B3A6B] uppercase tracking-widest mb-1">Architectural Parent</span>
+          <span className="font-serif text-base font-semibold text-[#0F0F0F]">Graphxy Labs</span>
+          <span className="text-[11px] text-[#525252] mt-1">Unified hierarchical structure of products</span>
+        </div>
+      );
+    }
+    if (active.type === 'vertical') {
+      const v = mobileVerticals.find(vv => vv.id === active.id);
+      const connected = mobileProducts.filter(p => v?.products.includes(p.id));
+      return (
+        <div className="flex flex-col gap-2">
+          <div>
+            <span className="font-mono text-[9px] text-black/40 uppercase tracking-widest">Vertical</span>
+            <p className="font-serif text-sm font-semibold text-[#0F0F0F]">{v?.name}</p>
+          </div>
+          {connected.length > 0 && (
+            <div className="flex gap-2 flex-wrap">
+              {connected.map(p => (
+                <Link key={p.id} to={p.link} style={{ touchAction: 'manipulation', backgroundColor: p.color + '14', borderColor: p.color + '30' }} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold no-underline active:scale-95 transition-transform">
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: p.color }} />
+                  <span style={{ color: p.color }}>{p.name}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+    if (active.type === 'product') {
+      const p = mobileProducts.find(pp => pp.id === active.id);
+      if (!p) return null;
+      return (
+        <div className="flex items-center justify-between gap-4 w-full">
+          <div>
+            <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: p.color }}>{p.tag}</span>
+            <p className="font-serif text-sm font-semibold text-[#0F0F0F]">{p.name}</p>
+            <p className="text-[11px] text-[#525252] mt-0.5">{p.description}</p>
+          </div>
+          <Link to={p.link} style={{ touchAction: 'manipulation', backgroundColor: p.color, color: '#fff' }} className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold no-underline flex-shrink-0 active:scale-95 transition-transform">
+            View <ArrowRight size={12} />
+          </Link>
+        </div>
+      );
+    }
+  };
+
+  const centerR = 20;
+  const nodeR = 16;
+  const pW = 74;
+  const pH = 28;
+
+  return (
+    <div className="relative w-full aspect-[360/340] select-none" onClick={dismiss}>
+      <svg viewBox="0 0 360 340" className="w-full h-full" onClick={dismiss}>
+        {/* L1 → L2 lines */}
+        {mobileVerticals.map(v => {
+          const activePath = isPathActive('center', v.id);
+          return (
+            <line key={`cl-${v.id}`}
+              x1="180" y1="30" x2={v.x} y2={v.y}
+              stroke={activePath ? '#1B3A6B' : 'rgba(0,0,0,0.07)'}
+              strokeWidth={activePath ? 1.8 : 1}
+              style={{ transition: 'stroke 0.2s, stroke-width 0.2s' }}
+            />
+          );
+        })}
+
+        {/* L2 → L3 lines */}
+        {mobileVerticals.map(v => v.products.map(pId => {
+          const p = mobileProducts.find(pp => pp.id === pId);
+          if (!p) return null;
+          const activePath = isPathActive(v.id, pId);
+          return (
+            <line key={`vpl-${v.id}-${pId}`}
+              x1={v.x} y1={v.y} x2={p.x} y2={p.y}
+              stroke={activePath ? p.color : 'rgba(0,0,0,0.07)'}
+              strokeWidth={activePath ? 1.8 : 1}
+              style={{ transition: 'stroke 0.2s, stroke-width 0.2s' }}
+            />
+          );
+        }))}
+
+        {/* L1 -> L2 Animation particles */}
+        {mobileVerticals.map((v, i) => {
+          const activePath = isPathActive('center', v.id);
+          return (
+            <motion.circle key={`dp1-${v.id}`}
+              r={1.5} fill="#1B3A6B" opacity={activePath ? 0.6 : 0.2}
+              animate={{ cx: [180, v.x], cy: [30, v.y] }}
+              transition={{ duration: 3.5 + i * 0.2, repeat: Infinity, ease: 'linear', delay: i * 0.3 }}
+            />
+          );
+        })}
+
+        {/* L2 -> L3 Animation particles */}
+        {mobileVerticals.map(v => v.products.map((pId, idx) => {
+          const p = mobileProducts.find(pp => pp.id === pId);
+          if (!p) return null;
+          const activePath = isPathActive(v.id, pId);
+          return (
+            <motion.circle key={`dp2-${v.id}-${pId}`}
+              r={1.5} fill={p.color} opacity={activePath ? 0.6 : 0.2}
+              animate={{ cx: [v.x, p.x], cy: [v.y, p.y] }}
+              transition={{ duration: 4.5 + idx * 0.3, repeat: Infinity, ease: 'linear', delay: Math.random() * 2 }}
+            />
+          );
+        }))}
+
+        {/* LEVEL 1 Center badge */}
+        <motion.g whileTap={{ scale: 0.94 }} onClick={e => { e.stopPropagation(); tap('center', 'center'); }} className="cursor-pointer">
+          <rect x="130" y="14" width="100" height="32" rx="9" fill="#1B3A6B" />
+          <rect x="126" y="10" width="108" height="40" rx="13" fill="none" stroke="#1B3A6B" strokeWidth="1" opacity={0.15} className="animate-pulse" style={{ animationDuration: '3s' }} />
+          <rect x="120" y="4" width="120" height="52" rx="16" fill="transparent" />
+          <text x="180" y="33" textAnchor="middle" fill="#FFFFFF" fontSize="9.5" fontWeight="700" fontFamily="serif" letterSpacing="0.5">GXY LABS</text>
+        </motion.g>
+
+        {/* LEVEL 2 Vertical nodes */}
+        {mobileVerticals.map(v => {
+          const IconComp = v.icon;
+          const on = isVertActive(v.id);
+          const selected = active?.id === v.id && active?.type === 'vertical';
+          return (
+            <motion.g key={v.id} whileTap={{ scale: 0.93 }} onClick={e => { e.stopPropagation(); tap('vertical', v.id); }} className="cursor-pointer">
+              <circle cx={v.x} cy={v.y} r={on ? nodeR + 3 : nodeR}
+                fill={on ? '#EEF3FB' : '#FFFFFF'}
+                stroke={on ? '#1B3A6B' : 'rgba(0,0,0,0.1)'}
+                strokeWidth={selected ? 2 : 1}
+                style={{ transition: 'all 0.18s' }}
+              />
+              <circle cx={v.x} cy={v.y} r="28" fill="transparent" />
+              <foreignObject x={v.x - 7.5} y={v.y - 7.5} width="15" height="15" className="pointer-events-none">
+                <div xmlns="http://www.w3.org/1999/xhtml" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: on ? '#1B3A6B' : 'rgba(0,0,0,0.35)' }}>
+                  <IconComp size={10} strokeWidth={2.5} />
+                </div>
+              </foreignObject>
+              <text x={v.x} y={v.y + 25} textAnchor="middle"
+                fontSize="8" fontWeight={on ? '700' : '500'}
+                fill={on ? '#0F0F0F' : 'rgba(0,0,0,0.35)'}
+                style={{ transition: 'fill 0.18s' }}
+              >
+                {v.name}
+              </text>
+            </motion.g>
+          );
+        })}
+
+        {/* LEVEL 3 Product nodes */}
+        {mobileProducts.map(p => {
+          const on = isProdActive(p.id);
+          const selected = active?.id === p.id && active?.type === 'product';
+          return (
+            <motion.g key={p.id} whileTap={{ scale: 0.95 }} onClick={e => { e.stopPropagation(); tap('product', p.id); }} className="cursor-pointer">
+              <rect
+                x={p.x - pW / 2} y={p.y - pH / 2}
+                width={pW} height={pH} rx={9}
+                fill={on ? p.color : '#FFFFFF'}
+                stroke={on ? p.color : 'rgba(0,0,0,0.08)'}
+                strokeWidth={selected ? 2 : 1}
+                style={{ transition: 'all 0.18s', filter: on ? 'drop-shadow(0 2px 6px ' + p.color + '33)' : 'none' }}
+              />
+              <rect x={p.x - pW / 2 - 8} y={p.y - pH / 2 - 8} width={pW + 16} height={pH + 16} rx={12} fill="transparent" />
+              <circle cx={p.x - pW / 2 + 10} cy={p.y} r={3} fill={on ? 'rgba(255,255,255,0.8)' : p.color} style={{ transition: 'fill 0.18s' }} />
+              <text
+                x={p.x + 4} y={p.y + 3.5}
+                textAnchor="middle" fontSize="9" fontWeight="700" fontFamily="serif"
+                fill={on ? '#FFFFFF' : '#0F0F0F'}
+                style={{ transition: 'fill 0.18s' }}
+              >
+                {p.name}
+              </text>
+            </motion.g>
+          );
+        })}
+      </svg>
+
+      {/* Slide-up detail panel */}
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 40, opacity: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-black/[0.05] rounded-b-2xl px-4 py-3 shadow-lg"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">{panelContent()}</div>
+              <button
+                onClick={() => setActive(null)}
+                style={{ touchAction: 'manipulation' }}
+                className="w-7 h-7 rounded-full bg-black/[0.05] flex items-center justify-center flex-shrink-0 active:bg-black/10 transition-colors mt-0.5"
+                aria-label="Dismiss"
+              >
+                <X size={13} className="text-black/50" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// SVG TREE — Desktop hover / Tablet click
+// ──────────────────────────────────────────────────────────────
+function SvgTree({ isTouch }) {
+  const [hoveredNode, setHoveredNode] = useState(null);
+
+  const handleEnter = (id) => { if (!isTouch) setHoveredNode(id); };
+  const handleLeave = () => { if (!isTouch) setHoveredNode(null); };
+  const handleClick = (id) => {
+    if (isTouch) setHoveredNode(prev => prev === id ? null : id);
+  };
 
   const isLinkActive = (nId1, nId2) => {
     if (!hoveredNode) return false;
@@ -34,139 +333,143 @@ export default function EcosystemTree() {
     return false;
   };
 
+  // Larger nodes on tablet for better touch targets
+  const nodeR = isTouch ? 17 : 13;
+
+  return (
+    <div className="w-full aspect-[600/290] relative">
+      <svg viewBox="0 0 600 290" className="w-full h-full select-none">
+        {/* L1 → L2 lines */}
+        {verticalsData.map(v => {
+          const active = isLinkActive('center', v.id);
+          return (
+            <line key={`l1-l2-${v.id}`}
+              x1="300" y1="35" x2={v.x} y2={v.y}
+              stroke={active ? '#1B3A6B' : 'rgba(0,0,0,0.06)'}
+              strokeWidth={active ? 1.5 : 1}
+              className="transition-colors duration-150"
+            />
+          );
+        })}
+
+        {/* L2 → L3 lines */}
+        {verticalsData.map(v =>
+          v.products.map(pId => {
+            const p = productsData.find(prod => prod.id === pId);
+            if (!p) return null;
+            const active = isLinkActive(v.id, p.id);
+            return (
+              <line key={`l2-l3-${v.id}-${p.id}`}
+                x1={v.x} y1={v.y} x2={p.x} y2={p.y}
+                stroke={active ? p.color : 'rgba(0,0,0,0.06)'}
+                strokeWidth={active ? 1.5 : 1}
+                className="transition-colors duration-150"
+              />
+            );
+          })
+        )}
+
+        {/* LEVEL 1: GXY LABS */}
+        <g
+          className="cursor-pointer"
+          onMouseEnter={() => handleEnter('center')}
+          onMouseLeave={handleLeave}
+          onClick={() => handleClick('center')}
+        >
+          <rect x="250" y="10" width="100" height="36" rx="10" fill="#1B3A6B" />
+          <rect x="246" y="6" width="108" height="44" rx="14" fill="none" stroke="#1B3A6B" strokeWidth="1" className="opacity-15 animate-pulse" />
+          {isTouch && <rect x="240" y="2" width="120" height="52" rx="16" fill="transparent" />}
+          <text x="300" y="31" textAnchor="middle" fill="#FFFFFF" className="font-serif text-[10px] font-bold tracking-wide">GXY LABS</text>
+        </g>
+
+        {/* LEVEL 2: Verticals */}
+        {verticalsData.map(v => {
+          const IconComp = v.icon;
+          const isSelected = hoveredNode === v.id || hoveredNode === 'center';
+          return (
+            <g key={v.id} className="cursor-pointer"
+              onMouseEnter={() => handleEnter(v.id)}
+              onMouseLeave={handleLeave}
+              onClick={() => handleClick(v.id)}
+            >
+              <circle cx={v.x} cy={v.y} r={nodeR} fill={isSelected ? '#EEF3FB' : '#FFFFFF'} stroke={isSelected ? '#1B3A6B' : 'rgba(0,0,0,0.08)'} strokeWidth="1.2" className="transition-all duration-150" />
+              {/* Larger invisible hit area on touch */}
+              {isTouch && <circle cx={v.x} cy={v.y} r="28" fill="transparent" />}
+              <foreignObject x={v.x - 7} y={v.y - 7} width="14" height="14" className="pointer-events-none">
+                <div className={`flex items-center justify-center w-full h-full ${isSelected ? 'text-[#1B3A6B]' : 'text-black/40'}`}>
+                  <IconComp size={9} strokeWidth={2.5} />
+                </div>
+              </foreignObject>
+              <text x={v.x} y={v.y + 28} textAnchor="middle"
+                className={`font-sans text-[7.5px] font-semibold tracking-tight transition-all duration-150 ${isSelected ? 'fill-black font-bold' : 'fill-black/40'}`}
+              >
+                {v.name}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* LEVEL 3: Products */}
+        {productsData.map(p => {
+          const isSelected = hoveredNode === p.id || (hoveredNode && verticalsData.find(v => v.id === hoveredNode && v.products.includes(p.id)));
+          return (
+            <g key={p.id} className="cursor-pointer"
+              onMouseEnter={() => handleEnter(p.id)}
+              onMouseLeave={handleLeave}
+              onClick={() => handleClick(p.id)}
+            >
+              <rect x={p.x - 45} y={p.y - 15} width="90" height="30" rx="9" fill="#FFFFFF" stroke={isSelected ? p.color : 'rgba(0,0,0,0.07)'} strokeWidth={isSelected ? 2 : 1} className="shadow-sm transition-all duration-150" />
+              {isTouch && <rect x={p.x - 55} y={p.y - 25} width="110" height="50" rx="12" fill="transparent" />}
+              <circle cx={p.x - 30} cy={p.y} r="3" fill={p.color} />
+              <text x={p.x + 8} y={p.y + 3.5} textAnchor="middle" fill="#0F0F0F" className="font-serif text-[9.5px] font-bold">{p.name}</text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// MAIN SECTION
+// ──────────────────────────────────────────────────────────────
+export default function EcosystemTree() {
+  const isTouch = useIsTouch();
+  const bp = useBreakpoint();
+  const isMobile = bp === 'mobile';
+
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-[#FAFAF8] border-b border-black/[0.06] relative overflow-hidden">
-      {/* Mesh gradients */}
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-gradient-to-br from-[#1B3A6B]/5 to-transparent blur-3xl pointer-events-none rounded-full" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808003_1px,transparent_1px),linear-gradient(to_bottom,#80808003_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       <Container className="relative z-10">
-        <SectionHeading 
+        <SectionHeading
           eyebrow="Architectural Structure"
           heading="A unified ecosystem engineered for distinct industries."
           description="Graphxy Labs operates as the core architectural parent. We design and launch focused product divisions that address math visualization, restaurant automation, and startup logistics."
         />
 
-        {/* 1. VISUAL THREE-LEVEL HIERARCHY TREE */}
-        <div data-reveal className="mt-10 max-w-4xl mx-auto flex flex-col items-center bg-white border border-black/5 rounded-2xl p-6 shadow-xs overflow-hidden">
-          <div className="w-full flex justify-between items-center text-[9px] font-mono text-black/45 border-b border-black/[0.04] pb-3 mb-4">
-            <span>LABS HIERARCHICAL SCHEMA</span>
-            <span className="text-[#1B3A6B] font-bold">
-              {hoveredNode ? hoveredNode.toUpperCase() : 'HOVER NODES TO HIGHLIGHT RELATIONSHIPS'}
+        {/* Hierarchy Visualization */}
+        <div data-reveal className="mt-10 max-w-4xl mx-auto flex flex-col items-center bg-white border border-black/5 rounded-2xl p-5 sm:p-6 shadow-xs overflow-hidden">
+          <div className="w-full flex justify-between items-center text-[9px] font-mono text-black/45 border-b border-black/[0.04] pb-3 mb-4 gap-2">
+            <span className="flex-shrink-0">LABS HIERARCHICAL SCHEMA</span>
+            <span className="text-[#1B3A6B] font-bold text-right truncate">
+              {isMobile ? 'TAP VERTICALS TO EXPLORE' : isTouch ? 'TAP NODES TO HIGHLIGHT' : 'HOVER NODES TO HIGHLIGHT RELATIONSHIPS'}
             </span>
           </div>
 
-          <div className="w-full aspect-[600/290] relative">
-            <svg viewBox="0 0 600 290" className="w-full h-full select-none">
-              {/* Level 1 to Level 2 connection lines */}
-              {verticals.map(v => {
-                const active = isLinkActive('center', v.id);
-                return (
-                  <g key={`l1-l2-${v.id}`}>
-                    <line 
-                      x1="300" y1="35" 
-                      x2={v.x} y2={v.y} 
-                      stroke={active ? '#1B3A6B' : 'rgba(0,0,0,0.06)'} 
-                      strokeWidth={active ? 1.5 : 1}
-                      className="transition-colors duration-150"
-                    />
-                  </g>
-                );
-              })}
-
-              {/* Level 2 to Level 3 connection lines */}
-              {verticals.map(v => {
-                return v.products.map(pId => {
-                  const p = products.find(prod => prod.id === pId);
-                  if (!p) return null;
-                  const active = isLinkActive(v.id, p.id);
-                  return (
-                    <line 
-                      key={`l2-l3-${v.id}-${p.id}`}
-                      x1={v.x} y1={v.y} 
-                      x2={p.x} y2={p.y} 
-                      stroke={active ? p.color : 'rgba(0,0,0,0.06)'} 
-                      strokeWidth={active ? 1.5 : 1}
-                      className="transition-colors duration-150"
-                    />
-                  );
-                });
-              })}
-
-              {/* LEVEL 1 NODE: PARENT LABS */}
-              <g 
-                className="cursor-pointer"
-                onMouseEnter={() => setHoveredNode('center')}
-                onMouseLeave={() => setHoveredNode(null)}
-              >
-                <rect x="250" y="10" width="100" height="36" rx="10" fill="#1B3A6B" />
-                <rect x="246" y="6" width="108" height="44" rx="14" fill="none" stroke="#1B3A6B" strokeWidth="1" className="opacity-15 animate-pulse" />
-                <text x="300" y="31" textAnchor="middle" fill="#FFFFFF" className="font-serif text-[10px] font-bold tracking-wide">GXY LABS</text>
-              </g>
-
-              {/* LEVEL 2 NODES: VERTICALS */}
-              {verticals.map(v => {
-                const IconComp = v.icon;
-                const isSelected = hoveredNode === v.id || (hoveredNode === 'center');
-                return (
-                  <g 
-                    key={v.id}
-                    className="cursor-pointer"
-                    onMouseEnter={() => setHoveredNode(v.id)}
-                    onMouseLeave={() => setHoveredNode(null)}
-                  >
-                    <circle cx={v.x} cy={v.y} r="13" fill={isSelected ? '#EEF3FB' : '#FFFFFF'} stroke={isSelected ? '#1B3A6B' : 'rgba(0,0,0,0.08)'} strokeWidth="1.2" className="transition-all duration-150" />
-                    <foreignObject x={v.x - 7} y={v.y - 7} width="14" height="14" className="pointer-events-none">
-                      <div className={`flex items-center justify-center w-full h-full ${isSelected ? 'text-[#1B3A6B]' : 'text-black/40'}`}>
-                        <IconComp size={9} strokeWidth={2.5} />
-                      </div>
-                    </foreignObject>
-                    
-                    {/* Vertical label */}
-                    <text 
-                      x={v.x} y={v.y + 24} 
-                      textAnchor="middle" 
-                      className={`font-sans text-[7.5px] font-semibold tracking-tight transition-all duration-150 ${
-                        isSelected ? 'fill-black font-bold' : 'fill-black/40'
-                      }`}
-                    >
-                      {v.name}
-                    </text>
-                  </g>
-                );
-              })}
-
-              {/* LEVEL 3 NODES: PRODUCTS */}
-              {products.map(p => {
-                const isSelected = hoveredNode === p.id || (hoveredNode && verticals.find(v => v.id === hoveredNode && v.products.includes(p.id)));
-                return (
-                  <g 
-                    key={p.id}
-                    className="cursor-pointer"
-                    onMouseEnter={() => setHoveredNode(p.id)}
-                    onMouseLeave={() => setHoveredNode(null)}
-                  >
-                    <rect 
-                      x={p.x - 45} y={p.y - 15} 
-                      width="90" height="30" 
-                      rx="9" fill="#FFFFFF" 
-                      stroke={isSelected ? p.color : 'rgba(0,0,0,0.07)'} 
-                      strokeWidth={isSelected ? 2 : 1}
-                      className="shadow-sm transition-all duration-150" 
-                    />
-                    <circle cx={p.x - 30} cy={p.y} r="3" fill={p.color} />
-                    <text x={p.x + 8} y={p.y + 3.5} textAnchor="middle" fill="#0F0F0F" className="font-serif text-[9.5px] font-bold">{p.name}</text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
+          {isMobile ? (
+            <MobileTreeGraph />
+          ) : (
+            <SvgTree isTouch={isTouch} />
+          )}
         </div>
 
-        {/* 2. PRODUCTS GRID CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mt-12 mx-auto">
-          {/* Card 1: Graphzy */}
-          <Card variant="surface" className="p-5 bg-white border-[#0066CC]/10 flex flex-col justify-between hover:border-[#0066CC]/30 hover:shadow-md transition-all duration-200 text-left">
+        {/* Product Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full max-w-5xl mt-10 sm:mt-12 mx-auto">
+          {/* Graphzy */}
+          <Card variant="surface" className="p-5 bg-white border-[#0066CC]/10 flex flex-col justify-between active:scale-[0.98] hover:border-[#0066CC]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
                 <Tag variant="math">Prototype Preview</Tag>
@@ -178,22 +481,22 @@ export default function EcosystemTree() {
               </p>
               <div className="border-t border-black/[0.04] pt-3 mb-5">
                 <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
-                <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[10px] text-[#525252]">
+                <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />Desmos graph canvas</li>
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />Parameter Auto-Mapping</li>
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0066CC]" />Dynamic parameter sliders</li>
                 </ul>
               </div>
             </div>
-            <Link to="/products#graphzy" className="mt-auto block">
-              <Button variant="graphzy" className="w-full flex items-center justify-center gap-1 text-xs py-1.5">
+            <Link to="/products#graphzy" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+              <Button variant="graphzy" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
                 Launch Visualizer <ArrowRight size={12} />
               </Button>
             </Link>
           </Card>
 
-          {/* Card 2: Mesa */}
-          <Card variant="surface" className="p-5 bg-[#FEF7EC] border-[#B45309]/14 flex flex-col justify-between hover:border-[#B45309]/30 hover:shadow-md transition-all duration-200 text-left">
+          {/* Mesa */}
+          <Card variant="surface" className="p-5 bg-[#FEF7EC] border-[#B45309]/14 flex flex-col justify-between active:scale-[0.98] hover:border-[#B45309]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
                 <Tag variant="serva">Concept Preview</Tag>
@@ -205,22 +508,22 @@ export default function EcosystemTree() {
               </p>
               <div className="border-t border-black/[0.04] pt-3 mb-5">
                 <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
-                <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[10px] text-[#525252]">
+                <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Floor & table layout status</li>
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Tablet kitchen displays</li>
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#92400E]" />Low inventory SMS alerts</li>
                 </ul>
               </div>
             </div>
-            <Link to="/products#mesa" className="mt-auto block">
-              <Button variant="serva" className="w-full flex items-center justify-center gap-1 text-xs py-1.5">
+            <Link to="/products#mesa" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+              <Button variant="serva" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
                 Register for Waitlist <ArrowRight size={12} />
               </Button>
             </Link>
           </Card>
 
-          {/* Card 3: VentureFlow */}
-          <Card variant="surface" className="p-5 bg-white border-[#1B3A6B]/10 flex flex-col justify-between hover:border-[#1B3A6B]/30 hover:shadow-md transition-all duration-200 text-left">
+          {/* VentureFlow */}
+          <Card variant="surface" className="p-5 bg-white border-[#1B3A6B]/10 flex flex-col justify-between active:scale-[0.98] hover:border-[#1B3A6B]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
                 <Tag variant="brand">Early Concept</Tag>
@@ -232,21 +535,20 @@ export default function EcosystemTree() {
               </p>
               <div className="border-t border-black/[0.04] pt-3 mb-5">
                 <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
-                <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[10px] text-[#525252]">
+                <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Investor Deal Pipeline CRM</li>
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Pitch Deck Telemetry</li>
                   <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />Dilution Cap Table Models</li>
                 </ul>
               </div>
             </div>
-            <Link to="/products#ventureflow" className="mt-auto block">
-              <Button variant="brand" className="w-full flex items-center justify-center gap-1 text-xs py-1.5">
+            <Link to="/products#ventureflow" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+              <Button variant="brand" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
                 Explore Concept <ArrowRight size={12} />
               </Button>
             </Link>
           </Card>
         </div>
-
       </Container>
     </section>
   );

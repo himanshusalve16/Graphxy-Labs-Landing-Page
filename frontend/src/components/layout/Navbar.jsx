@@ -50,7 +50,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`h-[54px] px-6 md:px-10 flex items-center justify-between sticky top-0 z-50 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      <nav className={`h-[54px] px-5 md:px-10 flex items-center justify-between sticky top-0 z-50 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         scrolled || mobileMenuOpen
           ? 'bg-[#FAFAF8]/92 backdrop-blur-md border-b border-black/[0.06]' 
           : 'bg-transparent border-b border-transparent'
@@ -78,7 +78,7 @@ export default function Navbar() {
               <Link 
                 to={link.path}
                 onClick={(e) => handleLinkClick(e, link.path)}
-                className={`text-xs font-medium no-underline transition-colors flex items-center gap-1 focus:ring-2 focus:ring-[#EEF3FB] rounded px-2 py-1 outline-none ${
+                className={`text-xs font-medium no-underline transition-colors flex items-center gap-1 focus:ring-2 focus:ring-[#EEF3FB] rounded px-2 py-1 outline-none min-h-[44px] ${
                   isActive(link.path) ? 'text-[#0F0F0F] font-semibold' : 'text-[#525252] hover:text-[#0F0F0F]'
                 }`}
               >
@@ -91,15 +91,16 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Mobile menu trigger */}
+        {/* Mobile menu trigger — 44×44px touch target */}
         <div className="flex items-center md:hidden">
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-8 h-8 rounded-full border border-black/5 bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#525252] hover:text-[#0f0f0f] cursor-pointer focus:ring-2 focus:ring-[#EEF3FB] outline-none transition-colors"
+            className="w-11 h-11 rounded-full border border-black/5 bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#525252] hover:text-[#0f0f0f] cursor-pointer focus:ring-2 focus:ring-[#EEF3FB] outline-none transition-colors touch-action-manipulation"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
+            style={{ touchAction: 'manipulation' }}
           >
-            {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </nav>
@@ -111,24 +112,34 @@ export default function Navbar() {
           role="dialog"
           aria-modal="true"
         >
-          <ul className="flex flex-col gap-6 list-none p-0 m-0 mt-8">
+          <ul className="flex flex-col gap-2 list-none p-0 m-0 mt-6">
             {navLinks.map((link) => (
-              <li key={link.label} className="border-b border-black/[0.04] pb-4 last:border-0">
+              <li key={link.label} className="border-b border-black/[0.04] last:border-0">
                 <Link 
                   to={link.path}
                   onClick={(e) => {
                     handleLinkClick(e, link.path);
                     setMobileMenuOpen(false);
                   }}
-                  className={`text-xl font-serif no-underline flex items-center justify-between ${
+                  style={{ touchAction: 'manipulation' }}
+                  className={`min-h-[56px] text-xl font-serif no-underline flex items-center justify-between px-2 ${
                     isActive(link.path) ? 'text-[#1B3A6B] font-medium' : 'text-[#525252]'
                   }`}
                 >
                   <span>{link.label}</span>
+                  {isActive(link.path) && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1B3A6B]" />
+                  )}
                 </Link>
               </li>
             ))}
           </ul>
+
+          {/* Bottom brand stamp */}
+          <div className="mt-auto pt-6 border-t border-black/[0.04] flex items-center gap-2">
+            <LogoSvg aria-hidden="true" className="w-5 h-5 opacity-30" />
+            <span className="font-mono text-[10px] text-black/30 uppercase tracking-widest">Engineering Studio</span>
+          </div>
         </div>
       )}
     </>

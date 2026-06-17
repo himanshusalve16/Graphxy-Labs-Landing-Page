@@ -102,7 +102,7 @@ function GraphzyPreview() {
       </div>
 
       {/* Screen Area */}
-      <div className="relative h-[200px] bg-white border border-black/5 rounded-lg overflow-hidden flex items-center justify-center">
+      <div className="relative h-[180px] sm:h-[200px] bg-white border border-black/5 rounded-lg overflow-hidden flex items-center justify-center">
         {/* Graph Grid Lines */}
         <div className="absolute inset-0 grid grid-cols-10 grid-rows-6 pointer-events-none opacity-[0.15]">
           {Array.from({ length: 60 }).map((_, i) => (
@@ -161,18 +161,22 @@ function GraphzyPreview() {
       </div>
 
       {/* Control Panel Simulator */}
-      <div className="bg-white rounded-lg p-3 border border-black/5 flex flex-col gap-2">
+      <div className="bg-white rounded-lg p-3 border border-black/5 flex flex-col gap-2" style={{ touchAction: 'manipulation' }}>
         <div className="flex justify-between items-baseline text-[10px] font-semibold">
           <span className="text-black/50 font-mono">PARAMETER a (STRETCH)</span>
           <span className="font-mono text-[#0066CC]">{sliderVal}</span>
         </div>
-        <div className="relative w-full h-1 bg-black/[0.06] rounded-full">
-          <motion.div 
-            className="absolute left-0 top-0 h-full bg-[#0066CC] rounded-full"
-            style={{ width: `${(sliderVal / 2.5) * 100}%` }}
-          />
-          <motion.div 
-            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-white border-2 border-[#0066CC] shadow"
+        <div className="relative w-full h-3 flex items-center" style={{ touchAction: 'none' }}>
+          <div className="absolute inset-y-0 flex items-center w-full">
+            <div className="w-full h-1 bg-black/[0.06] rounded-full relative">
+              <motion.div
+                className="absolute left-0 top-0 h-full bg-[#0066CC] rounded-full"
+                style={{ width: `${(sliderVal / 2.5) * 100}%` }}
+              />
+            </div>
+          </div>
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-2 border-[#0066CC] shadow-sm"
             style={{ left: `${(sliderVal / 2.5) * 100}%` }}
           />
         </div>
@@ -250,7 +254,7 @@ function MesaPreview() {
       </div>
 
       {/* Screen Area */}
-      <div className="bg-white border border-[#B45309]/10 rounded-lg p-4 h-[210px] flex flex-col justify-between relative overflow-hidden">
+      <div className="bg-white border border-[#B45309]/10 rounded-lg p-4 h-[190px] sm:h-[210px] flex flex-col justify-between relative overflow-hidden">
         {/* Floor plan tables */}
         <div className="flex justify-between items-center border-b border-black/[0.04] pb-2 mb-2">
           <span className="font-mono text-[9px] font-bold text-[#92400E] uppercase">Dining Floor Grid</span>
@@ -414,7 +418,7 @@ function VentureFlowPreview() {
       </div>
 
       {/* Screen Area */}
-      <div className="bg-white border border-[#1B3A6B]/10 rounded-lg p-4 h-[210px] flex flex-col justify-between overflow-hidden">
+      <div className="bg-white border border-[#1B3A6B]/10 rounded-lg p-4 h-[190px] sm:h-[210px] flex flex-col justify-between overflow-hidden">
         {/* Startup Runway Stats */}
         <div className="flex justify-between items-center border-b border-black/[0.04] pb-2">
           <div>
@@ -428,7 +432,7 @@ function VentureFlowPreview() {
         </div>
 
         {/* CRM Kanban simulator */}
-        <div className="grid grid-cols-2 gap-2 my-2">
+        <div className="grid grid-cols-2 gap-2 my-1 sm:my-2">
           {/* Column Meetings */}
           <div className="border border-black/5 bg-[#FAFAF8] p-2 rounded flex flex-col gap-1 min-h-[70px]">
             <div className="font-mono text-[7.5px] font-semibold text-black/40 border-b border-black/[0.04] pb-1 flex justify-between">
@@ -513,10 +517,10 @@ export default function ProductShowcase() {
           description="We channel our product philosophy into specialized platforms addressing mathematical visualization, restaurant automation, and founder execution lifecycles."
         />
         
-        <div className="flex flex-col gap-16 mt-12">
+        <div className="flex flex-col gap-10 sm:gap-16 mt-8 sm:mt-12">
           
           {/* PRODUCT ROW 1: GRAPHZY */}
-          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
             {/* Details Column */}
             <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
@@ -582,7 +586,7 @@ export default function ProductShowcase() {
           </div>
 
           {/* PRODUCT ROW 2: MESA */}
-          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center border-t border-black/[0.04] pt-16">
+          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center border-t border-black/[0.04] pt-10 sm:pt-16">
             {/* Dynamic Preview Component */}
             <div className="lg:col-span-5">
               <MesaPreview />
@@ -648,7 +652,7 @@ export default function ProductShowcase() {
           </div>
 
           {/* PRODUCT ROW 3: VENTUREFLOW */}
-          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center border-t border-black/[0.04] pt-16">
+          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center border-t border-black/[0.04] pt-10 sm:pt-16">
             {/* Details Column */}
             <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
