@@ -1,5 +1,5 @@
 # Roadmap
-## Graphxy Labs — Graphzy + Forkline
+## Graphxy Labs — Graphzy, Clampbox, Forkline, & Lattice
 
 Timeframes are relative ("Week N") rather than fixed calendar dates since this is a founder-led build. The sequencing and dependencies matter more than exact durations.
 
@@ -13,7 +13,7 @@ Timeframes are relative ("Week N") rather than fixed calendar dates since this i
 - Graphxy Labs design system tokens implemented (colors, type, spacing, glass-card, motion)
 - Gemini API integration: combined classify+explain call, JSON schema validation with one retry
 - `ai_response_cache` table and cache-key logic wired in
-- graphxylabs.com landing page live: hero, Graphzy card, Forkline "Coming Soon" card, eight service vertical sections, footer
+- graphxylabs.com landing page live: hero, Graphzy card, Clampbox, Forkline, & Lattice cards, eight service vertical sections, footer
 
 **Exit criteria:** Question typed in barebones UI returns valid structured JSON from Gemini, cached on repeat. Landing page is live at graphxylabs.com.
 
@@ -90,31 +90,27 @@ Timeframes are relative ("Week N") rather than fixed calendar dates since this i
 
 ---
 
+## Clampbox Roadmap
+
+### Phase 0 — Concept Definition & Waitlist
+- /clampbox detail page live on graphxylabs.com
+- Enclave CPU caches allocation, memory encryption key management, and cryptographic attestation design
+
 ## Forkline Roadmap
 
 ### Phase 0 — Concept Definition & Waitlist
-- /forkline waitlist page live on graphxylabs.com
+- /forkline detail page live on graphxylabs.com
 - POS, seating maps, and kitchen monitor workflow definition
 
 ## Lattice Roadmap
 
 ### Phase 0 — Concept Definition & Waitlist
-- /lattice waitlist page live on graphxylabs.com
-- Investor CRM tracking, deck metrics, execution roadmap specs
-
-### Phase 0 — Concept Definition & Waitlist
-- /forkline waitlist page live on graphxylabs.com
-- POS, seating maps, and kitchen monitor workflow definition
-
-## Lattice Roadmap
-
-### Phase 0 — Concept Definition & Waitlist
-- /lattice waitlist page live on graphxylabs.com
+- /lattice detail page live on graphxylabs.com
 - Investor CRM tracking, deck metrics, execution roadmap specs
 
 ### Forkline Phase 0 — Waitlist & Product Definition (Parallel to Graphzy Phases 1–3)
 
-- /forkline waitlist page live on graphxylabs.com with email capture
+- /forkline detail page live on graphxylabs.com with email capture
 - Forkline PRD, Feature Spec, IA, and Design docs produced
 - Competitive analysis of restaurant management space (Toast, Square for Restaurants, TouchBistro, etc.)
 - Core Forkline design system (warm premium aesthetic, distinct from Graphzy's STEM palette)

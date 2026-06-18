@@ -36,6 +36,7 @@ export default function Contact() {
     "Automation & Workflows",
     "Scalable Tech Products",
     "Graphzy Partnership",
+    "Clampbox Early Access",
     "Forkline Early Access",
     "Lattice Early Access"
   ];

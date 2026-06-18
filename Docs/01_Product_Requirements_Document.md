@@ -5,13 +5,14 @@
 
 ### 1. Company Context
 
-**Graphxy Labs** is a modern, premium technology company building software products, intelligent systems, business platforms, automation solutions, and scalable digital experiences for startups, businesses, and enterprises. Its product portfolio currently comprises three flagships:
+**Graphxy Labs** is a modern, premium technology company building software products, intelligent systems, business platforms, automation solutions, and scalable digital experiences for startups, businesses, and enterprises. Its product portfolio currently comprises four flagships:
 
 | Product | Category | Status |
 |---|---|---|
-| **Graphzy** | AI-Powered STEM Visualizer | Prototype Mockup / Under Active Development |
-| **Forkline** | Restaurant Operations Platform | Concept Preview |
-| **Lattice** | Startup Operations Platform | Early Concept |
+| **Graphzy** | AI-Powered STEM Visualizer | COMING SOON |
+| **Clampbox** | Confidential Execution Infrastructure | COMING SOON |
+| **Forkline** | Restaurant Operations Platform | COMING SOON |
+| **Lattice** | Startup Operations Platform | COMING SOON |
 
 This document covers the requirements for **Graphzy**, Graphxy Labs' core visualization product.
 

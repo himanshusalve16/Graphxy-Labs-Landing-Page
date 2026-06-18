@@ -1,7 +1,7 @@
 # Competitive Analysis
-## Graphxy Labs — Graphzy + Forkline
+## Graphxy Labs — Graphzy, Clampbox, Forkline, & Lattice
 
-This document covers two competitive landscapes: the AI tutoring/visualization space (for Graphzy) and the restaurant management and operations space (for Forkline).
+This document covers four competitive landscapes: the AI tutoring/visualization space (for Graphzy), the confidential execution infrastructure space (for Clampbox), the restaurant management and operations space (for Forkline), and the startup execution workspace space (for Lattice).
 
 ---
 
@@ -48,7 +48,7 @@ The AI tutoring space is crowded, but almost every player converges on the same 
 
 ---
 
-## Part 2 — Forkline: Restaurant Management & Operations
+## Part 2 — Forkline: Restaurant operations and KOT billing platform built for the Indian market & Operations
 
 ### 2.1 Landscape Summary
 
@@ -87,6 +87,19 @@ Restaurant management software (often called "restaurant tech" or "hospitality t
 
 > "Restaurant management software built for operators who care about both the guest experience and the operational one. Forkline is what happens when a premium product company decides to build for hospitality."
 
+## Part 2.5 — Clampbox: Confidential Execution Infrastructure
+
+### 2.5.1 Landscape Summary
+AI engineering teams and regulated enterprises struggle to deploy autonomous agents or process sensitive datasets because host compute operators can inspect data, prompts, or model weights. Clampbox runs code in hardware-attested secure enclaves (AWS Nitro, Intel SGX) with memory encryption to prevent host operator exposure.
+
+### 2.5.2 Competitor Map
+- **Anjuna / Fortanix:** Focus on legacy lift-and-shift enterprise security solutions, which are heavy and complex to configure for dynamic AI agents.
+- **Oasis / Secret Network:** Blockchain-based confidential compute, introducing high latency, transaction fees, and complexity for traditional web applications.
+- **Hyperscaler native enclaves (direct AWS/Azure APIs):** Raw infrastructure APIs requiring complex lower-level C/Rust integrations and custom attestation verification pipelines.
+
+### 2.5.3 Positioning Statement (Clampbox)
+> "Confidential execution infrastructure for AI workloads, agents, and sensitive data. Clampbox runs code inside cryptographically attested hardware enclaves so you can build secure AI without trust compromises."
+
 ---
 
 ## Part 3 — Lattice: Startup Operations Platform
@@ -106,14 +119,14 @@ Early-stage founders spend substantial administrative energy jumping between Not
 
 ### 3.1 Where Graphxy Labs Fits
 
-Graphxy Labs is not competing as a systems integrator, a freelance agency, or a generic software consultancy. The competitive reference point for the company brand is the class of modern, premium product companies (Linear, Vercel, Clerk, Raycast) that have built strong engineering-first identities before scaling. The company's portfolio approach — Graphzy (visualization) + Forkline (restaurant operations) + eight technology service verticals — positions it as a full-spectrum product and engineering studio, not a single-product startup.
+Graphxy Labs is not competing as a systems integrator, a freelance agency, or a generic software consultancy. The competitive reference point for the company brand is the class of modern, premium product companies (Linear, Vercel, Clerk, Raycast) that have built strong engineering-first identities before scaling. The company's portfolio approach — Graphzy (visualization), Clampbox (confidential compute), Forkline (restaurant operations), and Lattice (startup operations) + eight technology service verticals — positions it as a full-spectrum product and engineering studio, not a single-product startup.
 
 ### 3.2 Company Differentiators
 
 - Product-first, engineering-driven — every product is designed and built in-house, not outsourced.
-- Premium visual identity applied consistently across products (Graphzy, Forkline) and the corporate brand.
-- Cross-vertical technical depth: ML/AI, data visualization, management systems, mobile, web — Graphxy Labs can credibly serve clients across these areas while building its own flagship products.
+- Premium visual identity applied consistently across products (Graphzy, Clampbox, Forkline, Lattice) and the corporate brand.
+- Cross-vertical technical depth: ML/AI, confidential computing, data visualization, management systems, mobile, web — Graphxy Labs can credibly serve clients across these areas while building its own flagship products.
 
 ### 3.3 Company-Level Competitive Risk
 
-The company-as-agency risk: if Graphxy Labs takes on too many client service engagements before Graphzy and Forkline reach meaningful scale, the brand risks reading as a consultancy rather than a product company. Mitigation: client work is scoped to fund product R&D, not to define the company's identity — the public brand always leads with products (Graphzy, Forkline), and services are listed second.
+The company-as-agency risk: if Graphxy Labs takes on too many client service engagements before Graphzy and Clampbox reach meaningful scale, the brand risks reading as a consultancy rather than a product company. Mitigation: client work is scoped to fund product R&D, not to define the company's identity — the public brand always leads with products (Graphzy, Clampbox, Forkline, Lattice), and services are listed second.

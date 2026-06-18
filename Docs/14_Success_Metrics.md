@@ -87,9 +87,19 @@ Forkline is Coming Soon during the Graphzy pilot. The relevant metrics at this s
 
 | Metric | Definition | Target |
 |---|---|---|
-| Forkline waitlist sign-ups | Total emails captured at /forkline during the Graphzy pilot window | 100+ (validates market interest before build begins) |
+| Forkline detail page views / inquiry clicks | Total emails captured at /forkline during the Graphzy pilot window | 100+ (validates market interest before build begins) |
 | Waitlist source attribution | Traffic source breakdown for /forkline page (direct, organic, referral) | Track — informs future marketing channels |
 | Qualitative interest signals | Replies to waitlist confirmation email asking one open question ("What's your biggest operations headache?") | Qualitative input for Forkline PRD |
+
+---
+
+## Part 2.5 — Clampbox Pre-Launch Metrics
+Clampbox is under COMING SOON during the Graphzy pilot. The metrics measure detail page inquiry conversion.
+
+| Metric | Definition | Target |
+|---|---|---|
+| Clampbox detail page views / inquiry clicks | Total emails captured at /clampbox during the pilot window | 100+ (validates infrastructure/security interest) |
+| Qualitative interest signals | Inquiries regarding specific enclave support (AWS Nitro vs. Intel SGX) | Qualitative input for Clampbox product definition |
 
 ---
 
@@ -100,15 +110,15 @@ These are brand/presence metrics for the company during the pilot phase, not pro
 | Metric | Definition | Note |
 |---|---|---|
 | graphxylabs.com traffic | Monthly unique visitors to the landing page | Baseline measurement; no hard target for pilot |
-| Product page split | % of visitors routing to /graphzy vs. /forkline vs. /services | Signals which draw is strongest; informs landing page copy optimization |
-| Brand credibility signal | Inbound enquiries for services (Management Systems, Web Dev, AI/ML etc.) from graphxylabs.com | Validates the company positioning alongside the products |
+| Product page split | % of visitors routing to /graphzy vs. /clampbox vs. /forkline vs. /services | Signals which draw is strongest; informs landing page copy optimization |
+| Brand credibility signal | Inbound enquiries for services (Management Systems, Web Dev, AI/ML, Secure Infra etc.) from graphxylabs.com | Validates the company positioning alongside the products |
 
 ---
 
 ## Part 4 — Success Definition by Phase
 
-| Phase | Graphzy | Forkline | Lattice | Graphxy Labs (Company) |
-|---|---|---|---|---|
-| Pilot (now) | Interactivity hypothesis validated; ≥25% guest→signup; week-2 return ≥30% | ≥100 waitlist sign-ups | ≥100 waitlist sign-ups | Landing page live; services sections visible; brand coherent |
-| Post-pilot (V2) | Chemistry layer shipped; 3+ subjects available; paying tier launched | Forkline closed beta with 2–5 restaurant partners | First client service engagements sourced; team growing |
-| Growth | 10k+ MAU Graphzy; paying subscription cohort; strong retention | Forkline open beta; 20+ restaurant locations | Both flagships publicly available; Graphxy Labs brand established |
+| Phase | Graphzy | Clampbox | Forkline | Lattice | Graphxy Labs (Company) |
+|---|---|---|---|---|---|
+| Pilot (now) | Interactivity hypothesis validated; ≥25% guest→signup; week-2 return ≥30% | ≥100 detail page views / inquiry clicks | ≥100 detail page views / inquiry clicks | ≥100 detail page views / inquiry clicks | Landing page live; services sections visible; brand coherent |
+| Post-pilot (V2) | Chemistry layer shipped; 3+ subjects available; paying tier launched | Secure enclave SDK beta launch | Forkline closed beta with 2–5 restaurant partners | First client service engagements sourced; team growing |
+| Growth | 10k+ MAU Graphzy; paying subscription cohort; strong retention | Scaled multi-cloud enclave deployment | Forkline open beta; 20+ restaurant locations | Portfolio products publicly available; Graphxy Labs brand established |

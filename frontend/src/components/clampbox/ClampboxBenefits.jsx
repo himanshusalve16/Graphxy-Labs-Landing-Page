@@ -1,0 +1,30 @@
+import React from 'react';
+import { Card } from '../ui/Card';
+
+export default function ClampboxBenefits() {
+  const benefits = [
+    {
+      title: "Cryptographic Attestation",
+      desc: "Verify that the enclave is executing authentic code on genuine, secure hardware through verifiable SHA-256 system signatures."
+    },
+    {
+      title: "Zero-Trust Host Operator",
+      desc: "Completely isolate your code from cloud providers. Neither AWS, Google Cloud, nor Graphxy Labs can inspect your model weights or data."
+    },
+    {
+      title: "Compliance Ready",
+      desc: "Perfect for regulated industries (healthcare, finance) processing sensitive customer data or proprietary AI model weights."
+    }
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full text-left mt-12 max-w-4xl mx-auto">
+      {benefits.map((item, idx) => (
+        <Card key={idx} variant="surface" className="p-8 bg-white border-[#0D9488]/14 shadow-sm hover:shadow-md duration-200">
+          <h3 className="font-serif text-[17px] text-[#0f0f0f] mb-3 font-normal">{item.title}</h3>
+          <p className="text-xs text-[#525252] leading-relaxed">{item.desc}</p>
+        </Card>
+      ))}
+    </div>
+  );
+}

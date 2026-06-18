@@ -40,11 +40,11 @@
   --lattice-bg:        #EEF3FB;
   --lattice-border:    rgba(27, 58, 107, 0.14);
 
-  /* Lattice — deep corporate palette */
-  --lattice:           #1B3A6B;
-  --lattice-mid:       #0066CC;
-  --lattice-bg:        #EEF3FB;
-  --lattice-border:    rgba(27, 58, 107, 0.14);
+  /* Clampbox — enterprise security palette */
+  --clampbox:          #0D9488;
+  --clampbox-mid:      #1E4D5E;
+  --clampbox-bg:       #F0F7F7;
+  --clampbox-border:   rgba(13, 148, 136, 0.14);
 
   /* Surface hierarchy — light only */
   --page:           #FAFAF8;        /* Page background — warm off-white */
@@ -421,6 +421,7 @@ body {
 
 .pc-white  { background: var(--surface); box-shadow: var(--sh-md); }
 .pc-tinted { background: var(--forkline-bg); border-color: var(--forkline-border); }
+.pc-clampbox { background: var(--clampbox-bg); border-color: var(--clampbox-border); }
 .pc-lattice { background: var(--lattice-bg); border-color: var(--lattice-border); }
 
 .pc-eyebrow {
@@ -433,6 +434,7 @@ body {
 }
 .pc-white  .pc-eyebrow { color: var(--math); }
 .pc-tinted .pc-eyebrow { color: var(--forkline); }
+.pc-clampbox .pc-eyebrow { color: var(--clampbox); }
 .pc-lattice .pc-eyebrow { color: var(--lattice); }
 
 .pc-badge {
@@ -534,6 +536,16 @@ body {
   box-shadow: 0 4px 14px rgba(146,64,14,0.28);
 }
 
+.btn-clampbox {
+  background: var(--clampbox);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(13,148,136,0.22), 0 1px 2px rgba(13,148,136,0.10);
+}
+.btn-clampbox:hover {
+  background: var(--clampbox-mid);
+  box-shadow: 0 4px 14px rgba(13,148,136,0.28);
+}
+
 .btn-lattice {
   background: var(--lattice);
   color: #fff;
@@ -598,6 +610,7 @@ body {
 .tag-bio   { background: var(--bio-bg);   color: var(--bio);   }
 .tag-phys  { background: var(--phys-bg);  color: var(--phys);  }
 .tag-forkline { background: var(--forkline-bg); color: var(--forkline); }
+.tag-clampbox { background: var(--clampbox-bg); color: var(--clampbox); }
 .tag-lattice { background: var(--lattice-bg); color: var(--lattice); }
 .tag-brand { background: var(--brand-bg); color: var(--brand); }
 
@@ -1167,7 +1180,7 @@ body {
         <div class="tn">Eyebrow</div>
         <div class="ts">JetBrains Mono 500<br>11px · UC · ls 0.09em<br>Section starters, doc labels</div>
       </div>
-      <p class="t-label">Graphzy · Visualization Platform · Under Development</p>
+      <p class="t-label">Graphzy · Visualization Platform · COMING SOON</p>
     </div>
   </div>
 </section>
@@ -1252,7 +1265,7 @@ body {
 <section class="ds-section">
   <div class="section-label">05</div>
   <h2 class="section-title">Product Cards</h2>
-  <p class="section-desc">Used on the Graphxy Labs landing page. Graphzy is white surface with shadow. Forkline is warm-tinted. Lattice is tinted corporate blue. The badge-only treatment signals "coming soon" without greying out the card.</p>
+  <p class="section-desc">Used on the Graphxy Labs landing page. Graphzy is white surface with shadow. Clampbox is secure teal-tinted. Forkline is warm-tinted. Lattice is tinted corporate blue. The badge-only treatment signals "coming soon" without greying out the card.</p>
 
   <div class="product-cards-grid">
     <div class="pc pc-white">
@@ -1260,6 +1273,16 @@ body {
       <h3>Turn any question into an interactive visual.</h3>
       <p>AI-powered explanations with live graphs, molecules, and simulations — for students who want to see how things work, not just read about them.</p>
       <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
+    </div>
+    <div class="pc pc-clampbox">
+      <div class="pc-eyebrow">Clampbox · Confidential Compute</div>
+      <div class="pc-badge">
+        <span class="badge-dot"></span>
+        Coming Soon
+      </div>
+      <h3>AI infrastructure that does not leak data.</h3>
+      <p>Confidential execution infrastructure for AI agents and regulated workloads. Run untrusted code in hardware-isolated, cryptographically attested CPU enclaves.</p>
+      <button class="btn btn-md btn-clampbox">Explore Clampbox</button>
     </div>
     <div class="pc pc-tinted">
       <div class="pc-eyebrow">Forkline · Restaurant Operations</div>
@@ -1269,7 +1292,7 @@ body {
       </div>
       <h3>Restaurant management built for modern operators.</h3>
       <p>A unified platform for orders, tables, inventory, staff, and analytics. Designed to run a restaurant the way a product company would.</p>
-      <button class="btn btn-md btn-forkline">Join Forkline Waitlist</button>
+      <button class="btn btn-md btn-forkline">Explore Forkline</button>
     </div>
     <div class="pc pc-lattice">
       <div class="pc-eyebrow">Lattice · Startup Operations</div>
@@ -1279,7 +1302,7 @@ body {
       </div>
       <h3>Structured workspaces built for startup execution.</h3>
       <p>Track cap tables, investor outreach CRM, dynamic CAPEX metrics, and milestone pipelines in a cohesive corporate operating workspace.</p>
-      <button class="btn btn-md btn-lattice">Join Lattice Waitlist</button>
+      <button class="btn btn-md btn-lattice">Explore Lattice</button>
     </div>
   </div>
 </section>
@@ -1303,8 +1326,9 @@ body {
         </div>
         <div class="btn-row">
           <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
-          <button class="btn btn-md btn-forkline">Join Forkline Waitlist</button>
-          <button class="btn btn-md btn-lattice">Join Lattice Waitlist</button>
+          <button class="btn btn-md btn-clampbox">Explore Clampbox</button>
+          <button class="btn btn-md btn-forkline">Explore Forkline</button>
+          <button class="btn btn-md btn-lattice">Explore Lattice</button>
         </div>
         <div class="btn-row">
           <button class="btn btn-sm btn-brand">Small Primary</button>
@@ -1615,7 +1639,7 @@ body {
     </tbody>
   </table>
   <div class="callout">
-    <p><strong>Rules:</strong> Settle, don't bounce. Ease-out for entrances; ease-in-out for state changes. No spring, no overshoot. One orchestrated entrance per screen — all else is subordinate and &lt;200ms. Animate section blocks as units, not individual elements within. Respect <code>prefers-reduced-motion</code>: all transitions degrade to opacity-only fades.</p>
+    <p><strong>Rules:</strong> Settle, don't bounce. Ease-out for entrances; ease-in-out for state changes. No spring, no overshoot. One orchestrated entrance per screen — all else is subordinate and &lt;200ms. Animate section blocks as units, not individual elements within. Respect <code>prefers-reduced-motion</code>: all transitions degrade to opacity-only fades. <strong>Ecosystem Motion Consistency:</strong> The landing page interactive product preview motion system (timing, easing, step-loops) serves as the standard across the site; preview components are directly shared rather than introducing alternate mockup designs.</p>
   </div>
 </section>
 

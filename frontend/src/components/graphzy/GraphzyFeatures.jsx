@@ -38,7 +38,7 @@ export default function GraphzyFeatures() {
           <div>
             <div className="flex flex-wrap gap-2 items-center mb-2">
               <Badge variant="brand">Roadmap</Badge>
-              <span className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase tracking-wider">Prototype Mockup • Under Active Development</span>
+              <span className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase tracking-wider">COMING SOON</span>
             </div>
             <h3 className="font-serif text-lg md:text-xl text-[#0F0F0F] font-semibold">Future Development Roadmap</h3>
             <p className="text-xs text-[#525252] mt-1 max-w-xl">

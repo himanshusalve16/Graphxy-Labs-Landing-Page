@@ -33,11 +33,11 @@
   --lattice-mid:    #0066CC;
   --lattice-bg:     #EEF3FB;
   --lattice-bdr:    rgba(27,58,107,0.14);
-  
-  --lattice:        #1B3A6B;
-  --lattice-mid:    #0066CC;
-  --lattice-bg:     #EEF3FB;
-  --lattice-bdr:    rgba(27,58,107,0.14);
+
+  --clampbox:       #0D9488;
+  --clampbox-mid:   #1E4D5E;
+  --clampbox-bg:    #F0F7F7;
+  --clampbox-bdr:   rgba(13,148,136,0.14);
 
   --page:        #FAFAF8;
   --surface:     #FFFFFF;
@@ -239,7 +239,9 @@ body {
 
 .btn-brand    { background: var(--brand); color: #fff; box-shadow: 0 2px 8px rgba(27,58,107,0.22); }
 .btn-graphzy  { background: var(--math);  color: #fff; box-shadow: 0 2px 8px rgba(0,102,204,0.22); }
-.btn-forkline    { background: var(--forkline); color: #fff; box-shadow: 0 2px 8px rgba(146,64,14,0.22); }
+.btn-forkline { background: var(--forkline); color: #fff; box-shadow: 0 2px 8px rgba(146,64,14,0.22); }
+.btn-clampbox { background: var(--clampbox); color: #fff; box-shadow: 0 2px 8px rgba(13,148,136,0.22); }
+.btn-lattice  { background: var(--lattice); color: #fff; box-shadow: 0 2px 8px rgba(27,58,107,0.22); }
 .btn-outline  { background: transparent; color: var(--text-2); border: 1px solid var(--bdr-soft); }
 .btn-outline:hover { border-color: var(--bdr-mid); }
 
@@ -253,6 +255,8 @@ body {
 .tag-math  { background: var(--math-bg);  color: var(--math);  }
 .tag-brand { background: var(--brand-bg); color: var(--brand); }
 .tag-forkline { background: var(--forkline-bg); color: var(--forkline); }
+.tag-clampbox { background: var(--clampbox-bg); color: var(--clampbox); }
+.tag-lattice  { background: var(--lattice-bg); color: var(--lattice); }
 
 /* App layout */
 .app-frame {
@@ -383,7 +387,7 @@ body {
   border-bottom: 1px solid var(--bdr-fine);
 }
 
-.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
 .pcard {
   border-radius: var(--r-xl);
@@ -400,6 +404,10 @@ body {
   background: var(--forkline-bg);
   border: 1px solid var(--forkline-bdr);
 }
+.pcard-clampbox {
+  background: var(--clampbox-bg);
+  border: 1px solid var(--clampbox-bdr);
+}
 .pcard-lattice {
   background: var(--lattice-bg);
   border: 1px solid var(--lattice-bdr);
@@ -412,6 +420,7 @@ body {
 }
 .pcard-white .pcard-eyebrow { color: var(--math); }
 .pcard-warm  .pcard-eyebrow { color: var(--forkline); }
+.pcard-clampbox .pcard-eyebrow { color: var(--clampbox); }
 .pcard-lattice .pcard-eyebrow { color: var(--lattice); }
 
 .pcard-badge {
@@ -881,7 +890,7 @@ body {
 <header class="doc-header">
   <div class="label">Graphxy Labs · High-Fidelity Design · v0.3 · Light Mode</div>
   <h1>Visual direction — <em>website &amp; product screens.</em></h1>
-  <p>Six screen areas. Light-only throughout. No dark sections, no theme switching. Consistent warm-white surface system, restrained shadows, Fraunces editorial moments. Every spacing value is intentional.</p>
+  <p>Six screen areas. Light-only throughout. No dark sections, no theme switching. Consistent warm-white surface system, restrained shadows, Fraunces editorial moments. Every spacing value is intentional. The interactive motion system from Screen A is reused directly across all product detail screens to guarantee visual consistency.</p>
 </header>
 
 
@@ -911,17 +920,17 @@ body {
     <div class="landing-hero">
       <div class="hero-eyebrow">Graphxy Labs</div>
       <h1 class="hero-headline">Software that thinks,<br>scales, <em>and performs.</em></h1>
-      <p class="hero-sub">We build precision software products, intelligent systems, and scalable digital experiences — starting with Graphzy, Forkline, and Lattice.</p>
+      <p class="hero-sub">We build precision software products, intelligent systems, and scalable digital experiences — starting with Graphzy, Clampbox, Forkline, and Lattice.</p>
       <div class="hero-ctas">
         <button class="btn btn-lg btn-graphzy">Explore Graphzy</button>
-        <button class="btn btn-lg btn-outline">Join Forkline Waitlist</button>
+        <button class="btn btn-lg btn-outline">Explore Clampbox</button>
       </div>
     </div>
 
     <!-- Products -->
     <div class="products-section">
       <div class="section-label">Our Products</div>
-      <div class="section-heading">Three flagship products,<br>built in-house.</div>
+      <div class="section-heading">Four flagship products,<br>built in-house.</div>
       <div class="product-grid">
         <div class="pcard pcard-white">
           <div class="pcard-eyebrow">Graphzy · Visualization Platform</div>
@@ -929,19 +938,26 @@ body {
           <p>AI-powered explanations with live graphs, molecules, and simulations — for students who want to see how things work, not just read about them.</p>
           <button class="btn btn-md btn-graphzy">Explore Graphzy</button>
         </div>
+        <div class="pcard pcard-clampbox">
+          <div class="pcard-eyebrow">Clampbox · Confidential Compute</div>
+          <div class="pcard-badge"><span class="pcard-badge-dot"></span>Coming Soon</div>
+          <h3>AI infrastructure that does not leak data.</h3>
+          <p>Confidential execution infrastructure for AI agents and regulated workloads. Run untrusted code in hardware-isolated, cryptographically attested CPU enclaves.</p>
+          <button class="btn btn-md btn-clampbox">Explore Clampbox</button>
+        </div>
         <div class="pcard pcard-warm">
           <div class="pcard-eyebrow">Forkline · Restaurant Operations</div>
           <div class="pcard-badge"><span class="pcard-badge-dot"></span>Coming Soon</div>
           <h3>Restaurant management built for modern operators.</h3>
           <p>A unified platform for orders, tables, inventory, staff, and analytics — designed to run a restaurant the way a product company would.</p>
-          <button class="btn btn-md btn-forkline">Join Forkline Waitlist</button>
+          <button class="btn btn-md btn-forkline">Explore Forkline</button>
         </div>
         <div class="pcard pcard-lattice">
           <div class="pcard-eyebrow">Lattice · Startup Operations</div>
           <div class="pcard-badge"><span class="pcard-badge-dot"></span>Coming Soon</div>
           <h3>Structured workspaces built for startup execution.</h3>
           <p>Track cap tables, investor outreach CRM, dynamic CAPEX metrics, and milestone pipelines in a cohesive corporate operating workspace.</p>
-          <button class="btn btn-md btn-lattice">Join Lattice Waitlist</button>
+          <button class="btn btn-md btn-lattice">Explore Lattice</button>
         </div>
       </div>
     </div>
@@ -1027,7 +1043,7 @@ body {
             <div class="pos-bullet" style="background:var(--forkline);"></div>
             <div>
               <div class="pos-text">Products built in-house, not outsourced</div>
-              <div class="pos-sub">Graphzy, Forkline, and Lattice are our own</div>
+              <div class="pos-sub">Graphzy, Clampbox, Forkline, and Lattice are our own</div>
             </div>
           </div>
           <div class="pos-item">
@@ -1426,7 +1442,7 @@ body {
 <div class="screen-wrap">
   <div class="screen-meta">
     <span class="screen-id">Screen F</span>
-    <span class="screen-desc">Forkline — Waitlist Page (/forkline) — light warm palette, no dark sections</span>
+    <span class="screen-desc">Forkline — Detail Page (/forkline) — light warm palette, no dark sections</span>
   </div>
   <div class="device">
 
@@ -1443,7 +1459,7 @@ body {
       <p class="sv-sub">A premium, unified platform for orders, tables, inventory, staff, and analytics. Designed the way a product company would design for hospitality.</p>
       <div class="sv-form">
         <input class="sv-input" type="email" placeholder="your@email.com" />
-        <button class="sv-submit">Join Waitlist</button>
+        <button class="sv-submit">Explore Product</button>
       </div>
       <p class="sv-note">We'll reach out when Forkline is ready for early access. No spam, ever.</p>
     </div>

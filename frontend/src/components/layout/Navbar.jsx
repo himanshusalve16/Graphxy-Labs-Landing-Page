@@ -77,10 +77,7 @@ export default function Navbar() {
             className="w-7 h-7 flex-shrink-0 transition-opacity duration-200 group-hover:opacity-80"
             style={{ color: '#1B3A6B' }}
           />
-          <span className="flex items-center gap-1.5">
-            Graphxy Labs
-            <span className="w-1.5 h-1.5 rounded-full bg-[#1B3A6B]" />
-          </span>
+          <span>Graphxy Labs</span>
         </Link>
         
         {/* Desktop Links */}

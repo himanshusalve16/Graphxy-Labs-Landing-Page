@@ -190,7 +190,7 @@ body {
 <div class="doc-header">
   <div class="label">Graphxy Labs · Wireframes · v0.3 · Structural Layout Only</div>
   <h1>Wireframe documentation — layout, hierarchy, content zones</h1>
-  <p>Structural wireframes only. No colors, no real typography, no visual styling. Every region is labeled with its content type and structural role. Three surface areas: Graphxy Labs landing page, Graphzy product app, and the Forkline waitlist page. All screens are light-mode.</p>
+  <p>Structural wireframes only. No colors, no real typography, no visual styling. Every region is labeled with its content type and structural role. Four surface areas: Graphxy Labs landing page, Graphzy product app, and the Clampbox, Forkline, & Lattice detail pages. All screens are light-mode. Product previews utilize a unified interactive motion system (rather than static designs), which is shared directly across the landing page lists and individual detail pages for consistency.</p>
 </div>
 
 
@@ -243,7 +243,7 @@ body {
       <div class="box h-md" style="max-width:500px; font-size:11px;">Hero sub — 17px Inter · max 500px wide · 2–3 lines max</div>
       <div class="wf-row" style="max-width:360px;">
         <div class="box strong h-sm" style="flex:1;">Primary CTA — Explore Graphzy</div>
-        <div class="box solid h-sm"  style="flex:1;">Secondary — Join Forkline Waitlist</div>
+        <div class="box solid h-sm"  style="flex:1;">Secondary — Explore Forkline</div>
       </div>
     </div>
   </div>
@@ -258,14 +258,14 @@ body {
   <div class="section-header">
     <div class="section-meta">
       <span class="section-id">1C</span>
-      <span class="section-title">Products Section — Graphzy &amp; Forkline</span>
+      <span class="section-title">Products Section — Graphzy, Clampbox, Forkline, & Lattice</span>
     </div>
-    <p class="section-note">White surface section. Eyebrow + heading above a 2-column product card grid. Graphzy card: white with shadow. Forkline card: warm-tinted background + amber border + "coming soon" badge.</p>
+    <p class="section-note">White surface section. Eyebrow + heading above a 4-column product card grid. Graphzy is white with shadow. Clampbox is secure teal-tinted. Forkline is warm-tinted. Lattice is blue-tinted.</p>
   </div>
   <div class="frame pad-lg wf-col">
     <div class="box solid h-sm" style="max-width:120px; align-self:flex-start;">Eyebrow: Our Products</div>
     <div class="box h-md solid" style="max-width:400px; font-weight:700;">Section heading — 28px Fraunces</div>
-    <div class="wf-grid cols-3" style="margin-top:4px;">
+    <div class="wf-grid cols-4" style="margin-top:4px;">
       <!-- Graphzy card -->
       <div class="wf-col" style="background:#FAFAFA; border:1px solid #D0D0D0; border-radius:8px; padding:24px;">
         <div class="box solid h-sm">Eyebrow: Graphzy · Visualization Platform</div>
@@ -273,13 +273,21 @@ body {
         <div class="box h-lg">Description — 14px · max 2–3 lines · color: text-secondary</div>
         <div class="box strong h-sm">CTA — Explore Graphzy</div>
       </div>
+      <!-- Clampbox card -->
+      <div class="wf-col" style="background:#F0F7F7; border:1px solid #0D9488; border-radius:8px; padding:24px;">
+        <div class="box solid h-sm">Eyebrow: Clampbox · Confidential Compute</div>
+        <div class="box solid h-sm" style="max-width:130px; align-self:flex-start;">[ Coming Soon badge ]</div>
+        <div class="box h-md solid">Card headline — 22px Fraunces</div>
+        <div class="box h-lg">Description — 14px · max 2–3 lines</div>
+        <div class="box strong h-sm">CTA — Explore Clampbox</div>
+      </div>
       <!-- Forkline card -->
       <div class="wf-col" style="background:#FEF7EC; border:1px solid #D0A070; border-radius:8px; padding:24px;">
         <div class="box solid h-sm">Eyebrow: Forkline · Restaurant Operations</div>
         <div class="box solid h-sm" style="max-width:130px; align-self:flex-start;">[ Coming Soon badge ]</div>
         <div class="box h-md solid">Card headline — 22px Fraunces</div>
         <div class="box h-lg">Description — 14px · max 2–3 lines</div>
-        <div class="box strong h-sm">CTA — Join Forkline Waitlist</div>
+        <div class="box strong h-sm">CTA — Explore Forkline</div>
       </div>
       <!-- Lattice card -->
       <div class="wf-col" style="background:#EEF3FB; border:1px solid #B0C4DE; border-radius:8px; padding:24px;">
@@ -287,11 +295,11 @@ body {
         <div class="box solid h-sm" style="max-width:130px; align-self:flex-start;">[ Coming Soon badge ]</div>
         <div class="box h-md solid">Card headline — 22px Fraunces</div>
         <div class="box h-lg">Description — 14px · max 2–3 lines</div>
-        <div class="box strong h-sm">CTA — Join Lattice Waitlist</div>
+        <div class="box strong h-sm">CTA — Explore Lattice</div>
       </div>
     </div>
   </div>
-  <p class="ann">Section padding: 88px. Card border-radius: 28px (--r-xl). Both cards same typographic structure — only background and CTA color differ.</p>
+  <p class="ann">Section padding: 88px. Card border-radius: 28px (--r-xl). All cards same typographic structure — only background, border and CTA color differ.</p>
 </div>
 
 
@@ -736,7 +744,7 @@ body {
       <!-- Form -->
       <div class="wf-row" style="max-width:440px; width:100%; gap:10px;">
         <div class="box" style="flex:1; height:46px; background:#fff; border:1px solid #D0A070; border-radius:8px; min-height:unset; justify-content:flex-start; padding:0 14px; font-style:italic; font-size:12px;">Email input — your@email.com</div>
-        <div class="box strong h-sm" style="min-width:120px; height:46px; background:#92400E; color:#fff; border-color:#92400E; border-radius:8px; min-height:unset;">Join Waitlist [CTA]</div>
+        <div class="box strong h-sm" style="min-width:120px; height:46px; background:#92400E; color:#fff; border-color:#92400E; border-radius:8px; min-height:unset;">Explore [CTA]</div>
       </div>
       <div class="box h-sm" style="margin-top:10px; background:none; border:none; font-size:11px; color:#999;">Note: no spam, we'll reach out when ready</div>
     </div>
@@ -771,7 +779,7 @@ body {
       </div>
     </div>
   </div>
-  <p class="ann">Feature strip replaces a services or benefits section for the waitlist page — keep it concise. White background, amber-tinted top border from the hero section. No heading — labels are sufficient at this stage.</p>
+  <p class="ann">Feature strip replaces a services or benefits section for the detail page — keep it concise. White background, amber-tinted top border from the hero section. No heading — labels are sufficient at this stage.</p>
 </div>
 
 <!-- ─────────────────────────────────────────────────────────────
@@ -783,7 +791,7 @@ body {
       <span class="section-id">4A</span>
       <span class="section-title">Lattice — Hero + Waitlist Form</span>
     </div>
-    <p class="section-note">Lattice waitlist page skeleton. Centered alignment with corporate blue tint (#EEF3FB).</p>
+    <p class="section-note">Lattice detail page skeleton. Centered alignment with corporate blue tint (#EEF3FB).</p>
   </div>
   <div class="frame">
     <div class="wf-col pad-lg" style="align-items:center; text-align:center; min-height:300px; justify-content:center; background:#EEF3FB;">
@@ -791,7 +799,7 @@ body {
       <div class="box h-xl solid" style="max-width:580px; font-weight:700; margin-bottom:14px; background:#EEF3FB; border-color:#B0C4DE;">Hero headline — 48px Fraunces 400</div>
       <div class="wf-row" style="max-width:440px; width:100%; gap:10px;">
         <div class="box" style="flex:1; height:46px; background:#fff; border:1px solid #B0C4DE; border-radius:8px; min-height:unset; justify-content:flex-start; padding:0 14px; font-size:12px;">Email input — your@email.com</div>
-        <div class="box strong h-sm" style="min-width:120px; height:46px; background:#1B3A6B; color:#fff; border-color:#1B3A6B; border-radius:8px; min-height:unset;">Join Waitlist [CTA]</div>
+        <div class="box strong h-sm" style="min-width:120px; height:46px; background:#1B3A6B; color:#fff; border-color:#1B3A6B; border-radius:8px; min-height:unset;">Explore [CTA]</div>
       </div>
     </div>
   </div>

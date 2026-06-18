@@ -80,14 +80,14 @@ erDiagram
 ### `users` (managed by Supabase Auth)
 Standard Supabase Auth table. Referenced via `user_id` foreign keys. No custom columns needed for the Graphzy MVP.
 
-### `lattice_waitlist`
-Stores waitlist signups specifically for the Lattice early concept platform.
+### `clampbox_inquiry`
+Stores inquiries specifically for the Clampbox confidential execution infrastructure.
 - `id` (uuid, PK)
 - `email` (text, unique)
 - `created_at` (timestamptz)
 
-### `lattice_waitlist`
-Stores waitlist signups specifically for the Lattice early concept platform.
+### `lattice_inquiry`
+Stores inquiries specifically for the Lattice early concept platform.
 - `id` (uuid, PK)
 - `email` (text, unique)
 - `created_at` (timestamptz)

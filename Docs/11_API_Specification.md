@@ -185,6 +185,21 @@ Called immediately after a guest signs up. Reassigns guest-owned sessions to the
 
 ---
 
+## Formspree early access inquiries (`/clampbox` form)
+Submits early access requests via Formspree using `VITE_FORMSPREE_CLAMPBOX_ID` with subject `New Clampbox Inquiry` and payload: `{Name} is interested in Clampbox confidential execution infrastructure.`
+
+## POST `/waitlist/clampbox`
+**No auth required**
+
+Captures Clampbox waitlist email submissions.
+**Request body:**
+```json
+{ "email": "user@example.com" }
+```
+
+## Formspree early access inquiries (`/forkline` form)
+Submits early access requests via Formspree using `VITE_FORMSPREE_CONTACT_ID`.
+
 ## POST `/waitlist/forkline`
 **No auth required**
 

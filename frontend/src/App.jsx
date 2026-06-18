@@ -11,6 +11,7 @@ import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import Lattice from './pages/Lattice';
+import Clampbox from './pages/Clampbox';
 import Products from './pages/Products';
 
 function MainApp() {
@@ -25,6 +26,7 @@ function MainApp() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/graphzy" element={<Graphzy />} />
+          <Route path="/clampbox" element={<Clampbox />} />
           <Route path="/forkline" element={<Forkline />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />

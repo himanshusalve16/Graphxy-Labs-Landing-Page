@@ -5,49 +5,14 @@ import Container from '../layout/Container';
 import { Card } from '../ui/Card';
 import { Layers, Monitor, Cpu, LineChart, Code, GitMerge, Smartphone, Grid, ArrowRight, X } from 'lucide-react';
 import { useIsTouch, useBreakpoint } from '../../utils/useDeviceType';
-
-// ─── Shared Data ──────────────────────────────────────────────────────────────
-
-const VERTICALS = [
-  { id: 'v0', name: 'Management Systems', short: 'Mgmt',      icon: Grid },
-  { id: 'v1', name: 'Web Development',    short: 'Web Dev',   icon: Monitor },
-  { id: 'v2', name: 'Mobile App Dev',     short: 'Mobile',    icon: Smartphone },
-  { id: 'v3', name: 'AI & Machine Learning', short: 'AI / ML', icon: Cpu },
-  { id: 'v4', name: 'Data Science',       short: 'Data Sci',  icon: LineChart },
-  { id: 'v5', name: 'Custom Software',    short: 'Custom SW', icon: Code },
-  { id: 'v6', name: 'Automation',         short: 'Auto',      icon: GitMerge },
-  { id: 'v7', name: 'Scalable Tech',      short: 'Scale',     icon: Layers },
-];
-
-const PRODUCTS = [
-  { id: 'p_graphzy',    name: 'Graphzy',     description: 'AI-Powered STEM Visualizer', status: 'Prototype Mockup', color: '#0066CC', link: '/graphzy',     connects: ['v1','v3','v5'] },
-  { id: 'p_forkline',   name: 'Forkline',    description: 'Restaurant Operations Platform', status: 'Concept Preview',   color: '#92400E', link: '/forkline',    connects: ['v0','v1','v6'] },
-  { id: 'p_lattice',    name: 'Lattice',     description: 'Startup Operations Platform', status: 'Early Concept',     color: '#1B3A6B', link: '/lattice',     connects: ['v1','v4','v7'] },
-];
-
-// Product placement angles (radial): top, bottom-right, bottom-left
-const PRODUCT_ANGLES_RAD = [-Math.PI / 2, Math.PI / 6, (5 * Math.PI) / 6];
-
-// Vertex positions on a circle
-function polarToCart(cx, cy, r, angleDeg) {
-  const a = (angleDeg * Math.PI) / 180;
-  return { x: Math.round(cx + r * Math.cos(a)), y: Math.round(cy + r * Math.sin(a)) };
-}
-
-// Build radial positions from config
-function buildRadialPositions({ cx, cy, innerR, outerR }) {
-  const verts = VERTICALS.map((v, i) => {
-    const angleDeg = (i / 8) * 360 - 90; // start from top
-    const { x, y } = polarToCart(cx, cy, innerR, angleDeg);
-    return { ...v, rx: x, ry: y, angleDeg };
-  });
-  const prods = PRODUCTS.map((p, i) => {
-    const angleDeg = (PRODUCT_ANGLES_RAD[i] * 180) / Math.PI;
-    const { x, y } = polarToCart(cx, cy, outerR, angleDeg);
-    return { ...p, rx: x, ry: y };
-  });
-  return { verts, prods };
-}
+import { 
+  VERTICALS, 
+  PRODUCTS, 
+  buildRadialPositions,
+  HERO_SCATTER_NODES,
+  validateNode,
+  validateConnection
+} from '../../data/ecosystemNodes';
 
 // ─── Radial Ecosystem Graph ───────────────────────────────────────────────────
 // Used on mobile AND tablet. Switches to touch interaction model (tap → panel).
@@ -107,7 +72,7 @@ function RadialGraph({ cfg }) {
         <div className="flex flex-col items-center text-center">
           <span className="font-mono text-[9px] text-[#1B3A6B] uppercase tracking-widest mb-1">Engineering Studio</span>
           <span className="font-serif text-base font-semibold text-[#0F0F0F]">Graphxy Labs</span>
-          <span className="text-[11px] text-[#525252] mt-1">8 Technology Verticals → 3 Products</span>
+          <span className="text-[11px] text-[#525252] mt-1">8 Technology Verticals → 4 Products</span>
         </div>
       );
     }
@@ -160,6 +125,10 @@ function RadialGraph({ cfg }) {
       >
         {/* Center → Vertical lines */}
         {verts.map(v => {
+          if (cx === undefined || cy === undefined || v.rx === undefined || v.ry === undefined || isNaN(cx) || isNaN(cy) || isNaN(v.rx) || isNaN(v.ry)) {
+            if (import.meta.env.DEV) console.warn(`Missing coordinates for center-vertical connection to ${v.id}`);
+            return null;
+          }
           const on = pathActive('center', v.id);
           return (
             <line key={`cl-${v.id}`}
@@ -176,6 +145,11 @@ function RadialGraph({ cfg }) {
           const v = verts.find(vv => vv.id === vId);
           if (!v) return null;
           const prod = prods.find(pp => pp.id === p.id);
+          if (!prod) return null;
+          if (v.rx === undefined || v.ry === undefined || prod.rx === undefined || prod.ry === undefined || isNaN(v.rx) || isNaN(v.ry) || isNaN(prod.rx) || isNaN(prod.ry)) {
+            if (import.meta.env.DEV) console.warn(`Missing coordinates for vertical-product connection: ${vId} -> ${p.id}`);
+            return null;
+          }
           const on = pathActive(vId, p.id);
           return (
             <line key={`vpl-${vId}-${p.id}`}
@@ -188,25 +162,33 @@ function RadialGraph({ cfg }) {
         }))}
 
         {/* Animated data particles on all lines */}
-        {verts.map((v, i) => (
-          <motion.circle key={`dp-${v.id}`}
-            r={1.5} fill="#1B3A6B" opacity={0.25}
-            animate={{ cx: [cx, v.rx], cy: [cy, v.ry] }}
-            transition={{ duration: 3 + i * 0.3, repeat: Infinity, ease: 'linear', delay: i * 0.4 }}
-          />
-        ))}
+        {verts.map((v, i) => {
+          if (cx === undefined || cy === undefined || v.rx === undefined || v.ry === undefined || isNaN(cx) || isNaN(cy) || isNaN(v.rx) || isNaN(v.ry)) {
+            return null;
+          }
+          return (
+            <motion.circle key={`dp-${v.id}`}
+              r={1.5} fill="#1B3A6B" opacity={0.25}
+              animate={{ cx: [cx, v.rx], cy: [cy, v.ry] }}
+              transition={{ duration: 3 + i * 0.3, repeat: Infinity, ease: 'linear', delay: i * 0.4 }}
+            />
+          );
+        })}
 
         {/* CENTER NODE */}
-        <motion.g whileTap={{ scale: 0.94 }} onClick={e => { e.stopPropagation(); tap('center', 'center'); }} className="cursor-pointer">
-          <circle cx={cx} cy={cy} r={centerR} fill="#1B3A6B" />
-          <circle cx={cx} cy={cy} r={centerR + 7} fill="none" stroke="#1B3A6B" strokeWidth={1} opacity={0.15} className="animate-pulse" style={{ animationDuration: '3s' }} />
-          {/* Hit area */}
-          <circle cx={cx} cy={cy} r={centerHitR} fill="transparent" />
-          <text x={cx} y={cy + 3.5} textAnchor="middle" fill="#FFF" fontSize="9" fontWeight="700" fontFamily="serif" letterSpacing="0.5">GXY LABS</text>
-        </motion.g>
+        {cx !== undefined && cy !== undefined && !isNaN(cx) && !isNaN(cy) && (
+          <motion.g whileTap={{ scale: 0.94 }} onClick={e => { e.stopPropagation(); tap('center', 'center'); }} className="cursor-pointer">
+            <circle cx={cx} cy={cy} r={centerR} fill="#1B3A6B" />
+            <circle cx={cx} cy={cy} r={centerR + 7} fill="none" stroke="#1B3A6B" strokeWidth={1} opacity={0.15} className="animate-pulse" style={{ animationDuration: '3s' }} />
+            {/* Hit area */}
+            <circle cx={cx} cy={cy} r={centerHitR} fill="transparent" />
+            <text x={cx} y={cy + 3.5} textAnchor="middle" fill="#FFF" fontSize="9" fontWeight="700" fontFamily="serif" letterSpacing="0.5">GXY LABS</text>
+          </motion.g>
+        )}
 
         {/* VERTICAL NODES */}
         {verts.map((v) => {
+          if (v.rx === undefined || v.ry === undefined || isNaN(v.rx) || isNaN(v.ry)) return null;
           const IconComp = v.icon;
           const on = isVertActive(v.id);
           const selected = active?.id === v.id && active?.type === 'vertical';
@@ -222,27 +204,30 @@ function RadialGraph({ cfg }) {
               <circle cx={v.rx} cy={v.ry} r={hitR} fill="transparent" />
               <foreignObject x={v.rx - 8} y={v.ry - 8} width={16} height={16} className="pointer-events-none">
                 <div xmlns="http://www.w3.org/1999/xhtml" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: on ? '#1B3A6B' : 'rgba(0,0,0,0.35)' }}>
-                  <IconComp size={11} strokeWidth={2.5} />
+                  {IconComp && <IconComp size={11} strokeWidth={2.5} />}
                 </div>
               </foreignObject>
               {/* Label — abbreviated, angled outward */}
-              <text
-                x={v.rx + (v.rx - cx) * 0.38}
-                y={v.ry + (v.ry - cy) * 0.38 + 3}
-                textAnchor="middle"
-                fontSize="8"
-                fontWeight={on ? '700' : '500'}
-                fill={on ? '#0F0F0F' : 'rgba(0,0,0,0.35)'}
-                style={{ transition: 'fill 0.18s' }}
-              >
-                {v.short}
-              </text>
+              {cx !== undefined && cy !== undefined && (
+                <text
+                  x={v.rx + (v.rx - cx) * 0.38}
+                  y={v.ry + (v.ry - cy) * 0.38 + 3}
+                  textAnchor="middle"
+                  fontSize="8"
+                  fontWeight={on ? '700' : '500'}
+                  fill={on ? '#0F0F0F' : 'rgba(0,0,0,0.35)'}
+                  style={{ transition: 'fill 0.18s' }}
+                >
+                  {v.short}
+                </text>
+              )}
             </motion.g>
           );
         })}
 
         {/* PRODUCT NODES */}
         {prods.map((p) => {
+          if (p.rx === undefined || p.ry === undefined || isNaN(p.rx) || isNaN(p.ry)) return null;
           const on = isProdActive(p.id);
           const selected = active?.id === p.id && active?.type === 'product';
           return (
@@ -302,22 +287,8 @@ function RadialGraph({ cfg }) {
 
 // ─── Scatter Graph (Desktop only — hover interactions) ────────────────────────
 
-const SCATTER_VERTS = [
-  { id: 'v0', name: 'Management Systems', x: 390, y: 190, icon: Grid },
-  { id: 'v1', name: 'Web Development',    x: 364, y: 250, icon: Monitor },
-  { id: 'v2', name: 'Mobile App Dev',     x: 300, y: 275, icon: Smartphone },
-  { id: 'v3', name: 'AI & ML',            x: 236, y: 250, icon: Cpu },
-  { id: 'v4', name: 'Data Science',       x: 210, y: 190, icon: LineChart },
-  { id: 'v5', name: 'Custom Software',    x: 236, y: 130, icon: Code },
-  { id: 'v6', name: 'Automation',         x: 300, y: 105, icon: GitMerge },
-  { id: 'v7', name: 'Scalable Tech',      x: 364, y: 130, icon: Layers },
-];
-
-const SCATTER_PRODS = [
-  { id: 'p_graphzy',    name: 'Graphzy',     x: 110, y: 110, color: '#0066CC', description: 'Prototype Mockup • AI-Powered STEM Visualizer', link: '/graphzy',     connects: ['v1','v3','v5'] },
-  { id: 'p_forkline',   name: 'Forkline',    x: 490, y: 190, color: '#92400E', description: 'Concept Preview • Restaurant Operations Platform',          link: '/forkline',    connects: ['v0','v1','v6'] },
-  { id: 'p_lattice',    name: 'Lattice',     x: 220, y: 325, color: '#1B3A6B', description: 'Early Concept • Startup Operations Platform',               link: '/lattice',     connects: ['v1','v4','v7'] },
-];
+const SCATTER_VERTS = HERO_SCATTER_NODES.filter(n => n.type === 'vertical');
+const SCATTER_PRODS = HERO_SCATTER_NODES.filter(n => n.type === 'product');
 
 function ScatterGraph() {
   const [activeNode, setActiveNode] = useState(null);
@@ -350,6 +321,9 @@ function ScatterGraph() {
       <svg viewBox="0 0 600 380" className="w-full h-full select-none">
         {/* Center → Vertical paths */}
         {SCATTER_VERTS.map(v => {
+          if (CENTER.x === undefined || CENTER.y === undefined || v.x === undefined || v.y === undefined || isNaN(CENTER.x) || isNaN(CENTER.y) || isNaN(v.x) || isNaN(v.y)) {
+            return null;
+          }
           const on = pathOn('center', v.id);
           return (
             <g key={`cl-${v.id}`}>
@@ -369,6 +343,9 @@ function ScatterGraph() {
         {SCATTER_PRODS.map(p => p.connects.map(vId => {
           const v = SCATTER_VERTS.find(vv => vv.id === vId);
           if (!v) return null;
+          if (v.x === undefined || v.y === undefined || p.x === undefined || p.y === undefined || isNaN(v.x) || isNaN(v.y) || isNaN(p.x) || isNaN(p.y)) {
+            return null;
+          }
           const on = pathOn(p.id, v.id);
           return (
             <g key={`vp-${vId}-${p.id}`}>
@@ -385,15 +362,18 @@ function ScatterGraph() {
         }))}
 
         {/* CENTER NODE */}
-        <motion.g className="cursor-pointer" whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-          onMouseEnter={() => setOn('center', 'center')} onMouseLeave={setOff}>
-          <circle cx={CENTER.x} cy={CENTER.y} r={28} fill="#1B3A6B" />
-          <circle cx={CENTER.x} cy={CENTER.y} r={34} fill="none" stroke="#1B3A6B" strokeWidth={1} opacity={0.2} className="animate-ping" style={{ animationDuration: '3s' }} />
-          <text x={CENTER.x} y={CENTER.y + 4} textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="700" fontFamily="serif">GXY LABS</text>
-        </motion.g>
+        {CENTER.x !== undefined && CENTER.y !== undefined && !isNaN(CENTER.x) && !isNaN(CENTER.y) && (
+          <motion.g className="cursor-pointer" whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+            onMouseEnter={() => setOn('center', 'center')} onMouseLeave={setOff}>
+            <circle cx={CENTER.x} cy={CENTER.y} r={28} fill="#1B3A6B" />
+            <circle cx={CENTER.x} cy={CENTER.y} r={34} fill="none" stroke="#1B3A6B" strokeWidth={1} opacity={0.2} className="animate-ping" style={{ animationDuration: '3s' }} />
+            <text x={CENTER.x} y={CENTER.y + 4} textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="700" fontFamily="serif">GXY LABS</text>
+          </motion.g>
+        )}
 
         {/* VERTICAL NODES */}
         {SCATTER_VERTS.map(v => {
+          if (v.x === undefined || v.y === undefined || isNaN(v.x) || isNaN(v.y)) return null;
           const IconComp = v.icon;
           const on = activeNode && (activeNode.id === v.id || (activeNode.type === 'product' && SCATTER_PRODS.find(p => p.id === activeNode.id)?.connects.includes(v.id)) || activeNode.type === 'center');
           return (
@@ -402,16 +382,19 @@ function ScatterGraph() {
               <circle cx={v.x} cy={v.y} r={on ? 15 : 12} fill={on ? '#EEF3FB' : '#FFFFFF'} stroke={on ? '#1B3A6B' : 'rgba(0,0,0,0.08)'} strokeWidth={on ? 1.5 : 1} className="transition-all duration-200" />
               <foreignObject x={v.x - 7} y={v.y - 7} width={14} height={14} className="pointer-events-none">
                 <div xmlns="http://www.w3.org/1999/xhtml" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: on ? '#1B3A6B' : 'rgba(0,0,0,0.4)' }}>
-                  <IconComp size={10} strokeWidth={2.5} />
+                  {IconComp && <IconComp size={10} strokeWidth={2.5} />}
                 </div>
               </foreignObject>
-              <text x={v.x} y={v.y + (v.y > CENTER.y ? 28 : -20)} textAnchor="middle" fontSize="8" fontWeight={on ? '700' : '500'} fill={on ? '#0F0F0F' : 'rgba(0,0,0,0.4)'} style={{ transition: 'all 0.2s' }}>{v.name}</text>
+              {CENTER.y !== undefined && (
+                <text x={v.x} y={v.y + (v.y > CENTER.y ? 28 : -20)} textAnchor="middle" fontSize="8" fontWeight={on ? '700' : '500'} fill={on ? '#0F0F0F' : 'rgba(0,0,0,0.4)'} style={{ transition: 'all 0.2s' }}>{v.name}</text>
+              )}
             </motion.g>
           );
         })}
 
         {/* PRODUCT NODES */}
         {SCATTER_PRODS.map(p => {
+          if (p.x === undefined || p.y === undefined || isNaN(p.x) || isNaN(p.y)) return null;
           const on = activeNode && (activeNode.id === p.id || (activeNode.type === 'vertical' && p.connects.includes(activeNode.id)));
           return (
             <motion.g key={p.id} className="cursor-pointer" whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300, damping: 15 }}

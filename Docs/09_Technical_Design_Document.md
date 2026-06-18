@@ -53,7 +53,7 @@ graphxy-labs/
 └── README.md
 ```
 
-A monorepo structure (Turborepo recommended) allows Graphzy and the Graphxy Labs marketing site to share design tokens and types, and prepares the codebase to onboard Forkline later without architecture debt.
+A monorepo structure (Turborepo recommended) allows Graphzy and the Graphxy Labs marketing site to share design tokens and types, and prepares the codebase to onboard Clampbox, Forkline, and Lattice later without architecture debt.
 
 ---
 
@@ -71,7 +71,7 @@ A monorepo structure (Turborepo recommended) allows Graphzy and the Graphxy Labs
 
 - **Framework:** Next.js (App Router) for SEO, fast static generation, and easy addition of product/landing pages.
 - **Styling:** Tailwind CSS with shared design tokens from `packages/ui`.
-- **Key pages:** `/` (landing page with hero, products, verticals), `/graphzy` (product page / app redirect), `/forkline` (waitlist page), `/lattice` (waitlist page), `/services` (verticals detail).
+- **Key pages:** `/` (landing page with hero, products, verticals), `/graphzy` (product page / app redirect), `/forkline` (detail page), `/lattice` (detail page), `/services` (verticals detail).
 - **Hosting:** Vercel.
 
 ---
@@ -141,6 +141,10 @@ Forkline will be a separate backend service (Node.js + Express or NestJS) with i
 
 ## 11. Environments & Deployment
 
+### Formspree Integrations
+- `VITE_FORMSPREE_CLAMPBOX_ID`: Used for early access enterprise inquiries to Formspree, without client-side fallback. Subject: `New Clampbox Inquiry`. Payload builder message: `{Name} is interested in Clampbox confidential execution infrastructure.`
+- `VITE_FORMSPREE_CONTACT_ID`: Formspree ID for main site contact/waitlist inquiries.
+
 | Environment | Graphzy Frontend | Graphxy Labs Site | Backend | DB |
 |---|---|---|---|---|
 | Local dev | Vite dev server | Next.js dev | `node` with `.env` | Supabase dev project |
@@ -156,6 +160,14 @@ Forkline will be a separate backend service (Node.js + Express or NestJS) with i
 - Log every AI call's latency, success/failure, cache hit/miss.
 - `/health` endpoint for uptime checks.
 - Daily Gemini call count vs. free-tier daily limit logged for easy founder visibility.
+
+---
+
+## 12.5. Interactive Previews & Reusable Motion Modules
+To maintain single-source-of-truth visual design and identical animation behaviors across landing page lists and product detail pages, the preview modules are exported directly from `ProductShowcase.jsx` and imported on detail pages:
+- `ClampboxPreview` imported and rendered in `/clampbox` (`pages/Clampbox.jsx`).
+- `ForklinePreview` imported and rendered in `/forkline` (`pages/Forkline.jsx`).
+- `LatticePreview` imported and rendered in `/lattice` (`pages/Lattice.jsx`).
 
 ---
 

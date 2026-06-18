@@ -4,45 +4,31 @@ import { SectionHeading } from '../ui/SectionHeading';
 import { Card } from '../ui/Card';
 import { Tag } from '../ui/Tag';
 import { Button } from '../ui/Button';
-import { ArrowRight, Layers, Cpu, Code, Monitor, Grid, GitMerge, LineChart, TrendingUp, Smartphone, ChevronDown, X } from 'lucide-react';
+import { ArrowRight, Layers, Cpu, Code, Monitor, Grid, GitMerge, LineChart, TrendingUp, Smartphone, ChevronDown, X, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useIsTouch, useBreakpoint } from '../../utils/useDeviceType';
 
-const verticalsData = [
-  { id: 'v3', name: 'AI & ML', x: 80, y: 130, icon: Cpu, products: ['p_graphzy'] },
-  { id: 'v5', name: 'Custom Software', x: 150, y: 130, icon: Code, products: ['p_graphzy'] },
-  { id: 'v1', name: 'Web Development', x: 220, y: 130, icon: Monitor, products: ['p_graphzy', 'p_forkline', 'p_lattice'] },
-  { id: 'v0', name: 'Management Systems', x: 290, y: 130, icon: Grid, products: ['p_forkline'] },
-  { id: 'v6', name: 'Automation', x: 360, y: 130, icon: GitMerge, products: ['p_forkline'] },
-  { id: 'v4', name: 'Data Science', x: 430, y: 130, icon: LineChart, products: ['p_lattice'] },
-  { id: 'v7', name: 'Scalable Tech', x: 500, y: 130, icon: TrendingUp, products: ['p_lattice'] },
-];
+import { 
+  ECOSYSTEM_TREE_DESKTOP_NODES, 
+  ECOSYSTEM_TREE_MOBILE_NODES,
+  validateNode,
+  validateConnection
+} from '../../data/ecosystemNodes';
 
-const productsData = [
-  { id: 'p_graphzy', name: 'Graphzy', x: 120, y: 240, color: '#0066CC', link: '/graphzy', tag: 'Prototype Mockup' },
-  { id: 'p_forkline', name: 'Forkline', x: 300, y: 240, color: '#92400E', link: '/forkline', tag: 'Concept Preview' },
-  { id: 'p_lattice', name: 'Lattice', x: 480, y: 240, color: '#1B3A6B', link: '/lattice', tag: 'Early Concept' },
-];
+const verticalsData = ECOSYSTEM_TREE_DESKTOP_NODES.filter(n => n.type === 'vertical').map(v => ({
+  ...v,
+  products: v.connections.filter(c => c.startsWith('p_'))
+}));
 
-// ──────────────────────────────────────────────────────────────
-// MOBILE COMPACT TREE GRAPH
-// ──────────────────────────────────────────────────────────────
-const mobileVerticals = [
-  { id: 'v3', name: 'AI & ML', x: 48, y: 100, icon: Cpu, products: ['p_graphzy'] },
-  { id: 'v5', name: 'Custom Software', x: 136, y: 100, icon: Code, products: ['p_graphzy'] },
-  { id: 'v1', name: 'Web Dev', x: 224, y: 100, icon: Monitor, products: ['p_graphzy', 'p_forkline', 'p_lattice'] },
-  { id: 'v0', name: 'Mgmt Systems', x: 312, y: 100, icon: Grid, products: ['p_forkline'] },
-  { id: 'v6', name: 'Automation', x: 90, y: 175, icon: GitMerge, products: ['p_forkline'] },
-  { id: 'v4', name: 'Data Science', x: 180, y: 175, icon: LineChart, products: ['p_lattice'] },
-  { id: 'v7', name: 'Scalable Tech', x: 270, y: 175, icon: TrendingUp, products: ['p_lattice'] },
-];
+const productsData = ECOSYSTEM_TREE_DESKTOP_NODES.filter(n => n.type === 'product');
 
-const mobileProducts = [
-  { id: 'p_graphzy', name: 'Graphzy', x: 70, y: 260, color: '#0066CC', link: '/graphzy', tag: 'Prototype Mockup', description: 'AI-Powered STEM Visualizer. Transforms natural language queries into interactive visual learning models.' },
-  { id: 'p_forkline', name: 'Forkline', x: 180, y: 260, color: '#92400E', link: '/forkline', tag: 'Concept Preview', description: 'Restaurant management and operational intelligence platform.' },
-  { id: 'p_lattice', name: 'Lattice', x: 290, y: 260, color: '#1B3A6B', link: '/lattice', tag: 'Early Concept', description: 'Structured workspace for startup execution and operational clarity.' },
-];
+const mobileVerticals = ECOSYSTEM_TREE_MOBILE_NODES.filter(n => n.type === 'vertical').map(v => ({
+  ...v,
+  products: v.connections.filter(c => c.startsWith('p_'))
+}));
+
+const mobileProducts = ECOSYSTEM_TREE_MOBILE_NODES.filter(n => n.type === 'product');
 
 function MobileTreeGraph() {
   const [active, setActive] = useState(null); // { type, id }
@@ -57,7 +43,7 @@ function MobileTreeGraph() {
   const isPathActive = (fromId, toId) => {
     if (!active) return false;
     if (active.type === 'center') return true;
-    
+
     // Check if it's a center-to-vertical line
     if (fromId === 'center') {
       const vId = toId;
@@ -69,7 +55,7 @@ function MobileTreeGraph() {
         return v ? v.products.includes(active.id) : false;
       }
     }
-    
+
     // Check if it's a vertical-to-product line
     const vId = fromId;
     const pId = toId;
@@ -79,7 +65,7 @@ function MobileTreeGraph() {
     if (active.type === 'product') {
       return active.id === pId && mobileVerticals.find(vv => vv.id === vId)?.products.includes(active.id);
     }
-    
+
     return false;
   };
 
@@ -166,6 +152,9 @@ function MobileTreeGraph() {
       <svg viewBox="0 0 360 340" className="w-full h-full" onClick={dismiss}>
         {/* L1 → L2 lines */}
         {mobileVerticals.map(v => {
+          if (v.x === undefined || v.y === undefined || isNaN(v.x) || isNaN(v.y)) {
+            return null;
+          }
           const activePath = isPathActive('center', v.id);
           return (
             <line key={`cl-${v.id}`}
@@ -181,6 +170,9 @@ function MobileTreeGraph() {
         {mobileVerticals.map(v => v.products.map(pId => {
           const p = mobileProducts.find(pp => pp.id === pId);
           if (!p) return null;
+          if (v.x === undefined || v.y === undefined || p.x === undefined || p.y === undefined || isNaN(v.x) || isNaN(v.y) || isNaN(p.x) || isNaN(p.y)) {
+            return null;
+          }
           const activePath = isPathActive(v.id, pId);
           return (
             <line key={`vpl-${v.id}-${pId}`}
@@ -194,6 +186,9 @@ function MobileTreeGraph() {
 
         {/* L1 -> L2 Animation particles */}
         {mobileVerticals.map((v, i) => {
+          if (v.x === undefined || v.y === undefined || isNaN(v.x) || isNaN(v.y)) {
+            return null;
+          }
           const activePath = isPathActive('center', v.id);
           return (
             <motion.circle key={`dp1-${v.id}`}
@@ -208,6 +203,9 @@ function MobileTreeGraph() {
         {mobileVerticals.map(v => v.products.map((pId, idx) => {
           const p = mobileProducts.find(pp => pp.id === pId);
           if (!p) return null;
+          if (v.x === undefined || v.y === undefined || p.x === undefined || p.y === undefined || isNaN(v.x) || isNaN(v.y) || isNaN(p.x) || isNaN(p.y)) {
+            return null;
+          }
           const activePath = isPathActive(v.id, pId);
           return (
             <motion.circle key={`dp2-${v.id}-${pId}`}
@@ -228,6 +226,7 @@ function MobileTreeGraph() {
 
         {/* LEVEL 2 Vertical nodes */}
         {mobileVerticals.map(v => {
+          if (v.x === undefined || v.y === undefined || isNaN(v.x) || isNaN(v.y)) return null;
           const IconComp = v.icon;
           const on = isVertActive(v.id);
           const selected = active?.id === v.id && active?.type === 'vertical';
@@ -242,7 +241,7 @@ function MobileTreeGraph() {
               <circle cx={v.x} cy={v.y} r="28" fill="transparent" />
               <foreignObject x={v.x - 7.5} y={v.y - 7.5} width="15" height="15" className="pointer-events-none">
                 <div xmlns="http://www.w3.org/1999/xhtml" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: on ? '#1B3A6B' : 'rgba(0,0,0,0.35)' }}>
-                  <IconComp size={10} strokeWidth={2.5} />
+                  {IconComp && <IconComp size={10} strokeWidth={2.5} />}
                 </div>
               </foreignObject>
               <text x={v.x} y={v.y + 25} textAnchor="middle"
@@ -258,6 +257,7 @@ function MobileTreeGraph() {
 
         {/* LEVEL 3 Product nodes */}
         {mobileProducts.map(p => {
+          if (p.x === undefined || p.y === undefined || isNaN(p.x) || isNaN(p.y)) return null;
           const on = isProdActive(p.id);
           const selected = active?.id === p.id && active?.type === 'product';
           return (
@@ -341,6 +341,9 @@ function SvgTree({ isTouch }) {
       <svg viewBox="0 0 600 290" className="w-full h-full select-none">
         {/* L1 → L2 lines */}
         {verticalsData.map(v => {
+          if (v.x === undefined || v.y === undefined || isNaN(v.x) || isNaN(v.y)) {
+            return null;
+          }
           const active = isLinkActive('center', v.id);
           return (
             <line key={`l1-l2-${v.id}`}
@@ -357,6 +360,9 @@ function SvgTree({ isTouch }) {
           v.products.map(pId => {
             const p = productsData.find(prod => prod.id === pId);
             if (!p) return null;
+            if (v.x === undefined || v.y === undefined || p.x === undefined || p.y === undefined || isNaN(v.x) || isNaN(v.y) || isNaN(p.x) || isNaN(p.y)) {
+              return null;
+            }
             const active = isLinkActive(v.id, p.id);
             return (
               <line key={`l2-l3-${v.id}-${p.id}`}
@@ -384,6 +390,7 @@ function SvgTree({ isTouch }) {
 
         {/* LEVEL 2: Verticals */}
         {verticalsData.map(v => {
+          if (v.x === undefined || v.y === undefined || isNaN(v.x) || isNaN(v.y)) return null;
           const IconComp = v.icon;
           const isSelected = hoveredNode === v.id || hoveredNode === 'center';
           return (
@@ -397,7 +404,7 @@ function SvgTree({ isTouch }) {
               {isTouch && <circle cx={v.x} cy={v.y} r="28" fill="transparent" />}
               <foreignObject x={v.x - 7} y={v.y - 7} width="14" height="14" className="pointer-events-none">
                 <div className={`flex items-center justify-center w-full h-full ${isSelected ? 'text-[#1B3A6B]' : 'text-black/40'}`}>
-                  <IconComp size={9} strokeWidth={2.5} />
+                  {IconComp && <IconComp size={9} strokeWidth={2.5} />}
                 </div>
               </foreignObject>
               <text x={v.x} y={v.y + 28} textAnchor="middle"
@@ -411,6 +418,7 @@ function SvgTree({ isTouch }) {
 
         {/* LEVEL 3: Products */}
         {productsData.map(p => {
+          if (p.x === undefined || p.y === undefined || isNaN(p.x) || isNaN(p.y)) return null;
           const isSelected = hoveredNode === p.id || (hoveredNode && verticalsData.find(v => v.id === hoveredNode && v.products.includes(p.id)));
           return (
             <g key={p.id} className="cursor-pointer"
@@ -447,7 +455,7 @@ export default function EcosystemTree() {
         <SectionHeading
           eyebrow="Architectural Structure"
           heading="A unified ecosystem engineered for distinct industries."
-          description="Graphxy Labs operates as the core architectural parent. We design and launch focused product divisions that address math visualization, restaurant automation, and startup logistics."
+          description="Graphxy Labs operates as the core architectural parent. We design and launch focused product divisions that address math visualization, confidential execution infrastructure, restaurant automation, and startup logistics."
         />
 
         {/* Hierarchy Visualization */}
@@ -467,12 +475,12 @@ export default function EcosystemTree() {
         </div>
 
         {/* Product Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full max-w-5xl mt-10 sm:mt-12 mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full max-w-6xl mt-10 sm:mt-12 mx-auto">
           {/* Graphzy */}
           <Card variant="surface" className="p-5 bg-white border-[#0066CC]/10 flex flex-col justify-between active:scale-[0.98] hover:border-[#0066CC]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
-                <Tag variant="math">Prototype Mockup</Tag>
+                <Tag variant="math">COMING SOON</Tag>
                 <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2026</span>
               </div>
               <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Graphzy</h4>
@@ -488,9 +496,36 @@ export default function EcosystemTree() {
                 </ul>
               </div>
             </div>
-            <Link to="/products#graphzy" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+            <Link to="/graphzy" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
               <Button variant="graphzy" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
-                Launch Visualizer <ArrowRight size={12} />
+                Explore Graphzy <ArrowRight size={12} />
+              </Button>
+            </Link>
+          </Card>
+
+          {/* Clampbox */}
+          <Card variant="surface" className="p-5 bg-[#F0F7F7] border-[#0D9488]/14 flex flex-col justify-between active:scale-[0.98] hover:border-[#0D9488]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
+            <div>
+              <div className="flex justify-between items-start mb-4">
+                <Tag variant="clampbox">COMING SOON</Tag>
+                <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2026</span>
+              </div>
+              <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Clampbox</h4>
+              <p className="text-[11.5px] text-[#525252] leading-relaxed mb-4">
+                Confidential execution infrastructure for AI, agents, and sensitive workloads, running workloads in hardware-enforced isolated CPU enclaves.
+              </p>
+              <div className="border-t border-black/[0.04] pt-3 mb-5">
+                <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
+                <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Isolated runtime enclaves</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Zero-knowledge agent execution</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Encrypted-in-use memory</li>
+                </ul>
+              </div>
+            </div>
+            <Link to="/clampbox" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+              <Button variant="clampbox" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
+                Explore Clampbox <ArrowRight size={12} />
               </Button>
             </Link>
           </Card>
@@ -499,8 +534,8 @@ export default function EcosystemTree() {
           <Card variant="surface" className="p-5 bg-[#FEF7EC] border-[#B45309]/14 flex flex-col justify-between active:scale-[0.98] hover:border-[#B45309]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
-                <Tag variant="forkline">Concept Preview</Tag>
-                <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2027</span>
+                <Tag variant="forkline">COMING SOON</Tag>
+                <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2026</span>
               </div>
               <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Forkline</h4>
               <p className="text-[11.5px] text-[#525252] leading-relaxed mb-4">
@@ -515,9 +550,9 @@ export default function EcosystemTree() {
                 </ul>
               </div>
             </div>
-            <Link to="/products#forkline" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+            <Link to="/forkline" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
               <Button variant="forkline" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
-                Register for Waitlist <ArrowRight size={12} />
+                Explore Forkline <ArrowRight size={12} />
               </Button>
             </Link>
           </Card>
@@ -526,8 +561,8 @@ export default function EcosystemTree() {
           <Card variant="surface" className="p-5 bg-white border-[#1B3A6B]/10 flex flex-col justify-between active:scale-[0.98] hover:border-[#1B3A6B]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
-                <Tag variant="brand">Early Concept</Tag>
-                <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2027</span>
+                <Tag variant="brand">COMING SOON</Tag>
+                <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2026</span>
               </div>
               <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Lattice</h4>
               <p className="text-[11.5px] text-[#525252] leading-relaxed mb-4">
@@ -542,9 +577,9 @@ export default function EcosystemTree() {
                 </ul>
               </div>
             </div>
-            <Link to="/products#lattice" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
+            <Link to="/lattice" className="mt-auto block" style={{ touchAction: 'manipulation' }}>
               <Button variant="brand" className="w-full flex items-center justify-center gap-1 text-xs py-2.5">
-                Explore Concept <ArrowRight size={12} />
+                Explore Lattice <ArrowRight size={12} />
               </Button>
             </Link>
           </Card>

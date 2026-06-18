@@ -13,17 +13,15 @@ export default function Footer() {
               aria-hidden="true"
               className="w-7 h-7 flex-shrink-0 transition-opacity duration-200 group-hover:opacity-70"
             />
-            <span className="flex items-center gap-1.5">
-              Graphxy Labs
-              <span className="w-1 h-1 rounded-full bg-[#1B3A6B]" />
-            </span>
+            <span>Graphxy Labs</span>
           </Link>
           <p className="text-[10px] font-mono font-semibold tracking-wider uppercase text-black/35 mb-0.5">Engineering Studio</p>
         </div>
         
-        <div className="flex flex-wrap gap-x-8 gap-y-3">
-          <Link to="/products" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Products</Link>
+        <div className="flex flex-wrap gap-x-6 gap-y-3">
+          <Link to="/" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Home</Link>
           <Link to="/services" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Services</Link>
+          <Link to="/products" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Products</Link>
           <Link to="/contact" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Contact</Link>
           <Link to="/privacy-policy" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Privacy Policy</Link>
           <Link to="/terms-of-service" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Terms of Service</Link>

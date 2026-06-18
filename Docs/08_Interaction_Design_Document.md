@@ -79,10 +79,21 @@ The most important moment in the product — the gap between asking and the visu
 
 ## 9. Graphxy Labs Landing Page Interactions
 
-- **Hero CTA buttons:** hover → subtle 1px translateY lift + shadow deepening. Primary CTA (Explore Graphzy) uses Graphzy blue; secondary CTA (Join Forkline Waitlist) uses Forkline amber.
-- **Product cards (Graphzy / Forkline / Lattice):** on hover, a soft scale(1.015) with shadow elevation shift (~200ms ease-out). Forkline and Lattice cards display their respective badges ("Concept Preview" / "Early Concept") with custom tag fills and subtle border glows on hover.
+- **Hero CTA buttons:** hover → subtle 1px translateY lift + shadow deepening. Primary CTA (Explore Graphzy) uses Graphzy blue; secondary CTAs use their respective product theme colors (e.g. Clampbox teal, Forkline amber, Lattice navy).
+- **Product cards (Graphzy / Clampbox / Forkline / Lattice):** on hover, a soft scale(1.015) with shadow elevation shift (~200ms ease-out). Clampbox, Forkline, and Lattice cards display their respective badges ("COMING SOON" / "COMING SOON") with custom tag fills and subtle border glows on hover.
 - **Service vertical sections:** reveal on scroll into view with a fade+slight-rise (opacity 0→1, y +8px→0, ~300ms, staggered per section), controlled via IntersectionObserver + Framer Motion. Never more than one animated entrance zone visible at a time to avoid visual noise.
 - **Navigation:** sticky top nav with a frosted-glass background (backdrop-blur) that only activates when the page scrolls past the hero — no blur on initial load to keep the hero clean.
+
+---
+
+## 9.5. Product Preview & Interactive Motion System
+- The interactive product preview motion system introduced on the landing page (`ProductShowcase.jsx`) is the unified standard for product mockups across the entire site.
+- This includes the automated animated looping sequences:
+  - **GraphzyPreview:** Prompt typing simulation, AI parameter generation overlay, initial projectile trajectory drawing, slider adjustments, and coordinate tooltip reveals.
+  - **ClampboxPreview:** trusted enclave init loader, workload execution lines stream, Intel SGX attestation key verification, SECURE status indicator, and memory shield updates.
+  - **ForklinePreview:** Dine-in table turns telemetry alert loop, custom notification overlays, and KOT queue items stream.
+  - **LatticePreview:** Runway metrics, seed fundraising committed progress, investor pipeline kanban card transitions, and milestone completion flags.
+- **Direct Reuse:** To prevent visual drift, the exact same react components (`ClampboxPreview`, `ForklinePreview`, `LatticePreview`) are imported and rendered on their respective detail pages (`/clampbox`, `/forkline`, `/lattice`) instead of designing alternative mockup styles or static card graphics.
 
 ---
 
@@ -99,5 +110,5 @@ The most important moment in the product — the gap between asking and the visu
 - **Settle, don't bounce.** All easing is ease-out for entrances, ease-in-out for state changes. No spring or overshoot.
 - **One orchestrated moment per screen.** The thinking → reveal sequence on the result view is the signature motion. Everything else is quick (<200ms) and subordinate.
 - **Respect reduced motion.** All entrance animations degrade to simple opacity fades when `prefers-reduced-motion` is set.
-- **Color signals subject identity, not UI state.** Accent colors (math/chem/bio/physics/Forkline amber) are reserved for domain identity. Error states use neutral tones.
+- **Color signals subject identity, not UI state.** Accent colors (math/chem/bio/physics/Clampbox teal/Forkline amber) are reserved for domain identity. Error states use neutral tones.
 - **Landing page: one reveal per section, not per element.** Do not animate individual paragraph lines or icon items — animate the containing section block as a unit.

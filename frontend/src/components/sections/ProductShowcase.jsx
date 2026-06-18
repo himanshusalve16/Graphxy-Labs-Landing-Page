@@ -14,13 +14,14 @@ import {
   Briefcase,
   Play,
   Activity,
-  Plus
+  Plus,
+  Shield
 } from 'lucide-react';
 
 // ==========================================
 // 1. ANIMATED GRAPHZY PREVIEW COMPONENT
 // ==========================================
-function GraphzyPreview() {
+export function GraphzyPreview() {
   const [promptText, setPromptText] = useState('');
   const [launchAngle, setLaunchAngle] = useState(45);
   const [step, setStep] = useState(0); // 0: typing prompt, 1: AI generation, 2: drawing initial trajectory, 3: sliding launch angle, 4: tooltip
@@ -181,7 +182,7 @@ function GraphzyPreview() {
           </>
         )}
 
-        <span className="absolute bottom-2 right-2 text-[7px] font-mono text-black/30">PROTOTYPE MOCKUP • UNDER ACTIVE DEVELOPMENT</span>
+        <span className="absolute bottom-2 right-2 text-[7px] font-mono text-black/30">COMING SOON</span>
       </div>
 
       {/* Control Panel Simulator */}
@@ -210,16 +211,102 @@ function GraphzyPreview() {
 }
 
 // ==========================================
+// 1.5. ANIMATED CLAMPBOX PREVIEW COMPONENT
+// ==========================================
+export function ClampboxPreview() {
+  const [step, setStep] = useState(0); // 0: enclave init, 1: code processing, 2: attestation verified, 3: secure state, 4: loop reset
+  const [secureState, setSecureState] = useState('Off');
+  const [terminalLines, setTerminalLines] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    let timerId;
+
+    if (step === 0) {
+      setSecureState('Initializing');
+      setTerminalLines(['[sys] Initializing secure runtime...', '[sys] Allocating hardware enclave memory...']);
+      timerId = setTimeout(() => { if (active) setStep(1); }, 1500);
+    } else if (step === 1) {
+      setTerminalLines(prev => [...prev, '[sys] Encryption key generated.', '[sys] Running workload in isolated CPU cache...']);
+      timerId = setTimeout(() => { if (active) setStep(2); }, 1800);
+    } else if (step === 2) {
+      setTerminalLines(prev => [...prev, '[attest] Verifying hardware signature...', '[attest] SHA-256 verification: PASS']);
+      timerId = setTimeout(() => { if (active) setStep(3); }, 1500);
+    } else if (step === 3) {
+      setSecureState('SECURE');
+      setTerminalLines(prev => [...prev, '[sys] Execution complete. Memory zeroed.', '[sys] Output returned cryptographically.']);
+      timerId = setTimeout(() => { if (active) setStep(4); }, 3000);
+    } else if (step === 4) {
+      timerId = setTimeout(() => { if (active) setStep(0); }, 1000);
+    }
+
+    return () => {
+      active = false;
+      clearTimeout(timerId);
+    };
+  }, [step]);
+
+  return (
+    <Card variant="surface" className="p-5 bg-[#F0F7F7] border-[#0D9488]/14 shadow-sm overflow-hidden flex flex-col gap-4 w-full text-left">
+      <div className="flex justify-between items-center pb-2 border-b border-[#0D9488]/10">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
+          <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
+          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+        </div>
+        <span className="font-mono text-[9px] text-[#0D9488]">clampbox.graphxy.com/console/enclave</span>
+      </div>
+
+      {/* Screen Area */}
+      <div className="bg-[#0F2027] border border-[#0D9488]/10 rounded-lg p-3 h-[190px] sm:h-[210px] flex flex-col justify-between relative overflow-hidden font-mono text-[9px] text-white/90">
+        <div className="flex justify-between items-center border-b border-white/[0.06] pb-1.5 mb-1.5">
+          <span className="font-bold text-[#0D9488] uppercase tracking-wider text-[8px]">Enclave Compute Unit</span>
+          <span className={`text-[8px] px-1.5 py-0.2 rounded-full font-bold ${
+            secureState === 'SECURE' ? 'text-white bg-[#0D9488]' : 'text-black bg-amber-400'
+          }`}>
+            {secureState}
+          </span>
+        </div>
+
+        <div className="flex-1 overflow-y-auto flex flex-col gap-1 text-[9px] text-[#A3D9D9] leading-tight select-none">
+          {terminalLines.map((line, i) => (
+            <div key={i} className={line.startsWith('[attest]') ? 'text-[#0D9488] font-bold' : ''}>
+              {line}
+            </div>
+          ))}
+        </div>
+
+        <div className="border-t border-white/[0.06] pt-1.5 mt-1.5 flex justify-between items-center text-[8px] text-white/50">
+          <span>MEM: 512GB encrypted</span>
+          <span>ATTESTATION: ACTIVE</span>
+        </div>
+      </div>
+
+      {/* Metrics strip */}
+      <div className="bg-white rounded-lg p-3 border border-[#0D9488]/10 flex justify-between items-center text-left text-[9px]">
+        <div>
+          <span className="text-black/45 block font-mono">CRYPTOGRAPHIC STATE</span>
+          <span className="text-[10px] font-bold text-black">AES-256-GCM Memory Shield</span>
+        </div>
+        <span className="font-mono text-[8px] border border-[#0D9488]/20 bg-[#F0F7F7] text-[#0D9488] px-2 py-0.5 rounded-full font-semibold">
+          Hardware Verified
+        </span>
+      </div>
+    </Card>
+  );
+}
+
+// ==========================================
 // 2. ANIMATED FORKLINE PREVIEW COMPONENT
 // ==========================================
-function ForklinePreview() {
+export function ForklinePreview() {
   const [step, setStep] = useState(0); // 0: Seated state, 1: order arrives, 2: kitchen update, 3: warning limit, 4: clean/reset
   const [activeNotification, setActiveNotification] = useState(false);
   const [t2Status, setT2Status] = useState('Empty');
   const [t2Duration, setT2Duration] = useState('0m');
   const [activeKitchenOrders, setActiveKitchenOrders] = useState([
-    { id: 'o1', item: 'T-1: Steak Frites', time: '14m' },
-    { id: 'o2', item: 'T-3: Caesar Salad', time: '6m' }
+    { id: 'o1', item: 'T-1: Butter Chicken & Naan', time: '14m' },
+    { id: 'o2', item: 'T-3: Paneer Tikka', time: '6m' }
   ]);
 
   useEffect(() => {
@@ -233,15 +320,15 @@ function ForklinePreview() {
       setT2Duration('0m');
       setActiveNotification(false);
       setActiveKitchenOrders([
-        { id: 'o1', item: 'T-1: Steak Frites', time: '14m' },
-        { id: 'o2', item: 'T-3: Caesar Salad', time: '6m' }
+        { id: 'o1', item: 'T-1: Butter Chicken & Naan', time: '14m' },
+        { id: 'o2', item: 'T-3: Paneer Tikka', time: '6m' }
       ]);
       timerId = setTimeout(() => { if (active) setStep(1); }, 2000);
     } else if (step === 1) {
       // Table 2 gets seated, order sent to kitchen
       setT2Status('Seated');
       setT2Duration('1m');
-      setActiveKitchenOrders(prev => [...prev, { id: 'o3', item: 'T-2: Salmon Grill', time: '1m' }]);
+      setActiveKitchenOrders(prev => [...prev, { id: 'o3', item: 'T-2: Hyderabadi Biryani', time: '1m' }]);
       timerId = setTimeout(() => { if (active) setStep(2); }, 2500);
     } else if (step === 2) {
       // Kitchen completes Table 3 salad order, time passes
@@ -286,7 +373,7 @@ function ForklinePreview() {
           {/* Table 1 */}
           <div className="border border-black/5 bg-[#FAFAF8] p-2.5 rounded-lg flex flex-col items-center justify-center text-center shadow-xs">
             <div className="text-[10px] font-bold text-[#0F0F0F]">T-1</div>
-            <span className="text-[8px] text-[#1D4ED8] bg-[#EFF6FF] px-1.5 py-0.2 rounded-full mt-1.5 font-medium">Entrees</span>
+            <span className="text-[8px] text-[#1D4ED8] bg-[#EFF6FF] px-1.5 py-0.2 rounded-full mt-1.5 font-medium">Main Course</span>
           </div>
 
           {/* Table 2 (Dynamic state) */}
@@ -301,14 +388,14 @@ function ForklinePreview() {
               step === 3 ? 'text-[#EF4444] bg-[#FEF2F2]' :
               'text-[#B45309] bg-[#FFFBEB]'
             }`}>
-              {t2Status === 'Empty' ? 'Empty' : step === 3 ? 'ALERT' : 'Apps'}
+              {t2Status === 'Empty' ? 'Empty' : step === 3 ? 'ALERT' : 'Starters'}
             </span>
           </div>
 
           {/* Table 3 */}
           <div className="border border-black/5 bg-[#FAFAF8] p-2.5 rounded-lg flex flex-col items-center justify-center text-center shadow-xs">
             <div className="text-[10px] font-bold text-[#0F0F0F]">T-3</div>
-            <span className="text-[8px] text-[#1E8A4A] bg-[#E8F5EE] px-1.5 py-0.2 rounded-full mt-1.5 font-medium">Appetizer</span>
+            <span className="text-[8px] text-[#1E8A4A] bg-[#E8F5EE] px-1.5 py-0.2 rounded-full mt-1.5 font-medium">Starters</span>
           </div>
         </div>
 
@@ -323,7 +410,7 @@ function ForklinePreview() {
                 className="absolute inset-0 bg-[#FEF2F2] border border-[#EF4444]/10 rounded-md p-2 flex items-center justify-between text-left shadow-xs"
               >
                 <span className="text-[9px] font-semibold text-[#EF4444] flex items-center gap-1.5">
-                  <Clock size={11} /> Table 02 over Appetizer limit ({t2Duration})
+                  <Clock size={11} /> Table 02 over Starter limit ({t2Duration})
                 </span>
                 <span className="text-[8px] font-bold text-[#EF4444] font-mono">42m</span>
               </motion.div>
@@ -348,7 +435,7 @@ function ForklinePreview() {
               <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-ping" />
               <div>
                 <span className="block font-bold">NEW ORDER INCOMING</span>
-                <span className="text-white/70">Table 02: Calamari Appetizer</span>
+                <span className="text-white/70">Table 02: Pav Bhaji</span>
               </div>
             </motion.div>
           )}
@@ -357,7 +444,7 @@ function ForklinePreview() {
 
       {/* Kitchen Queue Stream Simulator */}
       <div className="bg-white rounded-lg p-3 border border-[#B45309]/10 flex flex-col gap-1.5 text-left">
-        <span className="text-[9px] font-mono text-[#92400E] font-bold uppercase tracking-wider block">Kitchen Display Queue ({activeKitchenOrders.length})</span>
+        <span className="text-[9px] font-mono text-[#92400E] font-bold uppercase tracking-wider block">Kitchen Display Queue (KOTs) ({activeKitchenOrders.length})</span>
         <div className="flex flex-col gap-1">
           {activeKitchenOrders.map(order => (
             <div key={order.id} className="flex justify-between items-center text-[10px] border-b border-black/[0.02] pb-1">
@@ -374,7 +461,7 @@ function ForklinePreview() {
 // ==========================================
 // 3. ANIMATED LATTICE PREVIEW COMPONENT
 // ==========================================
-function LatticePreview() {
+export function LatticePreview() {
   const [step, setStep] = useState(0); // 0: overview, 1: CRM transition, 2: progress increase, 3: runway/milestone completed
   const [committed, setCommitted] = useState(450);
   const [apexStage, setApexStage] = useState('Meetings'); // 'Meetings' | 'Term Sheet'
@@ -544,8 +631,7 @@ export default function ProductShowcase() {
             {/* Details Column */}
             <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
-                <Tag variant="math">Prototype Preview</Tag>
-                <span className="font-mono text-[9px] text-[#A3A3A3] font-bold uppercase tracking-wider">Not Functional Yet</span>
+                <Tag variant="math">COMING SOON</Tag>
               </div>
               
               <h3 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
@@ -594,7 +680,7 @@ export default function ProductShowcase() {
 
               <div>
                 <Link to="/graphzy">
-                  <Button variant="graphzy" size="md">Explore Graphzy App</Button>
+                  <Button variant="graphzy" size="md">Explore Graphzy</Button>
                 </Link>
               </div>
             </div>
@@ -605,18 +691,77 @@ export default function ProductShowcase() {
             </div>
           </div>
 
-          {/* PRODUCT ROW 2: FORKLINE */}
+          {/* PRODUCT ROW 2: CLAMPBOX */}
           <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center border-t border-black/[0.04] pt-10 sm:pt-16">
             {/* Dynamic Preview Component */}
             <div className="lg:col-span-5">
-              <ForklinePreview />
+              <ClampboxPreview />
             </div>
 
             {/* Details Column */}
             <div className="lg:col-span-7 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
-                <Tag variant="forkline">Concept Preview</Tag>
-                <span className="font-mono text-[9px] text-[#A3A3A3] font-bold uppercase tracking-wider">Product In Development</span>
+                <Tag variant="clampbox">COMING SOON</Tag>
+              </div>
+              
+              <h3 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
+                Clampbox
+              </h3>
+              
+              <p className="text-xs sm:text-sm text-[#525252] leading-relaxed mb-5">
+                Confidential execution infrastructure for AI workloads, autonomous agents, and sensitive data. Run untrusted code or process highly regulated data inside secure enclaves with hardware-verified protection.
+              </p>
+              
+              {/* Product Specifications Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6 border-t border-b border-black/[0.04] py-4">
+                <div>
+                  <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                    <CheckCircle size={10} className="text-[#0D9488]" /> Key Capabilities
+                  </h4>
+                  <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
+                    <li>Hardware Enclaves</li>
+                    <li>Zero-Knowledge Agents</li>
+                    <li>Memory Encryption</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                    <Shield size={10} className="text-[#0D9488]" /> Trust & Security
+                  </h4>
+                  <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
+                    <li>Cryptographic Attestation</li>
+                    <li>Zero Trust Operator</li>
+                    <li>Isolated CPU Caches</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                    <TrendingUp size={10} className="text-[#0D9488]" /> Roadmap Preview
+                  </h4>
+                  <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
+                    <li>Multi-cloud Enclave SDK</li>
+                    <li>Decentralized Verification</li>
+                    <li>Agent Secret Storage</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <Link to="/clampbox">
+                  <Button variant="clampbox" size="md">Explore Clampbox</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* PRODUCT ROW 3: FORKLINE */}
+          <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center border-t border-black/[0.04] pt-10 sm:pt-16">
+            {/* Details Column */}
+            <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-3">
+                <Tag variant="forkline">COMING SOON</Tag>
               </div>
               
               <h3 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
@@ -665,19 +810,28 @@ export default function ProductShowcase() {
 
               <div>
                 <Link to="/forkline">
-                  <Button variant="forkline" size="md">Join Developer Preview Waitlist</Button>
+                  <Button variant="forkline" size="md">Explore Forkline</Button>
                 </Link>
               </div>
             </div>
+
+            {/* Dynamic Preview Component */}
+            <div className="lg:col-span-5 order-1 lg:order-2">
+              <ForklinePreview />
+            </div>
           </div>
 
-          {/* PRODUCT ROW 3: LATTICE */}
+          {/* PRODUCT ROW 4: LATTICE */}
           <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center border-t border-black/[0.04] pt-10 sm:pt-16">
+            {/* Dynamic Preview Component */}
+            <div className="lg:col-span-5">
+              <LatticePreview />
+            </div>
+
             {/* Details Column */}
-            <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center">
+            <div className="lg:col-span-7 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
-                <Tag variant="brand">Early Concept</Tag>
-                <span className="font-mono text-[9px] text-[#A3A3A3] font-bold uppercase tracking-wider">Coming Soon</span>
+                <Tag variant="brand">COMING SOON</Tag>
               </div>
               
               <h3 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
@@ -726,14 +880,9 @@ export default function ProductShowcase() {
 
               <div>
                 <Link to="/lattice">
-                  <Button variant="brand" size="md">Explore Lattice Concept</Button>
+                  <Button variant="brand" size="md">Explore Lattice</Button>
                 </Link>
               </div>
-            </div>
-
-            {/* Dynamic Preview Component */}
-            <div className="lg:col-span-5 order-1 lg:order-2">
-              <LatticePreview />
             </div>
           </div>
 
