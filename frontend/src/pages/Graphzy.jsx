@@ -3,7 +3,10 @@ import PageShell from '../components/layout/PageShell';
 import Sidebar from '../components/graphzy/Sidebar';
 import AskView from '../components/graphzy/AskView';
 import ResultView from '../components/graphzy/ResultView';
+import ExplorerView from '../components/graphzy/ExplorerView';
 import GraphzyFeatures from '../components/graphzy/GraphzyFeatures';
+import { stemTopics } from '../data/stemTopics';
+import { followUpAnswers } from '../data/followUpAnswers';
 import { useSessionStore } from '../store/sessionStore';
 import { useUserStore } from '../store/userStore';
 import { Card } from '../components/ui/Card';
@@ -44,126 +47,105 @@ export default function Graphzy() {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [authMsg, setAuthMsg] = useState(null);
 
-  useEffect(() => {
-    loadHistoryFromStorage();
-  }, []);
-
   // Heuristic mock topic responses
   const getMockTopic = (query) => {
-    const q = query.toLowerCase();
-    if (q.includes('projectile') || q.includes('launch') || q.includes('velocity') || q.includes('physics')) {
-      return {
-        topicKey: "projectile",
-        subject: "physics",
-        equation: "y = x * \\tan(\\theta) - \\frac{g x^2}{2 v^2 \\cos^2(\\theta)}",
-        keyIdea: "Projectile Trajectory Mechanics",
-        summary: "In a uniform gravitational field $g$, a projectile launch trajectory forms a downward-facing parabola. Adjusting the launch angle $\\theta$ and initial velocity $v$ dynamically shifts coordinates like Peak Height, Horizontal Range, and flight duration.",
-        concepts: ["projectile kinematics", "parabolic trajectory", "vector components"],
-        sliders: [
-          { id: 'angle', label: 'Launch Angle (θ)', min: 10, max: 85, step: 1, val: 45.0 },
-          { id: 'velocity', label: 'Initial Velocity (v)', min: 5, max: 40, step: 0.5, val: 20.0 }
-        ],
-        followUps: ["What is the maximum range?", "What if launch angle is 90°?", "How does gravity affect range?"]
-      };
-    } else if (q.includes('water') || q.includes('h2o') || q.includes('chemistry') || q.includes('molecule')) {
-      return {
-        topicKey: "water_molecule",
-        subject: "chemistry",
-        equation: "H₂O Molecular Structure",
-        keyIdea: "Water Molecule Bond Parameters",
-        summary: "Water ($H_2O$) is a polar molecule with a bent geometry. This shape arises from the oxygen atom's $sp^3$ hybridization and two lone pairs. The experimental bond angle is $104.5^\\circ$ and the bond length is $95.8 \\text{ pm}$. Adjusting the parameters changes the net dipole moment vector.",
-        concepts: ["molecular geometry", "covalent bonds", "dipole moment"],
-        sliders: [
-          { id: 'bondAngle', label: 'Bond Angle (θ)', min: 80, max: 180, step: 0.5, val: 104.5 },
-          { id: 'bondLength', label: 'Bond Length (pm)', min: 50, max: 150, step: 1, val: 96.0 }
-        ],
-        followUps: ["Why is the shape bent?", "What is sp³ hybridization?", "How polar is water?"]
-      };
-    } else if (q.includes('sin') || q.includes('amplitude') || q.includes('wave') || q.includes('trig')) {
-      return {
-        topicKey: "sine",
-        subject: "math",
-        equation: "y = a * \\sin(x)",
-        keyIdea: "The amplitude stretch factor scaling the heights of trigonometric wave troughs and peaks.",
-        summary: "Multiplying the sine function by a constant factor <code>a</code> scales the amplitude. A larger value stretches the wave vertically, while values between 0 and 1 compress it. A negative factor flips the wave across the x-axis.",
-        concepts: ["trigonometric functions", "amplitude", "wave frequency"],
-        sliders: [{ id: 'a', label: 'Amplitude (a)', min: -5, max: 5, step: 0.1, val: 1.0 }],
-        followUps: ["What if amplitude is 0?", "What happens if a is negative?", "Show me cos(x) instead"]
-      };
-    } else if (q.includes('parabola') || q.includes('quadratic') || q.includes('stretch') || q.includes('ax²') || q.includes('ax^2')) {
-      return {
-        topicKey: "parabola",
-        subject: "math",
-        equation: "y = a * x^2",
-        keyIdea: "The leading coefficient 'a' dictates the vertical scale and opening direction of a quadratic parabola.",
-        summary: "Changing the stretch factor <code>a</code> alters how narrow or wide the parabola opens. If <code>|a| &gt; 1</code>, it grows narrower (steeper). If <code>0 &lt; |a| &lt; 1</code>, it widens. If <code>a</code> is negative, the parabola points downwards.",
-        concepts: ["quadratic functions", "vertical stretch", "parabola vertex"],
-        sliders: [{ id: 'a', label: 'Stretch (a)', min: -5, max: 5, step: 0.1, val: 1.0 }],
-        followUps: ["What if a is negative?", "What is the vertex?", "Add a horizontal shift"]
-      };
-    } else if (q.includes('cubic') || q.includes('x³') || q.includes('x^3') || q.includes('roots')) {
-      return {
-        topicKey: "cubic",
-        subject: "math",
-        equation: "y = x^3 - a * x",
-        keyIdea: "Cubic polynomials have up to three real roots where the curve crosses the horizontal x-axis.",
-        summary: "This cubic equation is of the form <code>y = x³ - ax</code>. The parameter <code>a</code> controls the separation of the local maximum and minimum. When <code>a &gt; 0</code>, the curve bends to form two turning points and three roots.",
-        concepts: ["polynomials", "cubic curves", "real roots"],
-        sliders: [{ id: 'a', label: 'Separation (a)', min: -2, max: 5, step: 0.1, val: 3.0 }],
-        followUps: ["Where are the turning points?", "What if a is negative?", "Find root coordinates"]
-      };
-    } else if (q.includes('shift') || q.includes('c') || q.includes('y = x² + c') || q.includes('y = x^2 + c')) {
-      return {
-        topicKey: "transformation",
-        subject: "math",
-        equation: "y = x^2 + c",
-        keyIdea: "Adding a constant 'c' shifts the entire curve vertically along the y-axis without altering its shape.",
-        summary: "In <code>y = x² + c</code>, <code>c</code> represents the vertical shift. When <code>c &gt; 0</code>, the parabola slides upwards. When <code>c &lt; 0</code>, it slides downwards. The vertex is always at <code>(0, c)</code>.",
-        concepts: ["transformations", "vertical shift", "parabola vertex"],
-        sliders: [{ id: 'c', label: 'Vertical Shift (c)', min: -5, max: 5, step: 0.1, val: 0.0 }],
-        followUps: ["What if c is 0?", "Combine shift and stretch", "What is the domain?"]
-      };
-    } else {
-      // Default fallback math
-      return {
-        topicKey: "custom_quadratic",
-        subject: "math",
-        equation: "y = a * x^2 + c",
-        keyIdea: "Interactive exploration of parameterized quadratic functions.",
-        summary: `You asked: "<strong>${query}</strong>". Here is an interactive graphing model graphing <code>y = ax² + c</code>. Adjust the parameters to see transformations in real-time.`,
-        concepts: ["quadratic modeling", "parameter analysis", "graphing basics"],
-        sliders: [
-          { id: 'a', label: 'Stretch (a)', min: -5, max: 5, step: 0.1, val: 1.0 },
-          { id: 'c', label: 'Shift (c)', min: -5, max: 5, step: 0.1, val: 0.0 }
-        ],
-        followUps: ["What if a is 0?", "Combine shift and stretch", "Reset parameters"]
-      };
+    const q = query.trim().toLowerCase();
+    
+    // Flatten all topics to a list to check against the query keywords
+    const allTopicsList = [];
+    Object.keys(stemTopics).forEach(sub => {
+      stemTopics[sub].forEach(topic => {
+        allTopicsList.push({ ...topic, subjectId: sub });
+      });
+    });
+
+    // Direct mappings for Ask page templates and seeds to guarantee correct loading
+    const directTemplates = {
+      "how does factor 'a' stretch a parabola y = ax²?": "algebra",
+      "compare sin(x) and 2*sin(x) amplitude changes": "trigonometry",
+      "simulate a projectile launch with customizable launch angle and velocity": "kinematics",
+      "show a 2d water molecule h2o structure with bond angle and length parameters": "molecular structure",
+      "visualize the dna double helix structure and nucleotide base pairing": "biomolecules"
+    };
+
+    if (directTemplates[q]) {
+      const found = allTopicsList.find(t => t.topicKey === directTemplates[q]);
+      if (found) return found;
     }
+
+    // Check if the query specifically matches a topic key (e.g. from history or direct explorer launch)
+    const exactMatch = allTopicsList.find(t => t.topicKey === query || t.topicKey === q);
+    if (exactMatch) {
+      return exactMatch;
+    }
+
+    // Heuristics: find topic by matches in key, name, or concepts
+    const matched = allTopicsList.find(t => 
+      q.includes(t.topicKey) || 
+      q.includes(t.displayName.toLowerCase()) || 
+      t.concepts.some(c => q.includes(c.toLowerCase()))
+    );
+
+    if (matched) {
+      return matched;
+    }
+
+    // Default fallback math (quadratic roots)
+    const fallback = stemTopics.math.find(t => t.topicKey === 'algebra') || stemTopics.math[0];
+    return fallback;
   };
 
+  useEffect(() => {
+    loadHistoryFromStorage();
+
+    const handleHashChange = () => {
+      const hash = window.location.hash || '#ask';
+      
+      if (hash.startsWith('#topic/')) {
+        const topicKey = decodeURIComponent(hash.substring(7));
+        const topic = getMockTopic(topicKey);
+        if (topic) {
+          const session = {
+            query: topic.displayName,
+            topic,
+            messages: [
+              { sender: 'ai', text: `Launched visual simulator for: "${topic.displayName}". Explore parameters via sliders.` }
+            ]
+          };
+          setActiveSession(session);
+          setFollowUpCount(0);
+          setActiveView('ask');
+        }
+      } else if (hash.startsWith('#explore')) {
+        setActiveView('explore');
+        resetSession();
+      } else if (hash === '#history') {
+        setActiveView('history');
+        resetSession();
+      } else if (hash === '#dashboard' || hash === '#analytics') {
+        setActiveView('dashboard');
+        resetSession();
+      } else if (hash === '#account') {
+        setActiveView('account');
+        resetSession();
+      } else {
+        setActiveView('ask');
+        resetSession();
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   const handleSubmitQuery = (queryText) => {
-    setIsThinking(true);
-    setThinkingText("Classifying concept domain...");
-    
-    // Simulate AI pipeline delay
-    setTimeout(() => {
-      setThinkingText("Synthesizing interactive formulas...");
-      setTimeout(() => {
-        const topic = getMockTopic(queryText);
-        const session = {
-          query: queryText,
-          topic,
-          messages: [
-            { sender: 'ai', text: `Here is the visualizer for: "${queryText}". You can drag the sliders to observe transformations.` }
-          ]
-        };
-        setActiveSession(session);
-        setFollowUpCount(0);
-        setIsThinking(false);
-        saveSessionToHistory(topic, queryText, topic.topicKey);
-        setActiveView('ask'); // stay or ensure in ask view
-      }, 1000);
-    }, 1000);
+    const topic = getMockTopic(queryText);
+    saveSessionToHistory(topic, queryText, topic.topicKey);
+    window.location.hash = '#topic/' + encodeURIComponent(topic.topicKey);
   };
 
   const handleSendFollowUp = (followUpText) => {
@@ -184,26 +166,42 @@ export default function Graphzy() {
 
     // Heuristics to update sliders on matching follow-ups
     setTimeout(() => {
-      let aiText = "That's an interesting question. In this model, that parameter shifts the geometric limits. Adjust the sliders to see it shift.";
       let updatedTopic = { ...activeSession.topic };
+      const topicKey = updatedTopic.topicKey;
+      
+      let aiText = "";
+      if (followUpAnswers[topicKey] && followUpAnswers[topicKey][followUpText]) {
+        aiText = followUpAnswers[topicKey][followUpText];
+      } else {
+        const subAnswers = followUpAnswers[topicKey];
+        if (subAnswers) {
+          const matchedKey = Object.keys(subAnswers).find(
+            k => k.trim().toLowerCase() === followUpText.trim().toLowerCase()
+          );
+          if (matchedKey) {
+            aiText = subAnswers[matchedKey];
+          }
+        }
+      }
 
+      if (!aiText) {
+        aiText = `For the **${updatedTopic.displayName}** simulation, "${followUpText}" can be explored by adjusting the parameter sliders on the visual canvas to see real-time updates.`;
+      }
+
+      // Keep slider side-effects for matching keywords
       const fLower = followUpText.toLowerCase();
       if (fLower.includes('negative')) {
-        // Find slide 'a' and make it negative
         updatedTopic.sliders = updatedTopic.sliders.map(sl => 
           sl.id === 'a' ? { ...sl, val: -2.0 } : sl
         );
-        aiText = "Adjusting stretch parameter <code>a</code> to -2.0 has reflected the curve downwards and stretched it vertically. Note how it opens downwards.";
       } else if (fLower.includes('amplitude is 0') || fLower.includes('amplitude to 0') || fLower.includes('0')) {
         updatedTopic.sliders = updatedTopic.sliders.map(sl => 
           sl.id === 'a' ? { ...sl, val: 0.0 } : sl
         );
-        aiText = "Setting the multiplier/amplitude <code>a = 0</code> collapses the entire wave or parabola into a flat line along the horizontal x-axis.";
       } else if (fLower.includes('c is 0')) {
         updatedTopic.sliders = updatedTopic.sliders.map(sl => 
           sl.id === 'c' ? { ...sl, val: 0.0 } : sl
         );
-        aiText = "Setting the vertical translation parameter <code>c = 0</code> places the vertex exactly on the horizontal x-axis.";
       }
 
       setActiveSession({
@@ -212,7 +210,7 @@ export default function Graphzy() {
         messages: [...updatedMessages, { sender: 'ai', text: aiText }]
       });
       setIsThinking(false);
-    }, 1200);
+    }, 600);
   };
 
   const handleSliderChange = (sliderId, value) => {
@@ -232,24 +230,8 @@ export default function Graphzy() {
     });
   };
 
-  // Re-open past session from history
   const handleSelectHistory = (item) => {
-    setIsThinking(true);
-    setThinkingText("Restoring graphing states...");
-    
-    setTimeout(() => {
-      const topic = getMockTopic(item.query);
-      setActiveSession({
-        query: item.query,
-        topic,
-        messages: [
-          { sender: 'ai', text: `Restored session: "${item.query}". Use sliders to continue exploring.` }
-        ]
-      });
-      setFollowUpCount(0);
-      setIsThinking(false);
-      setActiveView('ask');
-    }, 800);
+    window.location.hash = '#topic/' + encodeURIComponent(item.topicKey);
   };
 
   // Auth Submit Action
@@ -321,7 +303,7 @@ export default function Graphzy() {
                 <ResultView 
                   activeSession={activeSession}
                   followUpCount={followUpCount}
-                  onBack={resetSession}
+                  onBack={() => { window.location.hash = '#ask'; }}
                   onSendFollowUp={handleSendFollowUp}
                   onSliderChange={handleSliderChange}
                 />
@@ -332,6 +314,15 @@ export default function Graphzy() {
                 </>
               )}
             </>
+          )}
+
+          {/* VIEW: EXPLORE */}
+          {activeView === 'explore' && (
+            <ExplorerView 
+              onSelectTopic={(topic) => {
+                window.location.hash = '#topic/' + encodeURIComponent(topic.topicKey);
+              }}
+            />
           )}
 
           {/* VIEW: HISTORY */}
@@ -361,7 +352,11 @@ export default function Graphzy() {
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1.5">
-                          <Tag variant={item.subject?.toLowerCase() === 'physics' ? 'phys' : item.subject?.toLowerCase() === 'chemistry' ? 'chem' : 'math'}>
+                          <Tag variant={
+                            item.subject?.toLowerCase() === 'physics' ? 'phys' : 
+                            item.subject?.toLowerCase() === 'chemistry' ? 'chem' : 
+                            item.subject?.toLowerCase() === 'biology' ? 'bio' : 'math'
+                          }>
                             {item.subject}
                           </Tag>
                           <span className="font-mono text-[9px] text-[#A3A3A3]">{item.date} • {item.time}</span>
@@ -409,31 +404,38 @@ export default function Graphzy() {
               </div>
 
               {/* Subject Breakdown cards */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <Card variant="surface" className="p-5 border-l-4 border-l-[#0066CC] bg-white">
-                  <div className="font-mono text-[9px] font-bold text-[#0066CC] uppercase tracking-wider mb-1">Math</div>
-                  <div className="font-serif text-2xl text-[#0F0F0F] font-light">{history.length}</div>
-                  <div className="text-[10px] text-[#A3A3A3] mt-1">topics explored</div>
-                </Card>
-                
-                <Card variant="surface" className="p-5 bg-white/50 border-black/5 opacity-60">
-                  <div className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase tracking-wider mb-1">Chemistry</div>
-                  <div className="font-serif text-2xl text-black/25 font-light">—</div>
-                  <div className="text-[10px] text-[#A3A3A3] mt-1">coming soon</div>
-                </Card>
+              {(() => {
+                const getSubjectCount = (subName) => {
+                  return history.filter(item => item.subject === subName).length;
+                };
+                return (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <Card variant="surface" className="p-5 border-l-4 border-l-[#0066CC] bg-white">
+                      <div className="font-mono text-[9px] font-bold text-[#0066CC] uppercase tracking-wider mb-1">Mathematics</div>
+                      <div className="font-serif text-2xl text-[#0F0F0F] font-light">{getSubjectCount('Mathematics')}</div>
+                      <div className="text-[10px] text-[#A3A3A3] mt-1">topics explored</div>
+                    </Card>
+                    
+                    <Card variant="surface" className="p-5 border-l-4 border-l-[#1E8A4A] bg-white">
+                      <div className="font-mono text-[9px] font-bold text-[#1E8A4A] uppercase tracking-wider mb-1">Chemistry</div>
+                      <div className="font-serif text-2xl text-[#0F0F0F] font-light">{getSubjectCount('Chemistry')}</div>
+                      <div className="text-[10px] text-[#A3A3A3] mt-1">topics explored</div>
+                    </Card>
 
-                <Card variant="surface" className="p-5 bg-white/50 border-black/5 opacity-60">
-                  <div className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase tracking-wider mb-1">Biology</div>
-                  <div className="font-serif text-2xl text-black/25 font-light">—</div>
-                  <div className="text-[10px] text-[#A3A3A3] mt-1">coming soon</div>
-                </Card>
+                    <Card variant="surface" className="p-5 border-l-4 border-l-[#B85C00] bg-white">
+                      <div className="font-mono text-[9px] font-bold text-[#B85C00] uppercase tracking-wider mb-1">Biology</div>
+                      <div className="font-serif text-2xl text-[#0F0F0F] font-light">{getSubjectCount('Biology')}</div>
+                      <div className="text-[10px] text-[#A3A3A3] mt-1">topics explored</div>
+                    </Card>
 
-                <Card variant="surface" className="p-5 bg-white/50 border-black/5 opacity-60">
-                  <div className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase tracking-wider mb-1">Physics</div>
-                  <div className="font-serif text-2xl text-black/25 font-light">—</div>
-                  <div className="text-[10px] text-[#A3A3A3] mt-1">coming soon</div>
-                </Card>
-              </div>
+                    <Card variant="surface" className="p-5 border-l-4 border-l-[#6B3FA0] bg-white">
+                      <div className="font-mono text-[9px] font-bold text-[#6B3FA0] uppercase tracking-wider mb-1">Physics</div>
+                      <div className="font-serif text-2xl text-[#0F0F0F] font-light">{getSubjectCount('Physics')}</div>
+                      <div className="text-[10px] text-[#A3A3A3] mt-1">topics explored</div>
+                    </Card>
+                  </div>
+                );
+              })()}
 
               {/* Concepts explored list */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

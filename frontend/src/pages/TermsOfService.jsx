@@ -38,7 +38,7 @@ export default function TermsOfService() {
             <section className="flex flex-col gap-3">
               <h2 className="font-serif text-lg text-[#0F0F0F] font-semibold">3. Intellectual Property Rights</h2>
               <p>
-                The proprietary components, site design parameters, layout styles, custom assets, and source codes are the sole intellectual property of Graphxy Labs. Desmos graphing libraries and matching API CDNs are owned and copyrighted by Desmos Inc. All rights not explicitly granted are reserved by the respective owners.
+                The proprietary components, site design parameters, layout styles, custom assets, and source codes are the sole intellectual property of Graphxy Labs. All rights not explicitly granted are reserved.
               </p>
             </section>
 

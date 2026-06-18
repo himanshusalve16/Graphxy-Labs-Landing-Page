@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Tag } from '../ui/Tag';
 import { Card } from '../ui/Card';
 import GraphzyPreview from './GraphzyPreview';
+import { LatexText, MathRenderer } from './MathRenderer';
 import { ArrowLeft, Send } from 'lucide-react';
 
 export default function ResultView({ activeSession, followUpCount, onBack, onSendFollowUp, onSliderChange }) {
@@ -27,6 +28,28 @@ export default function ResultView({ activeSession, followUpCount, onBack, onSen
     }
   };
 
+  const getSubjectLabel = (subId) => {
+    switch (subId) {
+      case 'math': return 'Mathematics';
+      case 'physics': return 'Physics';
+      case 'chemistry': return 'Chemistry';
+      case 'biology': return 'Biology';
+      default: return 'Mathematics';
+    }
+  };
+
+  const getSubjectTagVariant = (subId) => {
+    switch (subId) {
+      case 'math': return 'math';
+      case 'physics': return 'phys';
+      case 'chemistry': return 'chem';
+      case 'biology': return 'bio';
+      default: return 'math';
+    }
+  };
+
+  const activeSubId = topic.subjectId || 'math';
+
   return (
     <div className="w-full flex flex-col">
       {/* Breadcrumb Header */}
@@ -37,18 +60,21 @@ export default function ResultView({ activeSession, followUpCount, onBack, onSen
         >
           <ArrowLeft size={14} /> New Question
         </button>
-        <div className="flex items-center gap-3">
-          <Tag variant={topic.subject === 'physics' ? 'phys' : topic.subject === 'chemistry' ? 'chem' : 'math'}>
-            {topic.subject || 'math'}
+        <div className="flex flex-wrap items-center gap-3">
+          <Tag variant={getSubjectTagVariant(activeSubId)}>
+            {getSubjectLabel(activeSubId)}
           </Tag>
+          <span className="px-1.5 py-0.5 rounded bg-blue-100 text-[8px] font-mono font-bold text-blue-800 tracking-wide uppercase border border-blue-200">
+            Interactive Prototype
+          </span>
           <span className="text-xs font-medium text-[#525252] truncate max-w-sm sm:max-w-md">"{query}"</span>
         </div>
       </div>
 
       {/* Grid panels */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* Left Visual Canvas */}
-        <div className="lg:col-span-7 w-full">
+        <div className="lg:col-span-7 w-full flex">
           <GraphzyPreview 
             topic={topic}
             equation={topic.equation}
@@ -58,11 +84,13 @@ export default function ResultView({ activeSession, followUpCount, onBack, onSen
         </div>
 
         {/* Right Explanation Card */}
-        <Card variant="glass" className="lg:col-span-5 p-7 flex flex-col bg-white/90 border-white shadow-md">
+        <Card variant="glass" className="lg:col-span-5 p-7 flex flex-col h-full bg-white/90 border-white shadow-md">
           <h2 className="font-serif text-lg md:text-xl text-[#0F0F0F] mb-3 leading-normal font-normal">
             {topic.keyIdea}
           </h2>
-          <p className="text-sm text-[#525252] leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: topic.summary }} />
+          <div className="text-sm text-[#525252] leading-relaxed mb-6">
+            <LatexText>{topic.summary}</LatexText>
+          </div>
 
           {/* Follow-up suggestions */}
           <div className="font-mono text-[9px] font-semibold tracking-wider uppercase text-black/40 mb-3">
@@ -85,7 +113,7 @@ export default function ResultView({ activeSession, followUpCount, onBack, onSen
           {messages && messages.length > 0 && (
             <div 
               ref={threadRef}
-              className="flex flex-col gap-3 max-h-[200px] overflow-y-auto mb-6 border-t border-black/[0.06] pt-4 pr-1 scrollbar-thin"
+              className="flex flex-col gap-3 flex-1 max-h-[200px] lg:max-h-none h-[220px] overflow-y-auto mb-6 border-t border-black/[0.06] pt-4 pr-1 scrollbar-thin"
             >
               {messages.map((msg, idx) => (
                 <div 
@@ -96,7 +124,7 @@ export default function ResultView({ activeSession, followUpCount, onBack, onSen
                       : 'bg-black/[0.03] text-[#0f0f0f] self-start rounded-bl-sm'
                   }`}
                 >
-                  {msg.text}
+                  <LatexText>{msg.text}</LatexText>
                 </div>
               ))}
             </div>

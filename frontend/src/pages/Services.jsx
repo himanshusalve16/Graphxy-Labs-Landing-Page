@@ -452,7 +452,7 @@ export default function Services() {
       <div className="relative overflow-hidden bg-[#FAFAF8] py-10 md:py-16 lg:py-24 border-b border-black/[0.04]">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#0066CC]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
         <Container className="relative z-10">
           

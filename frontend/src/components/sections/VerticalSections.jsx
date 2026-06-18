@@ -22,7 +22,7 @@ import {
 function DatabaseSyncVisual() {
   return (
     <div className="relative w-full h-[160px] bg-white border border-black/5 rounded-xl overflow-hidden flex items-center justify-center shadow-xs">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808003_1px,transparent_1px),linear-gradient(to_bottom,#80808003_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800f_1px,transparent_1px),linear-gradient(to_bottom,#8080800f_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
       
       <svg className="w-full h-full p-4" viewBox="0 0 320 140">
         {/* Connection Paths */}
@@ -101,7 +101,7 @@ function NeuralPropagationVisual() {
 
   return (
     <div className="relative w-full h-[160px] bg-white border border-black/5 rounded-xl overflow-hidden flex items-center justify-center shadow-xs">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808003_1px,transparent_1px),linear-gradient(to_bottom,#80808003_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800f_1px,transparent_1px),linear-gradient(to_bottom,#8080800f_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
       
       <svg className="w-full h-full p-4" viewBox="0 0 320 140">
         {/* Draw Fully Connected Lines */}
@@ -160,7 +160,7 @@ export default function VerticalSections() {
       {/* Background radial depth and grid overlay */}
       <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-gradient-to-bl from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-gradient-to-tr from-[#0066CC]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       
       <Container className="relative z-10">
         <SectionHeading 

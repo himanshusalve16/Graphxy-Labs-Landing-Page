@@ -567,7 +567,7 @@ export default function Products() {
       <div className="relative overflow-hidden bg-[#FAFAF8] py-16 md:py-24 border-b border-black/[0.04]">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
         <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#B45309]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
         <Container className="relative z-10 text-center">
           <div className="max-w-2xl mx-auto mb-16 text-center">
@@ -600,14 +600,14 @@ export default function Products() {
                 <span className="font-mono text-[11px] text-[#A3A3A3] mb-4 block font-semibold uppercase tracking-wider">Visualization Platform</span>
 
                 <p className="text-xs sm:text-sm text-[#525252] leading-relaxed mb-6">
-                  An interactive learning web application that transforms plain-language questions into visual, parameter-rich math models. Built on a CDN-delivered Desmos engine, it converts equations into coordinate grids that users can analyze and manipulate dynamically.
+                  An interactive learning web application that transforms plain-language questions into visual, parameter-rich math models. Built on a custom interactive math engine, it converts equations into coordinate grids that users can analyze and manipulate dynamically.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 border-t border-b border-black/[0.04] py-4">
                   <div>
                     <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5">Capabilities</h4>
                     <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                      <li>Desmos Graph Canvas</li>
+                      <li>Interactive Graph Canvas</li>
                       <li>Parameter Auto-Mapping</li>
                       <li>Dynamic Sliders</li>
                     </ul>

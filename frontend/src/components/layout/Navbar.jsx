@@ -40,7 +40,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { label: 'Verticals', path: '/services' },
+    { label: 'Services', path: '/services' },
     { label: 'Products', path: '/products' },
     { label: 'Contact', path: '/contact' }
   ];

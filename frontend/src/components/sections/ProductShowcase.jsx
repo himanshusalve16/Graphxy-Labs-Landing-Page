@@ -528,7 +528,7 @@ export default function ProductShowcase() {
     <section id="products" className="py-12 sm:py-16 bg-white border-b border-black/[0.06] relative overflow-hidden">
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
       <div className="absolute top-2/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#B45309]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       <Container className="relative z-10">
         <SectionHeading 
@@ -553,7 +553,7 @@ export default function ProductShowcase() {
               </h3>
               
               <p className="text-xs sm:text-sm text-[#525252] leading-relaxed mb-5">
-                An interactive learning web application that transforms plain-language questions into visual, parameter-rich math models. Built on a CDN-delivered Desmos engine, it converts equations into coordinate grids that users can analyze and manipulate dynamically.
+                An interactive learning web application that transforms plain-language questions into visual, parameter-rich math models. Built on a custom interactive math engine, it converts equations into coordinate grids that users can analyze and manipulate dynamically.
               </p>
               
               {/* Product Specifications Grid */}
@@ -563,7 +563,7 @@ export default function ProductShowcase() {
                     <CheckCircle size={10} className="text-[#0066CC]" /> Key Capabilities
                   </h4>
                   <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                    <li>Desmos Graph Canvas</li>
+                    <li>Interactive Graph Canvas</li>
                     <li>Parameter Auto-Mapping</li>
                     <li>Dynamic Sliders</li>
                   </ul>

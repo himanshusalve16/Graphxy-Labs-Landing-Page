@@ -10,7 +10,7 @@ export default function GraphzyFeatures() {
         <Card variant="surface" className="p-8">
           <h3 className="font-serif text-base text-[#0F0F0F] mb-2 font-medium">Interactive Math</h3>
           <p className="text-[12px] text-[#525252] leading-relaxed">
-            Translates natural language formulas into live 2D coordinate graphs. Auto-binds parameters to interactive sliders via Desmos API.
+            Translates natural language formulas into live 2D coordinate graphs. Auto-binds parameters to interactive sliders via our local custom math engine.
           </p>
         </Card>
         

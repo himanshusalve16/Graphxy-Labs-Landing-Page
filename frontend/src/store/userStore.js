@@ -18,19 +18,19 @@ export const useUserStore = create((set) => ({
         {
           id: "seed_1",
           query: "How does factor 'a' stretch a parabola y = ax²?",
-          topicKey: "parabola",
+          topicKey: "algebra",
           date: "Jun 14, 2026",
           time: "10:30 AM",
-          subject: "Math",
+          subject: "Mathematics",
           concepts: ["quadratic functions", "vertical stretch", "parabola vertex"]
         },
         {
           id: "seed_2",
           query: "Compare sin(x) and 2*sin(x) amplitude changes",
-          topicKey: "sine",
+          topicKey: "trigonometry",
           date: "Jun 12, 2026",
           time: "4:15 PM",
-          subject: "Math",
+          subject: "Mathematics",
           concepts: ["trigonometric functions", "amplitude", "wave frequency"]
         }
       ];
@@ -56,7 +56,7 @@ export const useUserStore = create((set) => ({
       topicKey,
       date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
       time: new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }),
-      subject: topic.subject === 'physics' ? 'Physics' : topic.subject === 'chemistry' ? 'Chemistry' : 'Math',
+      subject: topic.subjectId === 'math' ? 'Mathematics' : topic.subjectId === 'physics' ? 'Physics' : topic.subjectId === 'chemistry' ? 'Chemistry' : topic.subjectId === 'biology' ? 'Biology' : 'Mathematics',
       concepts: topic.concepts
     };
 

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Layers, Clock, LayoutGrid, User } from 'lucide-react';
+import { Layers, Clock, LayoutGrid, User, BookOpen } from 'lucide-react';
 
 export default function Sidebar({ activeView, onViewChange }) {
   const navItems = [
     { id: 'ask', label: 'Ask', icon: Layers },
+    { id: 'explore', label: 'Explore', icon: BookOpen },
     { id: 'history', label: 'History', icon: Clock },
     { id: 'dashboard', label: 'Dash', icon: LayoutGrid },
     { id: 'account', label: 'Account', icon: User }
@@ -17,7 +18,7 @@ export default function Sidebar({ activeView, onViewChange }) {
         return (
           <button
             key={item.id}
-            onClick={() => onViewChange(item.id)}
+            onClick={() => { window.location.hash = '#' + item.id; }}
             className={`flex flex-col items-center gap-1 cursor-pointer bg-transparent border-none w-12 py-2 rounded-lg text-[#A3A3A3] hover:text-[#525252] hover:bg-black/[0.02] duration-150 ${
               active ? 'bg-[#EBF3FF] text-[#0066CC] hover:bg-[#EBF3FF] hover:text-[#0066CC]' : ''
             }`}
