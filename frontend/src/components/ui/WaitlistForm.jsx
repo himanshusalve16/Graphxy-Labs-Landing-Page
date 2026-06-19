@@ -22,23 +22,83 @@ import { useWaitlistForm } from '../../utils/useWaitlistForm';
  * @param {string}   [props.successMessage] — Success card body text
  */
 export default function WaitlistForm({
-  formId,
-  accentColor = '#1B3A6B',
-  accentBg = '#EEF3FB',
-  accentRing = '#EEF3FB',
-  buttonVariant = 'brand',
-  buttonLabel = 'Join Waitlist',
-  emailPlaceholder = 'Enter your email address...',
-  subject,
-  buildMessage,
-  successTitle = "You're on the list",
-  successMessage = "Thank you for signing up. We've recorded your email and will reach out with early preview invitations soon.",
+  product,
+  formId: propFormId,
+  accentColor: propAccentColor,
+  accentBg: propAccentBg,
+  accentRing: propAccentRing,
+  buttonVariant: propButtonVariant,
+  buttonLabel: propButtonLabel,
+  emailPlaceholder: propEmailPlaceholder,
+  subject: propSubject,
+  buildMessage: propBuildMessage,
+  successTitle: propSuccessTitle = "You're on the list",
+  successMessage: propSuccessMessage,
 }) {
+  let formId = import.meta.env.VITE_FORMSPREE_WAITLIST_ID;
+  let accentColor = propAccentColor || '#1B3A6B';
+  let accentBg = propAccentBg || '#EEF3FB';
+  let accentRing = propAccentRing || '#EEF3FB';
+  let buttonVariant = propButtonVariant || 'brand';
+  let buttonLabel = propButtonLabel || 'Join Waitlist';
+  let emailPlaceholder = propEmailPlaceholder || 'Enter your email address...';
+  let subject = propSubject;
+  let buildMessage = propBuildMessage;
+  let successTitle = propSuccessTitle;
+  let successMessage = propSuccessMessage || "Thank you for signing up. We've recorded your email and will reach out with early preview invitations soon.";
+
+  if (product) {
+    const p = product.toLowerCase();
+    if (p === 'graphzy') {
+      accentColor = '#0066CC';
+      accentBg = '#EBF3FF';
+      accentRing = 'rgba(0,102,204,0.15)';
+      buttonVariant = 'graphzy';
+      buttonLabel = 'Join Graphzy Waitlist';
+      emailPlaceholder = 'Enter your student or educator email...';
+      subject = 'New Graphzy Waitlist Signup';
+      buildMessage = (name) => `${name} has joined the Graphzy waitlist.`;
+      successMessage = "Thank you for joining. We've recorded your email and will reach out with early Graphzy preview invitations soon.";
+    } else if (p === 'clampbox') {
+      accentColor = '#0D9488';
+      accentBg = '#F0F7F7';
+      accentRing = 'rgba(13,148,136,0.15)';
+      buttonVariant = 'clampbox';
+      buttonLabel = 'Submit Clampbox Inquiry';
+      emailPlaceholder = 'Enter your work email address...';
+      subject = 'New Clampbox Waitlist Signup';
+      buildMessage = (name) => `${name} has joined the Clampbox waitlist.`;
+      successMessage = "Thank you for joining. We've recorded your email and will reach out with early Clampbox preview invitations soon.";
+    } else if (p === 'forkline') {
+      accentColor = '#92400E';
+      accentBg = '#FEF7EC';
+      accentRing = '#FEF3E2';
+      buttonVariant = 'forkline';
+      buttonLabel = 'Join Forkline Waitlist';
+      emailPlaceholder = 'Enter your restaurant email address...';
+      subject = 'New Forkline Waitlist Signup';
+      buildMessage = (name) => `${name} has joined the Forkline waitlist.`;
+      successMessage = "Thank you for joining. We've recorded your email and will reach out with early Forkline preview invitations soon.";
+    } else if (p === 'lattice') {
+      accentColor = '#1B3A6B';
+      accentBg = '#EEF3FB';
+      accentRing = '#EEF3FB';
+      buttonVariant = 'brand';
+      buttonLabel = 'Join Lattice Waitlist';
+      emailPlaceholder = 'Enter your work email address...';
+      subject = 'New Lattice Waitlist Signup';
+      buildMessage = (name) => `${name} has joined the Lattice waitlist.`;
+      successMessage = "Thank you for joining. We've recorded your email and will reach out with early Lattice preview invitations soon.";
+    }
+  }
+
   const { register, handleSubmit, errors, status, errorMessage, onSubmit, retry } = useWaitlistForm({
     formId,
+    product,
     subject,
     buildMessage,
   });
+
 
   // ── Success State ───────────────────────────────────────────────────────────
   if (status === 'success') {

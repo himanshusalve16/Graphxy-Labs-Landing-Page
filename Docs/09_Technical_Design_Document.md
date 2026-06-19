@@ -142,8 +142,8 @@ Forkline will be a separate backend service (Node.js + Express or NestJS) with i
 ## 11. Environments & Deployment
 
 ### Formspree Integrations
-- `VITE_FORMSPREE_CLAMPBOX_ID`: Used for early access enterprise inquiries to Formspree, without client-side fallback. Subject: `New Clampbox Inquiry`. Payload builder message: `{Name} is interested in Clampbox confidential execution infrastructure.`
-- `VITE_FORMSPREE_CONTACT_ID`: Formspree ID for main site contact/waitlist inquiries.
+- `VITE_FORMSPREE_CONTACT_ID`: Formspree ID for main site contact submissions.
+- `VITE_FORMSPREE_WAITLIST_ID`: Formspree ID for all product early access/waitlist inquiries (Graphzy, Clampbox, Forkline, Lattice).
 
 | Environment | Graphzy Frontend | Graphxy Labs Site | Backend | DB |
 |---|---|---|---|---|

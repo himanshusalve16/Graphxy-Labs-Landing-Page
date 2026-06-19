@@ -185,47 +185,38 @@ Called immediately after a guest signs up. Reassigns guest-owned sessions to the
 
 ---
 
-## Formspree early access inquiries (`/clampbox` form)
-Submits early access requests via Formspree using `VITE_FORMSPREE_CLAMPBOX_ID` with subject `New Clampbox Inquiry` and payload: `{Name} is interested in Clampbox confidential execution infrastructure.`
+## Formspree Inquiries & Waitlists
 
-## POST `/waitlist/clampbox`
-**No auth required**
+All inquiries and product waitlists are submitted directly from the client to Formspree endpoints.
 
-Captures Clampbox waitlist email submissions.
-**Request body:**
-```json
-{ "email": "user@example.com" }
-```
+### POST `https://formspree.io/f/{VITE_FORMSPREE_CONTACT_ID}`
+- **Usage:** Main site contact form submissions.
+- **Payload:**
+  ```json
+  {
+    "name": "User Name",
+    "email": "user@example.com",
+    "company": "Company Name",
+    "subject": "Area of Inquiry",
+    "message": "Message details..."
+  }
+  ```
 
-## Formspree early access inquiries (`/forkline` form)
-Submits early access requests via Formspree using `VITE_FORMSPREE_CONTACT_ID`.
-
-## POST `/waitlist/forkline`
-**No auth required**
-
-Captures Forkline waitlist email submissions.
-**Request body:**
-```json
-{ "email": "user@example.com" }
-```
-
-## POST `/waitlist/lattice`
-**No auth required**
-
-Captures Lattice waitlist email submissions.
-**Request body:**
-```json
-{ "email": "user@example.com" }
-```
-
-**Response `200`:**
-```json
-{ "message": "You are on the list." }
-```
-
-Stored in a separate `waitlist` table outside the Graphzy Supabase schema.
+### POST `https://formspree.io/f/{VITE_FORMSPREE_WAITLIST_ID}`
+- **Usage:** Shared waitlist/early access inquiries for all products (Graphzy, Clampbox, Forkline, Lattice).
+- **Payload:**
+  ```json
+  {
+    "name": "User Name",
+    "email": "user@example.com",
+    "product": "Product Name",
+    "subject": "New [Product] Waitlist Signup",
+    "message": "[User Name] has joined the [Product] waitlist."
+  }
+  ```
 
 ---
+
 
 ## GET `/health`
 No auth required. Returns `{ "status": "ok", "product": "graphzy" }` for uptime monitoring.

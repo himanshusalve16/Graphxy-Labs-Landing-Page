@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import Graphzy from './pages/Graphzy';
+import GraphzyDetails from './pages/GraphzyDetails';
 import Forkline from './pages/Forkline';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
@@ -16,7 +17,7 @@ import Products from './pages/Products';
 
 function MainApp() {
   const location = useLocation();
-  const isGraphzy = location.pathname.startsWith('/graphzy');
+  const isVisualizer = location.pathname === '/graphzy/visualizer';
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAFAF8]">
@@ -25,7 +26,8 @@ function MainApp() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/graphzy" element={<Graphzy />} />
+          <Route path="/graphzy" element={<GraphzyDetails />} />
+          <Route path="/graphzy/visualizer" element={<Graphzy />} />
           <Route path="/clampbox" element={<Clampbox />} />
           <Route path="/forkline" element={<Forkline />} />
           <Route path="/services" element={<Services />} />
@@ -35,7 +37,7 @@ function MainApp() {
           <Route path="/lattice" element={<Lattice />} />
         </Routes>
       </div>
-      {!isGraphzy && <Footer />}
+      {!isVisualizer && <Footer />}
     </div>
   );
 }

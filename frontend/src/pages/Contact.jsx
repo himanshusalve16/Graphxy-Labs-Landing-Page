@@ -107,19 +107,9 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase">Email</div>
-                    <a href="mailto:himanshusalve16@gmail.com" className="text-xs font-semibold text-[#0F0F0F] hover:underline">
+                    <a href="mailto:himanshusalve9@gmail.com" className="text-xs font-semibold text-[#0F0F0F] hover:underline">
                       himanshusalve9@gmail.com
                     </a>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 items-center">
-                  <div className="w-9 h-9 rounded-lg bg-[#EEF3FB] text-[#1B3A6B] flex items-center justify-center flex-shrink-0">
-                    <Phone size={16} />
-                  </div>
-                  <div>
-                    <div className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase">Call</div>
-                    <span className="text-xs font-semibold text-[#0F0F0F]">+91 8767460104</span>
                   </div>
                 </div>
 

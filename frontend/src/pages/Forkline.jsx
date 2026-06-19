@@ -2,7 +2,7 @@ import React from 'react';
 import PageShell from '../components/layout/PageShell';
 import Container from '../components/layout/Container';
 import ForklineHero from '../components/forkline/ForklineHero';
-import ForklineWaitlist from '../components/forkline/ForklineWaitlist';
+import WaitlistForm from '../components/ui/WaitlistForm';
 import ForklineFeatures from '../components/forkline/ForklineFeatures';
 import ForklineBenefits from '../components/forkline/ForklineBenefits';
 import { Card } from '../components/ui/Card';
@@ -24,7 +24,8 @@ export default function Forkline() {
         <Container className="relative z-10">
           <div className="max-w-4xl mx-auto flex flex-col items-center">
             <ForklineHero />
-            <ForklineWaitlist />
+            <WaitlistForm product="Forkline" />
+
             
             {/* Rich Interactive Floor Map Mockup directly on the page */}
             <div className="w-full max-w-md mt-16 animate-fade-in">

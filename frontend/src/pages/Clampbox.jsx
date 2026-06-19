@@ -2,12 +2,13 @@ import React from 'react';
 import PageShell from '../components/layout/PageShell';
 import Container from '../components/layout/Container';
 import ClampboxHero from '../components/clampbox/ClampboxHero';
-import ClampboxWaitlist from '../components/clampbox/ClampboxWaitlist';
+import WaitlistForm from '../components/ui/WaitlistForm';
 import ClampboxFeatures from '../components/clampbox/ClampboxFeatures';
 import ClampboxBenefits from '../components/clampbox/ClampboxBenefits';
 import { Card } from '../components/ui/Card';
 import { Shield, Lock, Cpu, Server } from 'lucide-react';
 import { ClampboxPreview } from '../components/sections/ProductShowcase';
+
 
 export default function Clampbox() {
   return (
@@ -24,7 +25,7 @@ export default function Clampbox() {
         <Container className="relative z-10">
           <div className="max-w-4xl mx-auto flex flex-col items-center">
             <ClampboxHero />
-            <ClampboxWaitlist />
+            <WaitlistForm product="Clampbox" />
             
             {/* Rich Interactive Enclave Mockup directly on the page */}
             <div className="w-full max-w-md mt-16 animate-fade-in">

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High Fidelity Design Reference | Graphxy Labs Docs</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ff-d: 'Fraunces', Georgia, serif;
+      --ff-b: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --ff-m: 'JetBrains Mono', monospace;
+
+      --c-bg: #FAFAF8;
+      --c-fg: #0F0F0F;
+      --c-white: #FFFFFF;
+      --c-brand: #1B3A6B;
+      --c-brand-bg: #EEF3FB;
+      --c-math: #0066CC;
+      --c-forkline: #92400E;
+      --c-clampbox: #0D9488;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--c-bg);
+      color: var(--c-fg);
+      font-family: var(--ff-b);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: var(--c-white);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 30px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-family: var(--ff-d);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--c-brand);
+    }
+
+    .meta-badge {
+      font-family: var(--ff-m);
+      font-size: 11px;
+      background: var(--c-brand-bg);
+      color: var(--c-brand);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 30px;
+    }
+
+    .section {
+      background: var(--c-white);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .section-title {
+      font-family: var(--ff-d);
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      padding-bottom: 12px;
+      color: var(--c-brand);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 24px;
+      background: var(--c-brand);
+      border-radius: 4px;
+    }
+
+    /* Hi-Fi Layout Previews (CSS styled representation) */
+    .hifi-preview {
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 30px;
+      background: #FFFFFF;
+      margin-top: 20px;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .hifi-preview::before {
+      content: 'MOCK REPRESENTATION';
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-family: var(--ff-m);
+      font-size: 8px;
+      color: #bbb;
+      letter-spacing: 1px;
+    }
+
+    /* Hero section representation */
+    .hero-eyebrow {
+      font-family: var(--ff-m);
+      font-size: 10px;
+      color: var(--c-brand);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1px;
+      background: rgba(27, 58, 107, 0.4);
+    }
+
+    .hero-heading {
+      font-family: var(--ff-d);
+      font-size: 32px;
+      line-height: 1.15;
+      font-weight: 300;
+      margin-bottom: 12px;
+      color: var(--c-fg);
+    }
+
+    .hero-text {
+      font-family: var(--ff-b);
+      font-size: 14px;
+      color: #525252;
+      max-width: 480px;
+      margin-bottom: 24px;
+    }
+
+    /* Svg mesh grid */
+    .mesh-grid {
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      background-color: var(--c-bg);
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.025) 1px, transparent 1px);
+      background-size: 16px 16px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Alternating section preview block */
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .preview-box {
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      max-width: 400px; /* Constrained preview width matching max-w-md */
+      margin: 0 auto;
+    }
+
+    .preview-header {
+      background: #FAF8F6;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preview-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+
+    .preview-content {
+      background: #FFFFFF;
+      padding: 20px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .preview-terminal {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: var(--ff-m);
+      font-size: 11px;
+      padding: 16px;
+      border-radius: 8px;
+      height: 180px;
+      overflow: hidden;
+    }
+
+    /* JSON code block */
+    .code-block {
+      background: #0F172A;
+      color: #F8F8F2;
+      border-radius: 8px;
+      padding: 24px;
+      font-family: var(--ff-m);
+      font-size: 12.5px;
+      overflow-x: auto;
+      margin-top: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .code-key { color: #AE81FF; }
+    .code-str { color: #A6E22E; }
+    .code-num { color: #F92672; }
+
+    @media (max-width: 768px) {
+      .split-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .container {
+        padding: 0 15px;
+      }
+      .section {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Graphxy Labs — Hi-Fi Design Reference</h1>
+    <span class="meta-badge">V1.2.0 • BLUEPRINTS</span>
+  </header>
+
+  <div class="container">
+
+    <!-- Landing Page Hero section -->
+    <div class="section">
+      <h2 class="section-title">Landing Page Hero Layout</h2>
+      <p style="margin-bottom: 16px;">
+        Designed to create a strong first impression using a centered heading, warm base texture, and a living network graph visualization.
+      </p>
+
+      <div class="hifi-preview" style="background: var(--c-bg);">
+        <div style="max-width: 600px; margin: 0 auto; text-align: center; padding: 20px 0;">
+          <div class="hero-eyebrow" style="justify-content: center;">Engineering Studio</div>
+          <h2 class="hero-heading">Software that <span style="color: rgba(0,0,0,0.45); font-style: italic;">thinks</span>, scales, and performs.</h2>
+          <p class="hero-text" style="margin: 0 auto 30px;">
+            Graphxy Labs transforms rigorous engineering expertise into precise digital products, visual systems, and automation platforms.
+          </p>
+          
+          <div class="mesh-grid">
+            <div class="viz-grid-lines"></div>
+            <!-- Central Node representation -->
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--c-brand); display: flex; align-items: center; justify-content: center; color: white; font-family: var(--ff-d); font-size: 8px; font-weight: bold; box-shadow: 0 0 15px rgba(27, 58, 107, 0.4); z-index: 2;">
+              GXY LABS
+            </div>
+            <!-- Connections lines representation -->
+            <div style="position: absolute; width: 120px; height: 1px; background: rgba(0, 0, 0, 0.15); transform: rotate(30deg); transform-origin: left center; left: 50%;"></div>
+            <div style="position: absolute; width: 120px; height: 1px; background: rgba(0, 0, 0, 0.15); transform: rotate(150deg); transform-origin: left center; left: 50%;"></div>
+            <!-- Outer nodes -->
+            <div style="position: absolute; width: 24px; height: 24px; border-radius: 50%; background: white; border: 1px solid var(--c-brand); left: 65%; top: 60%; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--c-brand); font-weight: bold;">
+              AI
+            </div>
+            <div style="position: absolute; width: 24px; height: 24px; border-radius: 50%; background: white; border: 1px solid var(--c-brand); left: 30%; top: 20%; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--c-brand); font-weight: bold;">
+              SEC
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Symmetrical Node Coordinates -->
+    <div class="section">
+      <h2 class="section-title">Ecosystem Tree Node Schema (Desktop Grid)</h2>
+      <p style="margin-bottom: 16px;">
+        To ensure visual alignment and balance, the 9 Vertical Nodes and 4 Product Nodes are mathematically positioned in coordinates space.
+      </p>
+
+      <div class="hifi-preview">
+        <div style="font-family: var(--ff-m); font-size: 11px; margin-bottom: 20px; color: var(--c-brand); text-transform: uppercase;">Node Coordinate Mapping Grid</div>
+        
+        <div style="position: relative; height: 200px; border: 1px solid rgba(0,0,0,0.06); border-radius: 8px; background: #fafafa;">
+          <!-- Level 1 (Labs) -->
+          <div style="position: absolute; left: 50%; transform: translateX(-50%); top: 20px; background: var(--c-brand); color: white; padding: 6px 16px; border-radius: 8px; font-family: var(--ff-d); font-size: 11px; font-weight: bold;">
+            GXY LABS (x: 300, y: 35)
+          </div>
+
+          <!-- Level 2 (Verticals row) -->
+          <div style="position: absolute; left: 0; right: 0; top: 90px; display: flex; justify-content: space-around; padding: 0 10px;">
+            <div style="border: 1px solid #ccc; background: white; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-family: var(--ff-m);">AI (x: 80, y: 130)</div>
+            <div style="border: 1px solid #ccc; background: white; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-family: var(--ff-m);">Custom (x: 150, y: 130)</div>
+            <div style="border: 1px solid #ccc; background: white; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-family: var(--ff-m);">Web (x: 220, y: 130)</div>
+            <div style="border: 1px solid #ccc; background: white; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-family: var(--ff-m);">Mgmt (x: 290, y: 130)</div>
+            <div style="border: 1px solid #ccc; background: white; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-family: var(--ff-m);">Auto (x: 360, y: 130)</div>
+            <div style="border: 1px solid #ccc; background: white; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-family: var(--ff-m);">Data (x: 430, y: 130)</div>
+          </div>
+
+          <!-- Level 3 (Products row) -->
+          <div style="position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: space-around; padding: 0 40px;">
+            <div style="border: 1px solid var(--c-math); color: var(--c-math); background: var(--c-math-bg); padding: 4px 12px; border-radius: 6px; font-size: 10px; font-weight: bold; font-family: var(--ff-d);">Graphzy (x: 90, y: 240)</div>
+            <div style="border: 1px solid var(--c-clampbox); color: var(--c-clampbox); background: var(--c-clampbox-bg); padding: 4px 12px; border-radius: 6px; font-size: 10px; font-weight: bold; font-family: var(--ff-d);">Clampbox (x: 240, y: 240)</div>
+            <div style="border: 1px solid var(--c-forkline); color: var(--c-forkline); background: var(--c-forkline-bg); padding: 4px 12px; border-radius: 6px; font-size: 10px; font-weight: bold; font-family: var(--ff-d);">Forkline (x: 390, y: 240)</div>
+            <div style="border: 1px solid var(--c-brand); color: var(--c-brand); background: var(--c-brand-bg); padding: 4px 12px; border-radius: 6px; font-size: 10px; font-weight: bold; font-family: var(--ff-d);">Lattice (x: 510, y: 240)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product alternating sections and Previews Sizing -->
+    <div class="section">
+      <h2 class="section-title">Product alternating columns & Mockup sizing</h2>
+      <p style="margin-bottom: 16px;">
+        To prevent visual scaling distortions, standard product preview mockups (terminal outputs, floor plans, financial metrics) must be restricted to a maximum container width of <strong>max-w-md (approx. 400px - 440px)</strong> inside a 2-column flex or grid layout.
+      </p>
+
+      <div class="hifi-preview" style="background: #fafaf9;">
+        <div class="split-layout">
+          <!-- Text details column -->
+          <div>
+            <span class="tag tag-clampbox" style="margin-bottom: 10px;"><span class="tag-dot"></span>Secure Infrastructure</span>
+            <h3 style="font-family: var(--ff-d); font-size: 24px; font-weight: 400; margin-bottom: 10px; line-height: 1.2;">Confidential Execution Enclaves</h3>
+            <p style="font-size: 13px; color: #525252; margin-bottom: 20px;">
+              Clampbox provisions isolated CPU memory enclaves, allowing model parameters and user tokens to remain completely encrypted in use.
+            </p>
+            <button class="btn btn-clampbox">Explore Clampbox</button>
+          </div>
+
+          <!-- Preview Animation Column (Constrained width) -->
+          <div>
+            <div class="preview-box">
+              <div class="preview-header">
+                <span class="preview-dot" style="background: #ef4444;"></span>
+                <span class="preview-dot" style="background: #f59e0b;"></span>
+                <span class="preview-dot" style="background: #10b981;"></span>
+                <span style="font-family: var(--ff-m); font-size: 9px; color: #aaa; margin-left: auto;">clampbox::terminal</span>
+              </div>
+              <div class="preview-terminal">
+                <div>$ clampbox attest --verify</div>
+                <div style="color: #10b981;">[OK] Cryptographic identity confirmed.</div>
+                <div>[OK] Isolated secure enclave boot successful.</div>
+                <div style="color: #eab308; margin-top: 10px;">[INIT] Listening on encrypted port 8443...</div>
+              </div>
+            </div>
+            <div style="text-align: center; font-size: 11px; font-family: var(--ff-m); color: #888; margin-top: 10px;">Preview Box (Constrained: max-w-md)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Configurations Schema -->
+    <div class="section">
+      <h2 class="section-title">Ecosystem Schema & Data Configs</h2>
+      <p>
+        The following JSON schema defines the node structures exported by `ecosystemNodes.js` and consumed by our SVG visualizations:
+      </p>
+      
+      <pre class="code-block"><code>{
+  <span class="code-key">"id"</span>: <span class="code-str">"p_clampbox"</span>,
+  <span class="code-key">"label"</span>: <span class="code-str">"Clampbox"</span>,
+  <span class="code-key">"name"</span>: <span class="code-str">"Clampbox"</span>,
+  <span class="code-key">"type"</span>: <span class="code-str">"product"</span>,
+  <span class="code-key">"x"</span>: <span class="code-num">240</span>,
+  <span class="code-key">"y"</span>: <span class="code-num">240</span>,
+  <span class="code-key">"radius"</span>: <span class="code-num">0</span>,
+  <span class="code-key">"color"</span>: <span class="code-str">"#0D9488"</span>,
+  <span class="code-key">"link"</span>: <span class="code-str">"/clampbox"</span>,
+  <span class="code-key">"tag"</span>: <span class="code-str">"COMING SOON"</span>,
+  <span class="code-key">"description"</span>: <span class="code-str">"Confidential execution infrastructure..."</span>,
+  <span class="code-key">"connections"</span>: [<span class="code-str">"v3"</span>, <span class="code-str">"v6"</span>, <span class="code-str">"v7"</span>, <span class="code-str">"v8"</span>]
+}</code></pre>
+    </div>
+
+  </div>
+
+</body>
+</html>

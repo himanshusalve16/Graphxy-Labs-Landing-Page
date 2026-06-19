@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframes and User Flows Reference | Graphxy Labs Docs</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ff-d: 'Fraunces', Georgia, serif;
+      --ff-b: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --ff-m: 'JetBrains Mono', monospace;
+
+      --c-bg: #FAFAF8;
+      --c-fg: #0F0F0F;
+      --c-white: #FFFFFF;
+      --c-brand: #1B3A6B;
+      --c-brand-bg: #EEF3FB;
+      --c-math: #0066CC;
+      --c-forkline: #92400E;
+      --c-clampbox: #0D9488;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--c-bg);
+      color: var(--c-fg);
+      font-family: var(--ff-b);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: var(--c-white);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 30px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-family: var(--ff-d);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--c-brand);
+    }
+
+    .meta-badge {
+      font-family: var(--ff-m);
+      font-size: 11px;
+      background: var(--c-brand-bg);
+      color: var(--c-brand);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 30px;
+    }
+
+    .section {
+      background: var(--c-white);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .section-title {
+      font-family: var(--ff-d);
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      padding-bottom: 12px;
+      color: var(--c-brand);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 24px;
+      background: var(--c-brand);
+      border-radius: 4px;
+    }
+
+    /* Route architecture table */
+    .route-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 13.5px;
+    }
+
+    .route-table th, .route-table td {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .route-table th {
+      font-weight: 600;
+      color: var(--c-brand);
+      background: var(--c-brand-bg);
+    }
+
+    .code-route {
+      font-family: var(--ff-m);
+      font-weight: 600;
+      color: var(--c-math);
+    }
+
+    /* CSS Wireframe Blocks */
+    .wireframe-container {
+      border: 2px dashed rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      background: #F9F9F7;
+      margin-top: 20px;
+    }
+
+    .wf-block {
+      background: var(--c-white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #525252;
+    }
+
+    .wf-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wf-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wf-sidebar-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    /* Flow Chart Elements */
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .flow-badge {
+      background: var(--c-brand);
+      color: var(--c-white);
+      font-family: var(--ff-m);
+      font-size: 11px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .flow-content {
+      background: var(--c-white);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 8px;
+      padding: 12px 16px;
+      flex-grow: 1;
+      font-size: 13.5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .flow-content strong {
+      color: var(--c-brand);
+    }
+
+    .flow-arrow-down {
+      margin-left: 11px;
+      width: 2px;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.1);
+      margin-top: -8px;
+      margin-bottom: 8px;
+    }
+
+    /* Visualizer wireframe specs */
+    .viz-canvas-wireframe {
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #FFFFFF;
+      height: 180px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-family: var(--ff-m);
+      color: #888;
+    }
+
+    .viz-grid-lines {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .wf-sidebar-layout {
+        grid-template-columns: 1fr;
+      }
+      .wf-grid-3, .wf-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        padding: 0 15px;
+      }
+      .section {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Graphxy Labs — Wireframes & Flows</h1>
+    <span class="meta-badge">V1.2.0 • INTERACTION SPECS</span>
+  </header>
+
+  <div class="container">
+
+    <!-- Route Structure -->
+    <div class="section">
+      <h2 class="section-title">Site Route Architecture</h2>
+      <p style="margin-bottom: 16px;">
+        The frontend utilizes Client-Side Routing via React Router (<span class="code-route">BrowserRouter</span>) to manage page navigation. Graphzy uses a nested Hash Router structure internally for state persistence.
+      </p>
+      
+      <table class="route-table">
+        <thead>
+          <tr>
+            <th>Route Path</th>
+            <th>Component Name</th>
+            <th>Primary Content & Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="code-route">/</td>
+            <td>Home</td>
+            <td>Main Landing Page, company overview, ecosystem tree, capabilities.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/products</td>
+            <td>Products</td>
+            <td>Unified catalog page housing interactive preview animations for all 4 products.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/graphzy</td>
+            <td>GraphzyDetails</td>
+            <td>Graphzy product details, capabilities overview, and waitlist form.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/graphzy/visualizer</td>
+            <td>Graphzy</td>
+            <td>Interactive STEM AI Visualizer prototype workspace (Sidebar, Canvas, Chat panels).</td>
+          </tr>
+          <tr>
+            <td class="code-route">/clampbox</td>
+            <td>Clampbox</td>
+            <td>Confidential enclaves execution product details and inquiry form.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/forkline</td>
+            <td>Forkline</td>
+            <td>Restaurant ops operational intelligence details and waitlist form.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/lattice</td>
+            <td>Lattice</td>
+            <td>Startup operations platform details and waitlist signup form.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/services</td>
+            <td>Services</td>
+            <td>Our custom engineering divisions map and capabilities directory.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/contact</td>
+            <td>Contact</td>
+            <td>Client inquiries and Formspree contact form.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/privacy-policy</td>
+            <td>PrivacyPolicy</td>
+            <td>Standard legal documentation.</td>
+          </tr>
+          <tr>
+            <td class="code-route">/terms-of-service</td>
+            <td>TermsOfService</td>
+            <td>Standard usage agreement documentation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Product CTA Routing Flow -->
+    <div class="section">
+      <h2 class="section-title">Product CTA Routing Flow (P0 Rule)</h2>
+      <p style="margin-bottom: 20px;">
+        To ensure high product engagement and clear education, all product listing cards and references must first route the user to the dedicated product detail page rather than forcing a direct waitlist sign-up popup.
+      </p>
+
+      <div class="flow-step">
+        <div class="flow-badge">1</div>
+        <div class="flow-content">
+          User clicks <strong>"Explore [Product]"</strong> CTA button on Home, Products, or Ecosystem tree cards.
+        </div>
+      </div>
+      <div class="flow-arrow-down"></div>
+      
+      <div class="flow-step">
+        <div class="flow-badge">2</div>
+        <div class="flow-content">
+          Router intercepts path and redirects user to <strong>Product Detail Page</strong> (<span class="code-route">/graphzy</span>, <span class="code-route">/clampbox</span>, <span class="code-route">/forkline</span>, or <span class="code-route">/lattice</span>).
+        </div>
+      </div>
+      <div class="flow-arrow-down"></div>
+
+      <div class="flow-step">
+        <div class="flow-badge">3</div>
+        <div class="flow-content">
+          User views product details and sees the <strong>Interactive Preview Module</strong> (Boot Attest for Clampbox, Floor alerts for Forkline, Committed funds for Lattice).
+        </div>
+      </div>
+      <div class="flow-arrow-down"></div>
+
+      <div class="flow-step">
+        <div class="flow-badge">4</div>
+        <div class="flow-content">
+          If interested, the user fills the <strong>Waitlist / Inquiry Form</strong> directly inline at the bottom of the page.
+        </div>
+      </div>
+    </div>
+
+    <!-- Wireframes: Landing Page Layout -->
+    <div class="section">
+      <h2 class="section-title">Landing Page Wireframe</h2>
+      <p style="margin-bottom: 12px;">Order of sections representing the landing page hierarchy:</p>
+      
+      <div class="wireframe-container" style="max-width: 600px; margin: 20px auto 0;">
+        <div class="wf-block" style="background: var(--c-brand-bg); color: var(--c-brand);">Header Navigation (Navbar.jsx) — Brand wordmark, Links, Mobile Menu Trigger</div>
+        
+        <!-- Hero Section -->
+        <div class="wf-block" style="border: 1px solid rgba(0,0,0,0.15); background: #fdfdfb; padding: 20px 10px;">
+          <div style="font-size: 11px; color: #888; font-family: var(--ff-m); margin-bottom: 10px;">HERO SECTION</div>
+          <div style="font-size: 14px; font-family: var(--ff-d); font-weight: 500; margin-bottom: 8px;">Software that thinks, scales, and performs.</div>
+          <!-- Interactive map placeholder -->
+          <div class="viz-canvas-wireframe" style="height: 100px; font-size: 9px;">
+            <div class="viz-grid-lines"></div>
+            Interactive Map (Radial Graph on Mobile/Tablet | Scatter Graph on Desktop)
+          </div>
+        </div>
+
+        <div class="wf-block">Company Overview — Metrics & Introduction text block</div>
+
+        <!-- Ecosystem Tree -->
+        <div class="wf-block" style="border: 1px solid rgba(0,0,0,0.15); background: #fdfdfb; padding: 15px 10px;">
+          <div style="font-size: 10px; color: #888; font-family: var(--ff-m); margin-bottom: 6px;">ECOSYSTEM TREE SECTION</div>
+          <div style="border: 1px dashed rgba(0,0,0,0.1); padding: 8px; margin-bottom: 8px; font-size: 9px;">LABS HIERARCHICAL SCHEMA (Desktop SvgTree / MobileTreeGraph)</div>
+          <div class="wf-grid-2">
+            <div class="wf-block" style="font-size: 9px; margin-bottom: 0;">Graphzy Card</div>
+            <div class="wf-block" style="font-size: 9px; margin-bottom: 0;">Clampbox Card</div>
+          </div>
+          <div class="wf-grid-2">
+            <div class="wf-block" style="font-size: 9px; margin-bottom: 0;">Forkline Card</div>
+            <div class="wf-block" style="font-size: 9px; margin-bottom: 0;">Lattice Card</div>
+          </div>
+        </div>
+
+        <div class="wf-block">Product Showcase — Alternating preview enclaves</div>
+        <div class="wf-block">Capability Matrix — Grid of 8 engineering divisions</div>
+        <div class="wf-block">Why Graphxy Labs — Value props card grid</div>
+        <div class="wf-block">Process Timeline — 4-stage engineering flow</div>
+        <div class="wf-block">CTA Footer Signup — Global Waitlist / Inquiry trigger</div>
+        <div class="wf-block" style="background: rgba(0,0,0,0.03);">Footer (Footer.jsx) — Copyright, Links, No dot wordmark</div>
+      </div>
+    </div>
+
+    <!-- Wireframes: Graphzy Visualizer Page Layout -->
+    <div class="section">
+      <h2 class="section-title">Graphzy Visualizer Page Wireframe</h2>
+      <p style="margin-bottom: 12px;">Graphzy operates in a dedicated fullscreen webapp shell. Sidebar navigation triggers content views:</p>
+      
+      <div class="wireframe-container" style="margin-top: 20px;">
+        <div class="wf-sidebar-layout">
+          <!-- Sidebar -->
+          <div class="wf-block" style="border: 1px solid rgba(0,0,0,0.15); background: #fdfdfb; padding: 16px 8px; height: 320px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--ff-d); font-size: 14px; margin-bottom: 16px; color: var(--c-math);">Graphzy</div>
+              <div class="wf-block" style="font-size: 10px; padding: 6px;">STEM Ask</div>
+              <div class="wf-block" style="font-size: 10px; padding: 6px;">Explorer</div>
+              <div class="wf-block" style="font-size: 10px; padding: 6px;">History Logs</div>
+              <div class="wf-block" style="font-size: 10px; padding: 6px;">Dashboard</div>
+            </div>
+            <div>
+              <div class="wf-block" style="font-size: 9px; padding: 4px; margin-bottom: 0; background: #eee;">User Profile</div>
+            </div>
+          </div>
+
+          <!-- Main Visualizer Panel -->
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="wf-block" style="font-size: 11px; font-family: var(--ff-m); padding: 8px; text-align: left; background: var(--c-brand-bg); color: var(--c-brand);">
+              ACTIVE TOPIC: y = ax² Parabola stretch factors
+            </div>
+            
+            <div class="wf-grid-2">
+              <!-- Visual Canvas -->
+              <div class="wf-block" style="border: 1px solid rgba(0,0,0,0.1); height: 180px; padding: 8px;">
+                <div class="viz-canvas-wireframe" style="height: 100%;">
+                  <div class="viz-grid-lines"></div>
+                  Interactive High-Fidelity SVG Canvas Plot
+                </div>
+              </div>
+
+              <!-- Parameter Controls and Analytics -->
+              <div class="wf-block" style="border: 1px solid rgba(0,0,0,0.1); height: 180px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; padding: 12px;">
+                <div>
+                  <div style="font-size: 10px; font-weight: bold; color: #888; margin-bottom: 6px;">PARAMETER SLIDERS</div>
+                  <div style="width: 100%; height: 4px; background: #eee; border-radius: 2px; margin-bottom: 10px; position: relative;">
+                    <div style="position: absolute; left: 40%; top: -3px; width: 10px; height: 10px; border-radius: 50%; background: var(--c-math);"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 10px; font-weight: bold; color: #888; margin-bottom: 4px;">ANALYTICS FORMULAS (KaTeX)</div>
+                  <div style="font-family: var(--ff-m); font-size: 12px; background: #fdfdf9; padding: 6px; border: 1px solid rgba(0,0,0,0.04);">
+                    f(x) = ax^2 (a = 2.0)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat & Question controller -->
+            <div class="wf-block" style="border: 1px solid rgba(0,0,0,0.1); padding: 12px; text-align: left;">
+              <div style="font-size: 10px; color: #888; margin-bottom: 6px;">CONVERSATIONAL DIALOGUE</div>
+              <div style="font-size: 11px; background: #fafafa; padding: 8px; border-radius: 4px; margin-bottom: 8px;">
+                User: What happens if a is negative? <br>
+                AI (KaTeX formatted): The parabola flips downward: f(x) = -ax^2.
+              </div>
+              <input type="text" placeholder="Ask follow up questions here..." style="width: 100%; border: 1px solid rgba(0,0,0,0.1); padding: 6px; border-radius: 4px; font-size: 11px;" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsive Layout Mapping Flow -->
+    <div class="section">
+      <h2 class="section-title">Responsive Breakpoint Mapping</h2>
+      <p style="margin-bottom: 20px;">
+        The system dynamically loads distinct UI graph engines depending on breakpoints and input type to prevent SVG layout coordinates distortion:
+      </p>
+
+      <div class="flow-step">
+        <div class="flow-badge">M</div>
+        <div class="flow-content">
+          <strong>Mobile Layout (&lt; 640px):</strong> Loads `MobileTreeGraph` and `RadialGraph` (scaled viewBox, tap gestures, bottom details overlay sheet to conserve screen width).
+        </div>
+      </div>
+      <div class="flow-arrow-down"></div>
+
+      <div class="flow-step">
+        <div class="flow-badge">T</div>
+        <div class="flow-content">
+          <strong>Tablet Layout (640px - 1024px):</strong> Loads `SvgTree` and `RadialGraph` (increased hit ranges, touch/click selection highlights, bottom details panels).
+        </div>
+      </div>
+      <div class="flow-arrow-down"></div>
+
+      <div class="flow-step">
+        <div class="flow-badge">D</div>
+        <div class="flow-content">
+          <strong>Desktop Layout (&gt;= 1024px):</strong> Loads standard `SvgTree` and `ScatterGraph` (hover triggers connection pulses, tooltip overlay follows mouse cursor).
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -13,7 +13,7 @@ export async function submitToFormspree(formId, data) {
   const id = (formId || '').trim();
 
   if (!id) {
-    console.error('[Formspree] Missing form ID. Set the corresponding VITE_FORMSPREE_* environment variable in .env.local');
+    console.error('[Formspree] Missing form ID. Set VITE_FORMSPREE_CONTACT_ID or VITE_FORMSPREE_WAITLIST_ID in .env.local');
     return {
       success: false,
       error: 'Form configuration error. Please contact us directly at himanshusalve9@gmail.com.',

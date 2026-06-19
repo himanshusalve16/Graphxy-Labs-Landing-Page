@@ -2,7 +2,7 @@ import React from 'react';
 import PageShell from '../components/layout/PageShell';
 import Container from '../components/layout/Container';
 import LatticeHero from '../components/lattice/LatticeHero';
-import LatticeWaitlist from '../components/lattice/LatticeWaitlist';
+import WaitlistForm from '../components/ui/WaitlistForm';
 import LatticeFeatures from '../components/lattice/LatticeFeatures';
 import { Card } from '../components/ui/Card';
 import { Sparkles, TrendingUp, Check } from 'lucide-react';
@@ -23,7 +23,8 @@ export default function Lattice() {
         <Container className="relative z-10">
           <div className="max-w-4xl mx-auto flex flex-col items-center">
             <LatticeHero />
-            <LatticeWaitlist />
+            <WaitlistForm product="Lattice" />
+
             
             {/* Rich Interactive CRM/Pipeline Mockup directly on the page */}
             <div className="w-full max-w-md mt-16 animate-fade-in">

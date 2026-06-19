@@ -18,10 +18,11 @@ const waitlistSchema = z.object({
  *
  * @param {Object} options
  * @param {string}   options.formId        — Formspree form ID (from env var)
+ * @param {string}   options.product       — Product name (e.g. 'Graphzy')
  * @param {string}   options.subject       — Email subject line
  * @param {Function} options.buildMessage  — (name: string) => string for Formspree message body
  */
-export function useWaitlistForm({ formId, subject, buildMessage }) {
+export function useWaitlistForm({ formId, product, subject, buildMessage }) {
   const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -43,6 +44,7 @@ export function useWaitlistForm({ formId, subject, buildMessage }) {
     const payload = {
       name,
       email: data.email.trim(),
+      product,
       subject,
       message: buildMessage(name),
     };
