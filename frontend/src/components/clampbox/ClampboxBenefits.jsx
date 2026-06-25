@@ -4,16 +4,16 @@ import { Card } from '../ui/Card';
 export default function ClampboxBenefits() {
   const benefits = [
     {
-      title: "Cryptographic Attestation",
-      desc: "Verify that the enclave is executing authentic code on genuine, secure hardware through verifiable SHA-256 system signatures."
+      title: "Browser Extension Guard",
+      desc: "Deploy a lightweight Manifest V3 extension to intercept prompts inline on ChatGPT, Claude, Gemini, Grok, and more."
     },
     {
-      title: "Zero-Trust Host Operator",
-      desc: "Completely isolate your code from cloud providers. Neither AWS, Google Cloud, nor Graphxy Labs can inspect your model weights or data."
+      title: "Developer API Gateway",
+      desc: "Route programmatic requests through our secure Express gateway using cryptographically hashed gateway access keys."
     },
     {
-      title: "Compliance Ready",
-      desc: "Perfect for regulated industries (healthcare, finance) processing sensitive customer data or proprietary AI model weights."
+      title: "PII & IP Redaction",
+      desc: "Configure advanced regex or structured classifiers to dynamically replace sensitive data spans with custom placeholders."
     }
   ];
 

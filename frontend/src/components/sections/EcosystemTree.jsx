@@ -507,19 +507,19 @@ export default function EcosystemTree() {
           <Card variant="surface" className="p-5 bg-[#F0F7F7] border-[#0D9488]/14 flex flex-col justify-between active:scale-[0.98] hover:border-[#0D9488]/30 hover:shadow-md transition-all duration-200 text-left touch-press">
             <div>
               <div className="flex justify-between items-start mb-4">
-                <Tag variant="clampbox">COMING SOON</Tag>
+                <Tag variant="clampbox">ACTIVE</Tag>
                 <span className="font-mono text-[8px] text-[#A3A3A3]">EST. 2026</span>
               </div>
               <h4 className="font-serif text-lg text-[#0F0F0F] mb-1.5 font-semibold">Clampbox</h4>
               <p className="text-[11.5px] text-[#525252] leading-relaxed mb-4">
-                Confidential execution infrastructure for AI, agents, and sensitive workloads, running workloads in hardware-enforced isolated CPU enclaves.
+                AI Security Gateway to inspect prompts, enforce compliance policies, redact secrets, and audit AI tool usage across browser and API flows.
               </p>
               <div className="border-t border-black/[0.04] pt-3 mb-5">
                 <span className="font-mono text-[8px] text-black/45 uppercase tracking-wider block mb-2">Capabilities</span>
                 <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Isolated runtime enclaves</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Zero-knowledge agent execution</li>
-                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Encrypted-in-use memory</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Prompt inspection & secrets</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Dynamic policy engine</li>
+                  <li className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-[#0D9488]" />Immutable compliance audit</li>
                 </ul>
               </div>
             </div>

@@ -11,3 +11,5 @@ yarn-error.log*
 .next/
 out/
 build/
+# Local npm cache for Docker offline builds (regenerate with scripts/populate-docker-cache.ps1)
+.npm-docker-cache/

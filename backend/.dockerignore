@@ -1,0 +1,8 @@
+node_modules/
+.env*
+npm-debug.log*
+.git/
+.vscode/
+logs/
+temp/
+# NOTE: .npm-docker-cache is intentionally NOT ignored here – it's needed by the Dockerfile

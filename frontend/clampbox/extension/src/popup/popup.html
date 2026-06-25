@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clampbox Guard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ff-sans: 'Inter', sans-serif;
+      --ff-mono: 'JetBrains Mono', monospace;
+      --color-bg: #09090B;
+      --color-card: #18181B;
+      --color-border: #27272A;
+      --color-text: #F4F4F5;
+      --color-text-muted: #A1A1AA;
+      --color-primary: #0D9488;
+      --color-primary-hover: #0F766E;
+      --color-red: #EF4444;
+      --color-green: #10B981;
+    }
+    body {
+      width: 320px;
+      margin: 0;
+      font-family: var(--ff-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+    .logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--color-primary), #115E59);
+      box-shadow: 0 0 8px rgba(13, 148, 136, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .brand-info h3 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .brand-info span {
+      font-size: 8px;
+      color: var(--color-text-muted);
+      font-family: var(--ff-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      line-height: 1;
+      display: block;
+      margin-top: 1px;
+    }
+    .status-card {
+      background: linear-gradient(180deg, var(--color-card) 0%, rgba(24, 24, 27, 0.5) 100%);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .status-row:last-child {
+      margin-bottom: 0;
+    }
+    .status-label {
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+    .status-val {
+      font-weight: 600;
+      color: #FFFFFF;
+      font-family: var(--ff-mono);
+      font-size: 10px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2.5px 8px;
+      border-radius: 5px;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-family: var(--ff-mono);
+      letter-spacing: 0.02em;
+    }
+    .badge-active {
+      background-color: rgba(16, 185, 129, 0.08);
+      color: var(--color-green);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+    .badge-inactive {
+      background-color: rgba(239, 68, 68, 0.08);
+      color: var(--color-red);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
+    .pulse-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+    .badge-active .pulse-dot {
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+    .input-group {
+      margin-bottom: 12px;
+    }
+    .input-label {
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      display: block;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+    .text-input {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #09090B;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: var(--color-text);
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      outline: none;
+      transition: all 150ms ease;
+    }
+    .text-input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
+    }
+    button {
+      width: 100%;
+      background-color: var(--color-primary);
+      border: none;
+      color: white;
+      padding: 9px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: var(--ff-sans);
+      transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.2);
+    }
+    button:hover {
+      background-color: var(--color-primary-hover);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+      transform: translateY(-0.5px);
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+    button.btn-disconnect {
+      background-color: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      box-shadow: none;
+      margin-top: 8px;
+    }
+    button.btn-disconnect:hover {
+      background-color: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.2);
+      color: var(--color-red);
+      box-shadow: none;
+    }
+    .history-card {
+      border-top: 1px solid var(--color-border);
+      margin-top: 14px;
+      padding-top: 14px;
+    }
+    .history-title {
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .history-item {
+      background-color: rgba(24, 24, 27, 0.3);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .history-text {
+      max-width: 170px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--color-text-muted);
+    }
+    .history-badge {
+      font-family: var(--ff-mono);
+      font-size: 8px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+    .h-allow { background-color: rgba(16, 185, 129, 0.1); color: var(--color-green); }
+    .h-redact { background-color: rgba(13, 148, 136, 0.1); color: var(--color-primary); }
+    .h-warn { background-color: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+    .h-block { background-color: rgba(239, 68, 68, 0.1); color: var(--color-red); }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+      font-size: 9px;
+      font-family: var(--ff-mono);
+      text-transform: uppercase;
+    }
+    .nav-links a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      font-size: 8px;
+      color: #3F3F46;
+      text-align: center;
+      margin-top: 14px;
+      font-family: var(--ff-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(9, 9, 11, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .confirm-modal-card {
+      background-color: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 16px;
+      width: 100%;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    }
+    .confirm-modal-card h4 {
+      margin: 0 0 8px 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    .confirm-modal-card p {
+      margin: 0 0 14px 0;
+      font-size: 10.5px;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+    .confirm-modal-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .confirm-modal-actions button {
+      flex: 1;
+      padding: 8px;
+      font-size: 11px;
+    }
+    .cb-btn-ghost {
+      background-color: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      box-shadow: none;
+    }
+    .cb-btn-ghost:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #FFFFFF;
+    }
+    .cb-btn-danger {
+      background-color: var(--color-red);
+      color: white;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+    }
+    .cb-btn-danger:hover {
+      background-color: #DC2626;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">c</div>
+    <div class="brand-info">
+      <h3>Clampbox Guard</h3>
+      <span>Graphxy Labs Security</span>
+    </div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-row">
+      <span class="status-label">Connection</span>
+      <span id="connection-status" class="badge badge-inactive">
+        <span class="pulse-dot"></span>Disconnected
+      </span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Active Gateway</span>
+      <span id="gateway-name" class="status-val">-</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Active Policy</span>
+      <span id="active-policy" class="status-val">-</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Last Sync</span>
+      <span id="last-sync" class="status-val">-</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Backend Status</span>
+      <span id="backend-health" class="status-val" style="color: var(--color-text-muted);">Checking...</span>
+    </div>
+  </div>
+
+  <div id="error-banner" style="display: none; background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 6px; padding: 8px 10px; font-size: 10px; color: var(--color-red); margin-bottom: 12px; font-family: var(--ff-sans);"></div>
+
+  <div id="disconnected-view">
+    <div class="input-group">
+      <label for="gateway-key-input" class="input-label">Enter Gateway Key</label>
+      <input type="password" id="gateway-key-input" class="text-input" placeholder="cb_live_...">
+    </div>
+    <button id="connect-btn">Connect Gateway</button>
+  </div>
+
+  <div id="connected-view" style="display: none;">
+    <button id="sync-btn">Force Sync Policies</button>
+    <button id="disconnect-btn" class="btn-disconnect">Disconnect Gateway</button>
+  </div>
+
+  <div class="history-card" id="history-section" style="display: none;">
+    <div class="history-title">
+      <span>Inspection History</span>
+      <span style="font-weight: normal; color: var(--color-text-muted);" id="history-count">0 logs</span>
+    </div>
+    <div class="history-list" id="history-list">
+      <!-- Injected history logs -->
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="https://clampbox.graphxylabs.dev/dashboard" id="console-link" target="_blank">Open Console</a>
+    <span style="color: var(--color-border)">|</span>
+    <a href="https://clampbox.graphxylabs.dev/audit" id="audit-link" target="_blank">Audit Logs</a>
+  </div>
+
+  <div class="footer">
+    v1.0.0 (Manifest V3)
+  </div>
+
+  <div id="confirm-modal" class="confirm-overlay" style="display: none;">
+    <div class="confirm-modal-card">
+      <h4>Disconnect Gateway?</h4>
+      <p>This will stop all prompt protection and risk audit logging.</p>
+      <div class="confirm-modal-actions">
+        <button id="modal-cancel-btn" class="cb-btn-ghost">Cancel</button>
+        <button id="modal-confirm-btn" class="cb-btn-danger">Disconnect</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

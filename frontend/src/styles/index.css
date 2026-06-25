@@ -89,3 +89,28 @@ body {
   transition: max-height 300ms cubic-bezier(0.16, 1, 0.3, 1),
               opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Enclave Radial Glow Animations */
+@keyframes float-glow-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6%, 4%) scale(1.08); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes float-glow-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5%, -6%) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+.animate-glow-1 {
+  animation: float-glow-1 18s ease-in-out infinite;
+}
+.animate-glow-2 {
+  animation: float-glow-2 22s ease-in-out infinite;
+}
+
+/* Sidebar nav items focus rings */
+.nav-focus:focus-visible {
+  outline: 2px solid rgba(13, 148, 136, 0.4);
+  outline-offset: 2px;
+}
+

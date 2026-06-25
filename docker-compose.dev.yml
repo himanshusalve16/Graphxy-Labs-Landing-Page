@@ -1,0 +1,24 @@
+services:
+  backend:
+    environment:
+      - NODE_ENV=development
+    command: npm run dev --workspace=backend
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/backend/node_modules
+      - /app/shared/node_modules
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      target: build
+    command: npm run dev --workspace=frontend -- --host
+    ports:
+      - '5173:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/frontend/node_modules
+      - /app/shared/node_modules

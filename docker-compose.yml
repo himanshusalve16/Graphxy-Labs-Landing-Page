@@ -1,0 +1,78 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: clampbox-db
+    restart: always
+    environment:
+      POSTGRES_USER: clampbox
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: clampbox
+    ports:
+      - '5433:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clampbox -d clampbox"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: clampbox-redis
+    restart: always
+    ports:
+      - '6380:6379'
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: clampbox-backend
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - DATABASE_URL=postgresql://clampbox:password@db:5432/clampbox
+      - REDIS_URL=redis://redis:6379
+      - CLAMPBOX_ALLOWED_ORIGINS=http://localhost:5173,https://graphxylabs.dev
+      - CLAMPBOX_ENCRYPTION_KEY=demo_encryption_secret_key_32_bytes_value
+      - CLAMPBOX_GATEWAY_KEY_PEPPER=demo_pepper_value_key
+      - CLAMPBOX_SESSION_SECRET=demo_session_secret_value
+    ports:
+      - '5000:5000'
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: clampbox-frontend
+    restart: always
+    ports:
+      - '8090:80'
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  redisdata:
+
+# Lower MTU to 1450 to prevent TLS GCM cipher fragmentation failures
+# on Docker Desktop for Windows (Hyper-V/WSL2 hosts).
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: "1450"

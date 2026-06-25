@@ -93,41 +93,41 @@ export default function Products() {
 
               <div className="lg:col-span-7 flex flex-col justify-center">
                 <div className="flex items-center gap-3 mb-3">
-                  <Tag variant="clampbox">COMING SOON</Tag>
+                  <Tag variant="clampbox">ACTIVE</Tag>
                 </div>
                 
                 <h2 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
                   Clampbox
                 </h2>
-                <span className="font-mono text-[11px] text-[#A3A3A3] mb-4 block font-semibold uppercase tracking-wider">Confidential Execution Infrastructure</span>
+                <span className="font-mono text-[11px] text-[#A3A3A3] mb-4 block font-semibold uppercase tracking-wider">AI Security Gateway & Prompt Governance</span>
 
                 <p className="text-xs sm:text-sm text-[#525252] leading-relaxed mb-6">
-                  Confidential execution infrastructure for AI workloads, autonomous agents, and sensitive data. Run untrusted code or process highly regulated data inside secure enclaves with hardware-verified protection.
+                  Enterprise-grade security gate for prompt evaluation and data leak prevention. Intercept browser chats or secure backend API integrations to scrub credentials, enforce compliance rules, and log decisions automatically.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 border-t border-b border-black/[0.04] py-4">
                   <div>
                     <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5">Capabilities</h4>
                     <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                      <li>Hardware Enclaves</li>
-                      <li>Zero-Knowledge Agents</li>
-                      <li>Memory Encryption</li>
+                      <li>Prompt Inspection</li>
+                      <li>Secret Detection</li>
+                      <li>Data Redaction</li>
                     </ul>
                   </div>
                   <div>
                     <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5">Use Cases</h4>
                     <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                      <li>Secure Agent Compute</li>
-                      <li>Privacy-Safe LLM Calls</li>
-                      <li>Regulated Data Pipelines</li>
+                      <li>Browser Guarding</li>
+                      <li>Programmatic API Proxy</li>
+                      <li>SOC 2 Compliance Audit</li>
                     </ul>
                   </div>
                   <div>
                     <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5">Roadmap</h4>
                     <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                      <li>Multi-cloud Enclave SDK</li>
-                      <li>Decentralized Verification</li>
-                      <li>Agent Secret Storage</li>
+                      <li>Semantic Threat Scan</li>
+                      <li>LLM Classifiers</li>
+                      <li>Confidential Enclaves</li>
                     </ul>
                   </div>
                 </div>

@@ -701,7 +701,7 @@ export default function ProductShowcase() {
             {/* Details Column */}
             <div className="lg:col-span-7 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
-                <Tag variant="clampbox">COMING SOON</Tag>
+                <Tag variant="clampbox">ACTIVE</Tag>
               </div>
               
               <h3 className="font-serif text-2xl md:text-3xl text-[#0F0F0F] mb-3 font-semibold">
@@ -709,7 +709,7 @@ export default function ProductShowcase() {
               </h3>
               
               <p className="text-xs sm:text-sm text-[#525252] leading-relaxed mb-5">
-                Confidential execution infrastructure for AI workloads, autonomous agents, and sensitive data. Run untrusted code or process highly regulated data inside secure enclaves with hardware-verified protection.
+                Enterprise prompt security and leakage protection gateway. Scan submissions, detect secrets and credentials, enforce compliance rules, and redact sensitive spans in real time.
               </p>
               
               {/* Product Specifications Grid */}
@@ -719,20 +719,20 @@ export default function ProductShowcase() {
                     <CheckCircle size={10} className="text-[#0D9488]" /> Key Capabilities
                   </h4>
                   <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                    <li>Hardware Enclaves</li>
-                    <li>Zero-Knowledge Agents</li>
-                    <li>Memory Encryption</li>
+                    <li>Prompt Inspection</li>
+                    <li>Secret Detection</li>
+                    <li>Data Redaction</li>
                   </ul>
                 </div>
                 
                 <div>
                   <h4 className="font-mono text-[9px] font-bold text-black/40 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                    <Shield size={10} className="text-[#0D9488]" /> Trust & Security
+                    <Shield size={10} className="text-[#0D9488]" /> Integration Layers
                   </h4>
                   <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                    <li>Cryptographic Attestation</li>
-                    <li>Zero Trust Operator</li>
-                    <li>Isolated CPU Caches</li>
+                    <li>Browser Extension</li>
+                    <li>Developer API Proxy</li>
+                    <li>Dynamic Admin Policies</li>
                   </ul>
                 </div>
 
@@ -741,9 +741,9 @@ export default function ProductShowcase() {
                     <TrendingUp size={10} className="text-[#0D9488]" /> Roadmap Preview
                   </h4>
                   <ul className="list-none p-0 m-0 flex flex-col gap-1 text-[11px] text-[#525252]">
-                    <li>Multi-cloud Enclave SDK</li>
-                    <li>Decentralized Verification</li>
-                    <li>Agent Secret Storage</li>
+                    <li>Semantic Threat Scan</li>
+                    <li>LLM Classifiers</li>
+                    <li>Confidential Enclaves</li>
                   </ul>
                 </div>
               </div>
