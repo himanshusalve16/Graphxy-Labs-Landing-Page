@@ -2,8 +2,12 @@
   "name": "clampbox-extension",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "vite build"
+    "dev": "vite build --watch",
+    "build": "vite build && npm run validate",
+    "validate": "node scripts/validate-extension-build.mjs",
+    "test": "npm run validate"
   },
   "dependencies": {
     "react": "^18.3.1",

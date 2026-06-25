@@ -6,7 +6,7 @@
   "permissions": [
     "storage",
     "activeTab",
-    "scripting"
+    "alarms"
   ],
   "host_permissions": [
     "https://chatgpt.com/*",
@@ -18,7 +18,7 @@
     "http://127.0.0.1:5000/*"
   ],
   "background": {
-    "service_worker": "src/background/background.js"
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
@@ -28,12 +28,12 @@
         "https://claude.ai/*",
         "https://gemini.google.com/*"
       ],
-      "js": ["src/content/content.js"],
+      "js": ["content.js"],
       "run_at": "document_end"
     }
   ],
   "action": {
-    "default_popup": "src/popup/popup.html",
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "assets/icon16.png",
       "48": "assets/icon48.png",

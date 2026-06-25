@@ -28,24 +28,25 @@ export default function Clampbox() {
           <div className="max-w-4xl mx-auto flex flex-col items-center">
             <ClampboxHero />
             
-            {/* Primary Action: Go to Clampbox App Console */}
-            <div className="mb-8 w-full max-w-md text-center flex flex-col items-center gap-3">
-              <Link 
-                to="/clampbox/dashboard" 
-                className="w-full"
-              >
-                <Button 
-                  variant="clampbox" 
-                  size="lg" 
-                  className="w-full min-h-[50px] text-sm font-semibold tracking-wide shadow-md hover:shadow-lg transition-all"
-                >
-                  Open Clampbox
-                </Button>
-              </Link>
-              <p className="text-[11px] font-sans text-[#525252] leading-relaxed">
-                Configure prompt inspection rules and view security metrics inside your control panel.
-              </p>
-            </div>
+            {/* 
+<div className="mb-8 w-full max-w-md text-center flex flex-col items-center gap-3">
+  <Link 
+    to="/clampbox/dashboard" 
+    className="w-full"
+  >
+    <Button 
+      variant="clampbox" 
+      size="lg" 
+      className="w-full min-h-[50px] text-sm font-semibold tracking-wide shadow-md hover:shadow-lg transition-all"
+    >
+      Open Clampbox
+    </Button>
+  </Link>
+  <p className="text-[11px] font-sans text-[#525252] leading-relaxed">
+    Configure prompt inspection rules and view security metrics inside your control panel.
+  </p>
+</div>
+*/}
 
             {/* Visual Divider to secondary action */}
             <div className="w-full max-w-md flex items-center gap-3 my-4 text-[#A3A3A3] font-mono text-[9px] uppercase tracking-wider select-none">
