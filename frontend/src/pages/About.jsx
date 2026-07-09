@@ -403,6 +403,7 @@ export default function About() {
             </div>
           </div>
 
+
           {/* Why Graphxy Labs & CTA */}
           <div className="max-w-4xl mx-auto mt-10 md:mt-16 text-center" data-reveal>
             <div className="bg-white border border-black/[0.06] rounded-2xl p-6 sm:p-10 md:p-12 shadow-xs">
