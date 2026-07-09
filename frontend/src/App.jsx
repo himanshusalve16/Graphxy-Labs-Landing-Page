@@ -14,6 +14,8 @@ import TermsOfService from './pages/TermsOfService';
 import Lattice from './pages/Lattice';
 import Clampbox from './pages/Clampbox';
 import Products from './pages/Products';
+import ProcessPage from './pages/ProcessPage';
+import About from './pages/About';
 
 // Clampbox Console Pages
 import CbDashboard from '../clampbox/web/Dashboard';
@@ -54,6 +56,8 @@ function MainApp() {
           <Route path="/clampbox/docs" element={<CbDocs />} />
           <Route path="/forkline" element={<Forkline />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/process" element={<ProcessPage />} />
+          <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />

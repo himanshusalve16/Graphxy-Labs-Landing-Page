@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Container from '../layout/Container';
+import PageBackground from '../layout/PageBackground';
 import { SectionHeading } from '../ui/SectionHeading';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
@@ -21,8 +22,8 @@ export default function Process() {
   const [openStep, setOpenStep] = useState(null);
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-[#FAFAF8] border-b border-black/[0.06] relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800f_1px,transparent_1px),linear-gradient(to_bottom,#8080800f_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+    <section className="py-10 sm:py-14 md:py-20 bg-[#FAFAF8] border-b border-black/[0.06] relative overflow-hidden">
+      <PageBackground />
 
       <Container>
         <SectionHeading

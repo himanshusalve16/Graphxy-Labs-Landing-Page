@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Container from '../layout/Container';
+import PageBackground from '../layout/PageBackground';
 import { SectionHeading } from '../ui/SectionHeading';
 import { Card } from '../ui/Card';
 import { 
@@ -13,7 +14,10 @@ import {
   Workflow, 
   TrendingUp,
   Server,
-  Network
+  Network,
+  Code,
+  Layers,
+  GitMerge
 } from 'lucide-react';
 
 // ==========================================
@@ -146,31 +150,28 @@ function NeuralPropagationVisual() {
 }
 
 const servicesGrid = [
-  { icon: Globe, title: "Web Development", desc: "Server-rendered React applications, responsive interfaces, and marketing frontends." },
-  { icon: Smartphone, title: "Mobile Clients", desc: "iOS and Android client builds developed natively or through high-performance cross-platform engines." },
-  { icon: Terminal, title: "Custom Logic Portals", desc: "Bespoke algorithmic routines, client-facing databases, and backend services." },
-  { icon: BarChart3, title: "Data Analytics", desc: "Interactive metrics pipelines, business intelligence tools, and aggregated operations logs." },
-  { icon: TrendingUp, title: "Scalable SaaS MVPs", desc: "Cloud database design, scalable architectures, and feature roadmap planning." },
-  { icon: Workflow, title: "Workflow Automation", desc: "Event-triggered notification loops, Shift operations logs, and approval systems." }
+  { icon: Globe, title: "Web Development", desc: "Server-rendered React applications, highly responsive interfaces, and performant web portals." },
+  { icon: Smartphone, title: "Mobile App Development", desc: "Native and cross-platform mobile client builds engineered for speed, responsiveness, and fluid interaction." },
+  { icon: Cpu, title: "AI & Machine Learning", desc: "Integrating intelligent models, predictive analytics, and natural language processing engines directly into workflows." },
+  { icon: GitMerge, title: "Automation Systems", desc: "Event-triggered processing loops, automated pipelines, and operations logs to remove manual friction." },
+  { icon: Code, title: "Custom Software", desc: "Bespoke algorithmic routines, client-facing management databases, and performant backend engines." },
+  { icon: Layers, title: "Cloud & DevOps", desc: "Robust database configurations, server replication, security vault enclaves, and scalable deployment pipelines." }
 ];
 
 export default function VerticalSections() {
   return (
-    <section id="services" className="relative overflow-hidden py-12 sm:py-16 bg-[#FAFAF8] border-b border-black/[0.06]">
-      {/* Background radial depth and grid overlay */}
-      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-gradient-to-bl from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-gradient-to-tr from-[#0066CC]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+    <section id="services" className="relative overflow-hidden py-10 sm:py-14 md:py-20 bg-[#FAFAF8] border-b border-black/[0.06]">
+      <PageBackground />
       
       <Container className="relative z-10">
         <SectionHeading 
-          eyebrow="Core Verticals"
-          heading="Specialized engineering divisions focused on system execution."
-          description="We operate across specialized technology sectors, demonstrating architectural authority and rigorous design standards."
+          eyebrow="Core Services"
+          heading="Rigorous engineering services for custom digital products."
+          description="We deliver specialized engineering capabilities across critical technology domains, demonstrating high architectural standards and execution quality."
         />
 
         {/* 1. FEATURED EXPERTISE BLOCKS (TWO COLUMNS WITH DYNAMIC DIAGRAMS) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-8 md:mt-10 mb-6 md:mb-10">
           {/* Featured Column 1: Distributed Architectures */}
           <Card variant="surface" className="p-6 bg-white border-black/5 hover:border-[#1B3A6B]/30 duration-200 flex flex-col justify-between">
             <div>

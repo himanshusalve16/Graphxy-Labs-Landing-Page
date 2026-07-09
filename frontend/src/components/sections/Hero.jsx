@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Container from '../layout/Container';
+import PageBackground from '../layout/PageBackground';
 import { Card } from '../ui/Card';
 import { Layers, Monitor, Cpu, LineChart, Code, GitMerge, Smartphone, Grid, ArrowRight, X } from 'lucide-react';
 import { useIsTouch, useBreakpoint } from '../../utils/useDeviceType';
@@ -72,7 +73,7 @@ function RadialGraph({ cfg }) {
         <div className="flex flex-col items-center text-center">
           <span className="font-mono text-[9px] text-[#1B3A6B] uppercase tracking-widest mb-1">Engineering Studio</span>
           <span className="font-serif text-base font-semibold text-[#0F0F0F]">Graphxy Labs</span>
-          <span className="text-[11px] text-[#525252] mt-1">8 Technology Verticals → 4 Products</span>
+          <span className="text-[11px] text-[#525252] mt-1">8 Core Engineering Services</span>
         </div>
       );
     }
@@ -82,7 +83,7 @@ function RadialGraph({ cfg }) {
       return (
         <div className="flex flex-col gap-2">
           <div>
-            <span className="font-mono text-[9px] text-black/40 uppercase tracking-widest">Vertical</span>
+            <span className="font-mono text-[9px] text-black/40 uppercase tracking-widest">Specialization</span>
             <p className="font-serif text-sm font-semibold text-[#0F0F0F]">{v?.name}</p>
           </div>
           {connected.length > 0 && (
@@ -109,7 +110,7 @@ function RadialGraph({ cfg }) {
             <p className="text-[11px] text-[#525252] mt-0.5">{p.description}</p>
           </div>
           <Link to={p.link} style={{ touchAction: 'manipulation', backgroundColor: p.color, color: '#fff' }} className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold no-underline flex-shrink-0 active:scale-95 transition-transform">
-            View <ArrowRight size={12} />
+            Explore <ArrowRight size={12} />
           </Link>
         </div>
       );
@@ -288,7 +289,6 @@ function RadialGraph({ cfg }) {
 // ─── Scatter Graph (Desktop only — hover interactions) ────────────────────────
 
 const SCATTER_VERTS = HERO_SCATTER_NODES.filter(n => n.type === 'vertical');
-const SCATTER_PRODS = HERO_SCATTER_NODES.filter(n => n.type === 'product');
 
 function ScatterGraph() {
   const [activeNode, setActiveNode] = useState(null);
@@ -300,18 +300,8 @@ function ScatterGraph() {
   const pathOn = (id1, id2) => {
     if (!activeNode) return false;
     if (activeNode.type === 'center' && (id1 === 'center' || id2 === 'center')) return true;
-    if (activeNode.type === 'product') {
-      const p = SCATTER_PRODS.find(p => p.id === activeNode.id);
-      if (p) {
-        if ((id1 === p.id && p.connects.includes(id2)) || (id2 === p.id && p.connects.includes(id1))) return true;
-        if (id1 === 'center' && p.connects.includes(id2)) return true;
-        if (id2 === 'center' && p.connects.includes(id1)) return true;
-      }
-    }
     if (activeNode.type === 'vertical') {
       if ((id1 === 'center' && id2 === activeNode.id) || (id2 === 'center' && id1 === activeNode.id)) return true;
-      const p = SCATTER_PRODS.find(p => p.connects.includes(activeNode.id));
-      if (p && ((id1 === p.id && id2 === activeNode.id) || (id2 === p.id && id1 === activeNode.id))) return true;
     }
     return false;
   };
@@ -338,28 +328,6 @@ function ScatterGraph() {
             </g>
           );
         })}
-
-        {/* Vertical → Product paths */}
-        {SCATTER_PRODS.map(p => p.connects.map(vId => {
-          const v = SCATTER_VERTS.find(vv => vv.id === vId);
-          if (!v) return null;
-          if (v.x === undefined || v.y === undefined || p.x === undefined || p.y === undefined || isNaN(v.x) || isNaN(v.y) || isNaN(p.x) || isNaN(p.y)) {
-            return null;
-          }
-          const on = pathOn(p.id, v.id);
-          return (
-            <g key={`vp-${vId}-${p.id}`}>
-              <line x1={v.x} y1={v.y} x2={p.x} y2={p.y}
-                stroke={on ? p.color : 'rgba(0,0,0,0.06)'}
-                strokeWidth={on ? 1.5 : 1} className="transition-colors duration-200"
-              />
-              <motion.circle r={on ? 2 : 1.5} fill={on ? p.color : '#A3A3A3'}
-                animate={{ cx: [v.x, p.x], cy: [v.y, p.y] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear', delay: Math.random() * 2 }}
-              />
-            </g>
-          );
-        }))}
 
         {/* CENTER NODE */}
         {CENTER.x !== undefined && CENTER.y !== undefined && !isNaN(CENTER.x) && !isNaN(CENTER.y) && (
@@ -392,36 +360,7 @@ function ScatterGraph() {
           );
         })}
 
-        {/* PRODUCT NODES */}
-        {SCATTER_PRODS.map(p => {
-          if (p.x === undefined || p.y === undefined || isNaN(p.x) || isNaN(p.y)) return null;
-          const on = activeNode && (activeNode.id === p.id || (activeNode.type === 'vertical' && p.connects.includes(activeNode.id)));
-          return (
-            <motion.g key={p.id} className="cursor-pointer" whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-              onMouseEnter={() => setOn('product', p.id)} onMouseLeave={setOff}>
-              <rect x={p.x - 45} y={p.y - 18} width={90} height={36} rx={10} fill="#FFFFFF" stroke={on ? p.color : 'rgba(0,0,0,0.06)'} strokeWidth={on ? 2 : 1} className="transition-all duration-200" />
-              <circle cx={p.x - 32} cy={p.y} r={4} fill={p.color} />
-              <text x={p.x + 8} y={p.y + 4} textAnchor="middle" fill="#0F0F0F" fontSize="10" fontWeight="700" fontFamily="serif">{p.name}</text>
-            </motion.g>
-          );
-        })}
       </svg>
-
-      {/* Desktop hover tooltip */}
-      <AnimatePresence>
-        {activeNode?.type === 'product' && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.15 }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-[#FAFAF8] border border-black/5 rounded-xl px-4 py-2 shadow-md flex flex-col items-center pointer-events-none"
-          >
-            <span className="font-mono text-[9px] font-bold uppercase tracking-wider" style={{ color: SCATTER_PRODS.find(p => p.id === activeNode.id)?.color }}>
-              {SCATTER_PRODS.find(p => p.id === activeNode.id)?.name}
-            </span>
-            <span className="text-[10px] text-[#525252] mt-0.5">{SCATTER_PRODS.find(p => p.id === activeNode.id)?.description}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
@@ -441,9 +380,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-10 pb-12 sm:pt-16 sm:pb-20 border-b border-black/[0.06] bg-[#FAFAF8]">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute top-1/2 left-10 w-[300px] h-[300px] bg-gradient-to-tr from-[#92400E]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <PageBackground />
 
       <Container className="relative z-10 flex flex-col items-center text-center">
         {/* Header */}
@@ -463,7 +400,7 @@ export default function Hero() {
         <div className="w-full max-w-3xl mx-auto relative px-2 sm:px-4">
           <Card variant="surface" className={`bg-white/70 backdrop-blur-sm border-black/5 shadow-sm overflow-hidden rounded-2xl ${useRadial ? 'p-4' : 'p-4 sm:p-6'}`}>
             <div className="flex justify-between items-center text-left text-[10px] font-mono text-black/40 border-b border-black/[0.04] pb-3 mb-4 gap-2">
-              <span className="flex-shrink-0">ACTIVE LIVING SYSTEM MAP</span>
+              <span className="flex-shrink-0">CORE SERVICES MAP</span>
               <span className="text-[#1B3A6B] font-semibold text-right truncate max-w-[180px]">{interactionHint}</span>
             </div>
 

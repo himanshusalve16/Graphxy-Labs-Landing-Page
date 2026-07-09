@@ -1,6 +1,7 @@
 import React from 'react';
 import PageShell from '../components/layout/PageShell';
 import Container from '../components/layout/Container';
+import PageBackground from '../components/layout/PageBackground';
 import { Tag } from '../components/ui/Tag';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -30,12 +31,7 @@ export default function GraphzyDetails() {
     <PageShell>
       {/* Background Mesh Overlays */}
       <div className="relative overflow-hidden bg-[#FAFAF8] py-16 md:py-24 border-b border-black/[0.04]">
-        {/* Glow textures and radial meshes */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#0066CC]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-
-        {/* Sub-section grid lines overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+        <PageBackground />
 
         <Container className="relative z-10">
           <div className="max-w-4xl mx-auto flex flex-col items-center">
@@ -50,9 +46,6 @@ export default function GraphzyDetails() {
                 An interactive visualization platform that transforms plain-language math, physics, and chemistry equations into coordinate models. Join the waitlist below or try the live sandbox prototype.
               </p>
             </div>
-
-            {/* Waitlist Form */}
-            <WaitlistForm product="Graphzy" />
 
             {/* Rich Interactive SVG Graph Preview */}
             <div className="w-full max-w-md mt-16 animate-fade-in">
@@ -82,6 +75,15 @@ export default function GraphzyDetails() {
               </div>
             </div>
 
+            {/* Waitlist Form Section at the bottom */}
+            <div className="w-full max-w-md mt-16 flex flex-col items-center">
+              <div className="w-full flex items-center gap-3 my-4 text-[#A3A3A3] font-mono text-[9px] uppercase tracking-wider select-none">
+                <div className="h-[1px] bg-black/5 flex-1" />
+                <span>Join the waitlist</span>
+                <div className="h-[1px] bg-black/5 flex-1" />
+              </div>
+              <WaitlistForm product="Graphzy" />
+            </div>
           </div>
         </Container>
       </div>

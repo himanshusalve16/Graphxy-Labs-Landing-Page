@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import PageShell from '../components/layout/PageShell';
 import Container from '../components/layout/Container';
+import PageBackground from '../components/layout/PageBackground';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -27,18 +28,13 @@ export default function Contact() {
 
   const subjects = [
     "General Inquiry",
-    "Management Systems",
     "Web Development",
     "Mobile App Development",
     "AI & Machine Learning",
-    "Data Science & Analytics",
-    "Custom Software",
+    "Data Engineering",
+    "Custom Software Development",
     "Automation & Workflows",
-    "Scalable Tech Products",
-    "Graphzy Early Access",
-    "Clampbox Early Access",
-    "Forkline Early Access",
-    "Lattice Early Access"
+    "Cloud & DevOps"
   ];
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm({
@@ -84,44 +80,50 @@ export default function Contact() {
 
   return (
     <PageShell>
-      <div className="bg-[#FAFAF8] py-10 sm:py-16 md:py-24">
-        <Container>
+      <div className="relative overflow-hidden bg-[#FAFAF8] py-10 sm:py-16 md:py-24">
+        <PageBackground />
+        <Container className="relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
 
-            {/* Contact details */}
-            <div className="lg:col-span-5 flex flex-col gap-8">
+            {/* Contact details and layout balancing */}
+            <div className="lg:col-span-5 flex flex-col gap-6">
               <div>
                 <span className="font-mono text-[9px] font-bold text-[#1B3A6B] uppercase tracking-wider">Contact Us</span>
-                <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-[#0F0F0F] mt-2 mb-4">
+                <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-[#0F0F0F] mt-2 mb-4 leading-tight">
                   Let's discuss your next system.
                 </h1>
                 <p className="text-xs md:text-sm text-[#525252] leading-relaxed">
-                  Have a question about Graphzy, Forkline, or Lattice, or looking to build bespoke business software? Reach out to our engineering team.
+                  We're always interested in discussing new ideas, collaborations, engineering challenges, and opportunities. If you'd like to work with Graphxy Labs, simply fill out the form and we'll get back to you.
                 </p>
               </div>
 
-              <div className="flex flex-col gap-5 border-t border-black/[0.04] pt-8">
-                <div className="flex gap-4 items-center">
-                  <div className="w-9 h-9 rounded-lg bg-[#EEF3FB] text-[#1B3A6B] flex items-center justify-center flex-shrink-0">
-                    <Mail size={16} />
-                  </div>
-                  <div>
-                    <div className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase">Email</div>
-                    <a href="mailto:himanshusalve9@gmail.com" className="text-xs font-semibold text-[#0F0F0F] hover:underline">
-                      himanshusalve9@gmail.com
-                    </a>
-                  </div>
-                </div>
+              {/* Response Time Card */}
+              <Card variant="surface" className="p-4 bg-white border-black/[0.04] shadow-xs text-left">
+                <div className="font-mono text-[8px] text-black/35 font-bold uppercase tracking-widest mb-1">Response Timeline</div>
+                <div className="text-[12px] font-semibold text-[#0F0F0F]">Typically within 24 hours on business days.</div>
+              </Card>
 
-                <div className="flex gap-4 items-center">
-                  <div className="w-9 h-9 rounded-lg bg-[#EEF3FB] text-[#1B3A6B] flex items-center justify-center flex-shrink-0">
-                    <MapPin size={16} />
-                  </div>
-                  <div>
-                    <div className="font-mono text-[9px] font-bold text-[#A3A3A3] uppercase">HQ</div>
-                    <span className="text-xs font-semibold text-[#0F0F0F]">Nagpur, Maharashtra</span>
-                  </div>
-                </div>
+              {/* What you can contact us about */}
+              <div className="flex flex-col gap-3 border-t border-black/[0.04] pt-5">
+                <div className="font-mono text-[8.5px] text-black/35 font-bold uppercase tracking-widest">Areas of Scoping</div>
+                <ul className="list-none p-0 m-0 flex flex-col gap-2 text-[11.5px] text-[#525252]">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1B3A6B]" />
+                    Custom Software & Web Platforms
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0066CC]" />
+                    AI & Machine Learning Integrations
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0D9488]" />
+                    Automation & Data Pipelines
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED]" />
+                    Cloud Architecture & Scale Planning
+                  </li>
+                </ul>
               </div>
             </div>
 

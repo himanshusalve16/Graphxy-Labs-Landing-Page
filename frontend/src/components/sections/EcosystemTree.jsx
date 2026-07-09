@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Container from '../layout/Container';
+import PageBackground from '../layout/PageBackground';
 import { SectionHeading } from '../ui/SectionHeading';
 import { Card } from '../ui/Card';
 import { Tag } from '../ui/Tag';
@@ -448,8 +449,7 @@ export default function EcosystemTree() {
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-[#FAFAF8] border-b border-black/[0.06] relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-gradient-to-br from-[#1B3A6B]/15 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808026_1px,transparent_1px),linear-gradient(to_bottom,#80808026_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <PageBackground />
 
       <Container className="relative z-10">
         <SectionHeading

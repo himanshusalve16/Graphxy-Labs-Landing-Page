@@ -13,7 +13,7 @@ export const SectionHeading = React.forwardRef(({
     <div
       ref={ref}
       className={cn(
-        "flex flex-col mb-12",
+        "flex flex-col mb-8 md:mb-12",
         {
           "items-start text-left": align === 'left',
           "items-center text-center": align === 'center',
@@ -28,7 +28,7 @@ export const SectionHeading = React.forwardRef(({
         </div>
       )}
       {heading && (
-        <h2 className="font-serif text-[28px] md:text-[32px] leading-tight tracking-[-0.015em] text-[#0F0F0F] max-w-lg">
+        <h2 className="font-serif text-[24px] sm:text-[28px] md:text-[32px] leading-tight tracking-[-0.015em] text-[#0F0F0F] max-w-lg">
           {heading}
         </h2>
       )}
