@@ -125,12 +125,7 @@ export const RADIAL_VERTICALS = [
   { id: 'v7', name: 'Cloud Solutions', short: 'Cloud', icon: Layers },
 ];
 
-export const RADIAL_PRODUCTS = [
-  { id: 'p_graphzy', name: 'Web Platforms', description: 'Web Applications & Dashboards', status: 'CORE DIVISION', color: '#0066CC', link: '/services', connects: ['v1', 'v3', 'v5'] },
-  { id: 'p_clampbox', name: 'Secure Infrastructure', description: 'Confidential Cloud & Security', status: 'CORE DIVISION', color: '#0D9488', link: '/services', connects: ['v3', 'v6', 'v7'] },
-  { id: 'p_forkline', name: 'Business Automation', description: 'Custom ERP & Pipelines', status: 'CORE DIVISION', color: '#92400E', link: '/services', connects: ['v0', 'v1', 'v6'] },
-  { id: 'p_lattice', name: 'Data & Analytics', description: 'Telemetry & Metrics Panels', status: 'CORE DIVISION', color: '#1B3A6B', link: '/services', connects: ['v1', 'v4', 'v7'] },
-];
+export const RADIAL_PRODUCTS = [];
 
 const PRODUCT_ANGLES_RAD = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
 

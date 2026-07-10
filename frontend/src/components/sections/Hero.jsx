@@ -18,8 +18,8 @@ import {
 // ─── Radial Ecosystem Graph ───────────────────────────────────────────────────
 // Used on mobile AND tablet. Switches to touch interaction model (tap → panel).
 
-const MOBILE_CFG = { viewBox: '0 0 400 330', cx: 200, cy: 170, innerR: 74, outerR: 130, nodeR: 17, centerR: 26, hitR: 32, centerHitR: 46, pW: 68, pH: 28, pHW: 84, pHH: 46 };
-const TABLET_CFG = { viewBox: '0 0 560 370', cx: 280, cy: 190, innerR: 88, outerR: 148, nodeR: 17, centerR: 28, hitR: 30, centerHitR: 46, pW: 72, pH: 30, pHW: 92, pHH: 48 };
+const MOBILE_CFG = { viewBox: '0 0 400 330', cx: 200, cy: 170, innerR: 82, outerR: 130, nodeR: 17, centerR: 26, hitR: 32, centerHitR: 46, pW: 68, pH: 28, pHW: 84, pHH: 46 };
+const TABLET_CFG = { viewBox: '0 0 560 370', cx: 280, cy: 190, innerR: 104, outerR: 148, nodeR: 17, centerR: 28, hitR: 30, centerHitR: 46, pW: 72, pH: 30, pHW: 92, pHH: 48 };
 
 function RadialGraph({ cfg }) {
   const [active, setActive] = useState(null); // { type: 'center'|'vertical'|'product', id }
@@ -208,20 +208,39 @@ function RadialGraph({ cfg }) {
                   {IconComp && <IconComp size={11} strokeWidth={2.5} />}
                 </div>
               </foreignObject>
-              {/* Label — abbreviated, angled outward */}
-              {cx !== undefined && cy !== undefined && (
-                <text
-                  x={v.rx + (v.rx - cx) * 0.38}
-                  y={v.ry + (v.ry - cy) * 0.38 + 3}
-                  textAnchor="middle"
-                  fontSize="8"
-                  fontWeight={on ? '700' : '500'}
-                  fill={on ? '#0F0F0F' : 'rgba(0,0,0,0.35)'}
-                  style={{ transition: 'fill 0.18s' }}
-                >
-                  {v.short}
-                </text>
-              )}
+              {/* Label — full name, radiating outward, positioned to avoid overlap or crossing connection lines */}
+              {cx !== undefined && cy !== undefined && (() => {
+                const dx = v.rx - cx;
+                const dy = v.ry - cy;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const ux = dist > 0 ? dx / dist : 0;
+                const uy = dist > 0 ? dy / dist : 0;
+                
+                const textOffset = on ? nodeR + 11 : nodeR + 8;
+                const tx = v.rx + ux * textOffset;
+                const ty = v.ry + uy * textOffset + 2.5;
+
+                let anchor = "middle";
+                if (ux > 0.3) {
+                  anchor = "start";
+                } else if (ux < -0.3) {
+                  anchor = "end";
+                }
+
+                return (
+                  <text
+                    x={tx}
+                    y={ty}
+                    textAnchor={anchor}
+                    fontSize="8.5"
+                    fontWeight={on ? '700' : '500'}
+                    fill={on ? '#0F0F0F' : 'rgba(0,0,0,0.45)'}
+                    style={{ transition: 'fill 0.18s' }}
+                  >
+                    {v.name}
+                  </text>
+                );
+              })()}
             </motion.g>
           );
         })}
