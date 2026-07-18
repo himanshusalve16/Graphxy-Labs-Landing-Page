@@ -23,6 +23,7 @@ export default function Footer() {
           <Link to="/services" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Services</Link>
           <Link to="/process" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Process</Link>
           <Link to="/about" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">About</Link>
+          <Link to="/careers" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Careers</Link>
           <Link to="/contact" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Contact</Link>
           <Link to="/privacy-policy" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Privacy Policy</Link>
           <Link to="/terms-of-service" className="text-xs text-[#525252] hover:text-[#0F0F0F] no-underline font-medium">Terms of Service</Link>

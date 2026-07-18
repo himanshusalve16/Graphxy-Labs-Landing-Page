@@ -16,6 +16,7 @@ import Clampbox from './pages/Clampbox';
 import Products from './pages/Products';
 import ProcessPage from './pages/ProcessPage';
 import About from './pages/About';
+import Careers from './pages/Careers';
 
 // Clampbox Console Pages
 import CbDashboard from '../clampbox/web/Dashboard';
@@ -62,6 +63,7 @@ function MainApp() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/lattice" element={<Lattice />} />
+          <Route path="/careers" element={<Careers />} />
         </Routes>
       </div>
       {!hideGlobalLayout && <Footer />}
