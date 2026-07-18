@@ -65,6 +65,8 @@ function InteractiveDBSync() {
           key={`pulse-${pulseCount}`}
           r="4"
           fill="#1B3A6B"
+          cx="40"
+          cy="45"
           animate={{ cx: [40, 160], cy: [45, 45] }}
           transition={{ duration: 1.5, ease: "easeOut" }}
         />
@@ -72,6 +74,8 @@ function InteractiveDBSync() {
           key={`pulse2-${pulseCount}`}
           r="4"
           fill="#0066CC"
+          cx="160"
+          cy="45"
           animate={{ cx: [160, 280], cy: [45, 45] }}
           transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
         />

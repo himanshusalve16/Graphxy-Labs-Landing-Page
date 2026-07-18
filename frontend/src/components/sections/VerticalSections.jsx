@@ -38,12 +38,16 @@ function DatabaseSyncVisual() {
         <motion.circle
           r="3"
           fill="#1B3A6B"
+          cx="40"
+          cy="70"
           animate={{ cx: [40, 160], cy: [70, 70] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
         />
         <motion.circle
           r="3"
           fill="#0066CC"
+          cx="160"
+          cy="70"
           animate={{ cx: [160, 280], cy: [70, 70] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: "linear", delay: 0.8 }}
         />
@@ -68,6 +72,8 @@ function DatabaseSyncVisual() {
             stroke="#1B3A6B"
             strokeWidth="1"
             strokeDasharray="4 4"
+            cx="0"
+            cy="0"
             animate={{ rotate: 360 }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           />

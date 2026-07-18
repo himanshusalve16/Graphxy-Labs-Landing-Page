@@ -194,6 +194,7 @@ function MobileTreeGraph() {
           return (
             <motion.circle key={`dp1-${v.id}`}
               r={1.5} fill="#1B3A6B" opacity={activePath ? 0.6 : 0.2}
+              cx={180} cy={30}
               animate={{ cx: [180, v.x], cy: [30, v.y] }}
               transition={{ duration: 3.5 + i * 0.2, repeat: Infinity, ease: 'linear', delay: i * 0.3 }}
             />
@@ -211,6 +212,7 @@ function MobileTreeGraph() {
           return (
             <motion.circle key={`dp2-${v.id}-${pId}`}
               r={1.5} fill={p.color} opacity={activePath ? 0.6 : 0.2}
+              cx={v.x} cy={v.y}
               animate={{ cx: [v.x, p.x], cy: [v.y, p.y] }}
               transition={{ duration: 4.5 + idx * 0.3, repeat: Infinity, ease: 'linear', delay: Math.random() * 2 }}
             />

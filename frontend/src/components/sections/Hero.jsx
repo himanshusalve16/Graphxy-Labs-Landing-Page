@@ -170,6 +170,7 @@ function RadialGraph({ cfg }) {
           return (
             <motion.circle key={`dp-${v.id}`}
               r={1.5} fill="#1B3A6B" opacity={0.25}
+              cx={cx} cy={cy}
               animate={{ cx: [cx, v.rx], cy: [cy, v.ry] }}
               transition={{ duration: 3 + i * 0.3, repeat: Infinity, ease: 'linear', delay: i * 0.4 }}
             />
@@ -341,6 +342,7 @@ function ScatterGraph() {
                 strokeWidth={on ? 1.5 : 1} className="transition-colors duration-200"
               />
               <motion.circle r={on ? 2 : 1.5} fill={on ? '#1B3A6B' : '#A3A3A3'}
+                cx={CENTER.x} cy={CENTER.y}
                 animate={{ cx: [CENTER.x, v.x], cy: [CENTER.y, v.y] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'linear', delay: Math.random() * 2 }}
               />

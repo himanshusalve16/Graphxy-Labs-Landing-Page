@@ -92,6 +92,8 @@ function ArcParticle({ phase, index }) {
   const endAngle = phase.angle + SLICE_DEG / 2;
   return (
     <motion.circle r={2.5} fill={phase.color} opacity={0.5}
+      cx={CX + OUTER_R * Math.cos((startAngle + ARC_GAP) * DEG2RAD)}
+      cy={CY + OUTER_R * Math.sin((startAngle + ARC_GAP) * DEG2RAD)}
       animate={{
         cx: [
           CX + OUTER_R * Math.cos((startAngle + ARC_GAP) * DEG2RAD),

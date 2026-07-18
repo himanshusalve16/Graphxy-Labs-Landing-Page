@@ -192,41 +192,8 @@ export default function Careers() {
             </p>
           </div>
 
-          {/* Why Join Graphxy Labs */}
-          <div className="my-16 md:my-24">
-            <SectionHeading
-              eyebrow="Culture & Growth"
-              heading="Why Join Graphxy Labs?"
-              description="We operate as a high-fidelity specialized engineering studio where technical depth and absolute visual restraint shape every project."
-              className="text-center max-w-2xl mx-auto mb-10 md:mb-14"
-            />
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {benefits.map((benefit, idx) => {
-                const Icon = benefit.icon;
-                return (
-                  <Card 
-                    key={idx} 
-                    variant="surface" 
-                    className="p-6 bg-white border-black/5 hover:border-[#1B3A6B]/20 duration-200 transition-all shadow-xs flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="w-9 h-9 rounded-lg bg-[#EEF3FB] flex items-center justify-center mb-4 text-[#1B3A6B]">
-                        <Icon size={16} />
-                      </div>
-                      <h4 className="font-serif text-sm font-semibold text-[#0F0F0F] mb-2">{benefit.title}</h4>
-                      <p className="text-[11px] leading-relaxed text-[#525252] font-normal">
-                        {benefit.desc}
-                      </p>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Current Openings */}
-          <div className="my-16 md:my-24">
+          <div className="mb-16 md:mb-24">
             <SectionHeading
               eyebrow="Opportunities"
               heading="Current Openings"
@@ -301,7 +268,7 @@ export default function Careers() {
           </div>
 
           {/* Apply Now Section */}
-          <div id="apply" className="mt-16 md:mt-24 max-w-3xl mx-auto">
+          <div id="apply" className="my-16 md:my-24 max-w-3xl mx-auto">
             <SectionHeading
               eyebrow="Application"
               heading="Apply Now"
@@ -633,8 +600,41 @@ export default function Careers() {
             </Card>
           </div>
 
-          {/* Hiring Process */}
+          {/* Why Join Graphxy Labs */}
           <div className="my-16 md:my-24">
+            <SectionHeading
+              eyebrow="Culture & Growth"
+              heading="Why Join Graphxy Labs?"
+              description="We operate as a high-fidelity specialized engineering studio where technical depth and absolute visual restraint shape every project."
+              className="text-center max-w-2xl mx-auto mb-10 md:mb-14"
+            />
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {benefits.map((benefit, idx) => {
+                const Icon = benefit.icon;
+                return (
+                  <Card 
+                    key={idx} 
+                    variant="surface" 
+                    className="p-6 bg-white border-black/5 hover:border-[#1B3A6B]/20 duration-200 transition-all shadow-xs flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-9 h-9 rounded-lg bg-[#EEF3FB] flex items-center justify-center mb-4 text-[#1B3A6B]">
+                        <Icon size={16} />
+                      </div>
+                      <h4 className="font-serif text-sm font-semibold text-[#0F0F0F] mb-2">{benefit.title}</h4>
+                      <p className="text-[11px] leading-relaxed text-[#525252] font-normal">
+                        {benefit.desc}
+                      </p>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Hiring Process */}
+          <div className="mt-16 md:mt-24">
             <SectionHeading
               eyebrow="Pipeline"
               heading="Hiring Process"

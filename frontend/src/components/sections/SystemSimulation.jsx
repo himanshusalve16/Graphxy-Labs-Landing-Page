@@ -205,6 +205,8 @@ export default function SystemSimulation() {
                     key={p.id}
                     r={2.5}
                     fill={p.color}
+                    cx={p.startX}
+                    cy={p.startY}
                     initial={{ cx: p.startX, cy: p.startY }}
                     animate={{ cx: p.endX, cy: p.endY }}
                     transition={{ duration: 1.2, ease: 'easeInOut' }}

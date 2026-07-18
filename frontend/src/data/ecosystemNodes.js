@@ -105,9 +105,9 @@ export const ECOSYSTEM_TREE_MOBILE_NODES = [
   { id: 'v8', label: 'Systems Security', name: 'Systems Security', type: 'vertical', x: 315, y: 175, radius: 16, color: '#1B3A6B', icon: Shield, connections: ['center', 'p_clampbox'] },
   // Products (Now converted to core capabilities)
   { id: 'p_graphzy', label: 'Web Platforms', name: 'Web Platforms', type: 'product', x: 50, y: 260, radius: 0, color: '#0066CC', link: '/services', tag: 'CORE DIVISION', description: 'High-performance web applications and responsive interfaces.', connections: ['v1', 'v3', 'v5'] },
-  { id: 'p_clampbox', label: 'Secure Infrastructure', name: 'Secure Infrastructure', type: 'product', x: 130, y: 260, color: '#0D9488', link: '/services', tag: 'CORE DIVISION', description: 'Confidential cloud execution, robust encryption, and security.', connections: ['v3', 'v6', 'v7', 'v8'] },
-  { id: 'p_forkline', label: 'Business Automation', name: 'Business Automation', type: 'product', x: 220, y: 260, color: '#92400E', link: '/services', tag: 'CORE DIVISION', description: 'Custom operational pipelines, integrations, and ERP system flow.', connections: ['v0', 'v1', 'v6'] },
-  { id: 'p_lattice', label: 'Data & Analytics', name: 'Data & Analytics', type: 'product', x: 310, y: 260, color: '#1B3A6B', link: '/services', tag: 'CORE DIVISION', description: 'Telemetry panels, data ingestion pipelines, and metrics views.', connections: ['v1', 'v4', 'v7'] },
+  { id: 'p_clampbox', label: 'Secure Infrastructure', name: 'Secure Infrastructure', type: 'product', x: 130, y: 260, radius: 0, color: '#0D9488', link: '/services', tag: 'CORE DIVISION', description: 'Confidential cloud execution, robust encryption, and security.', connections: ['v3', 'v6', 'v7', 'v8'] },
+  { id: 'p_forkline', label: 'Business Automation', name: 'Business Automation', type: 'product', x: 220, y: 260, radius: 0, color: '#92400E', link: '/services', tag: 'CORE DIVISION', description: 'Custom operational pipelines, integrations, and ERP system flow.', connections: ['v0', 'v1', 'v6'] },
+  { id: 'p_lattice', label: 'Data & Analytics', name: 'Data & Analytics', type: 'product', x: 310, y: 260, radius: 0, color: '#1B3A6B', link: '/services', tag: 'CORE DIVISION', description: 'Telemetry panels, data ingestion pipelines, and metrics views.', connections: ['v1', 'v4', 'v7'] },
 ];
 
 // ==============================================================================
